@@ -4,18 +4,5 @@ RecyclerView 使用大全测试项目，主要包含怎样使用不同的Recycle
 
 博客说明地址：<http://blog.csdn.net/itrenj/article/details/70163238>
 ## 效果图
-![RecyclerView效果图目录](http://img.blog.csdn.net/20170413232341009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView列表效果](http://img.blog.csdn.net/20170413232616685?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图网格效果](http://img.blog.csdn.net/20170413232651889?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图瀑布流效果](http://img.blog.csdn.net/20170413232731452?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图活用网格布局效果](http://img.blog.csdn.net/20170413232755828?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图多种item效果](http://img.blog.csdn.net/20170413232818953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图刷新加载效果](http://img.blog.csdn.net/20170413232859735?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
-
-![RecyclerView效果图拖拽和侧滑效果](http://img.blog.csdn.net/20170413232919533?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![RecyclerView效果图目录](http://img.blog.csdn.net/20170413232341009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView列表效果](http://img.blog.csdn.net/20170413232616685?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView效果图网格效果](http://img.blog.csdn.net/20170413232651889?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView效果图瀑布流效果](http://img.blog.csdn.net/20170413232731452?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![RecyclerView效果图活用网格布局效果](http://img.blog.csdn.net/20170413232755828?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView效果图多种item效果](http://img.blog.csdn.net/20170413232818953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView效果图刷新加载效果](http://img.blog.csdn.net/20170413232859735?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)![RecyclerView效果图拖拽和侧滑效果](http://img.blog.csdn.net/20170413232919533?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
