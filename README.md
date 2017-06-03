@@ -5,4 +5,4 @@ RecyclerView 使用大全测试项目，主要包含怎样使用不同的Recycle
 博客说明地址：<http://blog.csdn.net/itrenj/article/details/70163238>
 
 ## 效果图
-![Android水波纹](http://img.blog.csdn.net/20161225222622327?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)     ![Android水波纹](http://img.blog.csdn.net/20161225222639977?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![Android水波纹](http://img.blog.csdn.net/20161225222622327?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)           ![Android水波纹](http://img.blog.csdn.net/20161225222639977?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSVRSZW5q/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
