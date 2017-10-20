@@ -70,6 +70,12 @@
                 android:text="刷新与自动加载更多" />
 
             <Button
+                android:id="@+id/bt11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="使用自定义的RecyclerView控件" />
+
+            <Button
                 android:id="@+id/bt10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
