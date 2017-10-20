@@ -32,6 +32,7 @@ import java.util.List;
 public class MyRefreshRecyclerViewActivity extends BaseActivity {
     private TextView title;
     private RefreshRecyclerView recyclerview;
+    private MyRefreshRecyclerAdapter adapter;
 
     // 定义加载更多的次数
     private int loadingCount = 0;
@@ -64,7 +65,6 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
             }
         }
     };
-    private MyRefreshRecyclerAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -75,6 +75,8 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
     protected void initView() {
         title = (TextView) findViewById(R.id.title);
         recyclerview = (RefreshRecyclerView) findViewById(R.id.recyclerview);
+        // recyclerview.setCanLoadMore(false);
+        // recyclerview.setCanRefresh(false);
 
         title.setText("使用自定义的刷新RecyclerView控件");
 
