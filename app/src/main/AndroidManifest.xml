@@ -35,6 +35,7 @@
 		<activity android:name=".activity.MultipleItemActivity"/>
 		<activity android:name=".activity.RefreshActivity"/>
 		<activity android:name=".activity.ItemTouchActivity"/>
+		<activity android:name=".activity.MyRefreshRecyclerViewActivity"/>
 	</application>
 
 </manifest>

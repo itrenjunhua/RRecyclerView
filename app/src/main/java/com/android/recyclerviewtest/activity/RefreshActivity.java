@@ -23,7 +23,7 @@ import java.util.List;
  * <p/>
  * 创建时间：2017-04-13    14:57
  * <p/>
- * 描述：RefreshActivity 刷新与自动加载更多
+ * 描述：RefreshActivity 刷新与自动加载更多（使用系统的SwipeRefreshLayout控件）
  * <p/>
  * 修订历史：
  * <p/>
