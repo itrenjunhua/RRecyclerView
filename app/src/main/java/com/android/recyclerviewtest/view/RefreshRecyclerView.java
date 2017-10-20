@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
@@ -74,8 +76,10 @@ public class RefreshRecyclerView extends RecyclerView {
     private Animation down2UpAnimtion;
     private Animation up2DownAnimtion;
 
-    //布局管理器
+    // 布局管理器
     private LinearLayoutManager layoutManager;
+    // 用于控制滑动动画的对象
+    private Scroller scroller;
 
     // 记录按下的位置和移动的位置的差值
     private int downY, dY;
@@ -95,6 +99,7 @@ public class RefreshRecyclerView extends RecyclerView {
     }
 
     private void initView(Context context) {
+        scroller = new Scroller(context);
         initHeaderView(context);
         initFooterView(context);
         initAnimation();
@@ -178,12 +183,14 @@ public class RefreshRecyclerView extends RecyclerView {
                 if (mFirstVisibleItemPosition == 0 && dY > 0) {
                     if (mHeaderCurrentState == DOWN_REFRESH_STATE) {
                         // 隐藏头
-                        headerView.setPadding(0, -headerViewHeight, 0, 0);
+                        // headerView.setPadding(0, -headerViewHeight, 0, 0);
+                        startMoveAnimation(-(headerViewHeight - dY), -dY);
                     } else if (mHeaderCurrentState == RELEASE_REFRESH_STATE) {
                         // 把状态切换为正在加载 把头缩回置本身头的高度 隐藏箭头 显示进度条
                         mHeaderCurrentState = REFRESHING_STATE;
                         headerMsg.setText(REFRESHING);
-                        headerView.setPadding(0, 0, 0, 0);
+                        //headerView.setPadding(0, 0, 0, 0);
+                        startMoveAnimation(-(headerViewHeight - dY), headerViewHeight - dY);
                         // 清除动画后控件才可以隐藏
                         arrowView.clearAnimation();
                         arrowView.setVisibility(View.INVISIBLE);
@@ -279,6 +286,31 @@ public class RefreshRecyclerView extends RecyclerView {
     }
 
     /**
+     * 开始移动动画
+     *
+     * @param startY 开始位置
+     * @param dY     移动值
+     */
+    private void startMoveAnimation(int startY, int dY) {
+        int duration = Math.abs(dY) * 10;
+        scroller.startScroll(0, startY, 0, dY, duration > 500 ? 500 : duration);
+        postInvalidateOnAnimation();
+    }
+
+    /**
+     * 维持动画
+     */
+    @Override
+    public void computeScroll() {
+        if (scroller.computeScrollOffset()) {
+            int currY = scroller.getCurrY();
+            headerView.setPadding(0, currY, 0, 0);
+            postInvalidateOnAnimation();
+            Log.i("RefreshRecyclerView", "-----------------------------");
+        }
+    }
+
+    /**
      * 设置能不能加载更多
      *
      * @param canRefresh true：能<br/>
@@ -324,10 +356,11 @@ public class RefreshRecyclerView extends RecyclerView {
      * 刷新完成，恢复默认状态
      */
     public void finishRefreshing() {
-        if(refreshWrapAdapter != null)
+        if (refreshWrapAdapter != null)
             refreshWrapAdapter.notifyDataSetChanged();
 
-        headerView.setPadding(0, -headerViewHeight, 0, 0);
+        //headerView.setPadding(0, -headerViewHeight, 0, 0);
+        startMoveAnimation(0, -headerViewHeight);
         mHeaderCurrentState = DOWN_REFRESH_STATE;
         headerMsg.setText(DOWN_REFRESH);
         headerPb.setVisibility(INVISIBLE);
@@ -338,7 +371,7 @@ public class RefreshRecyclerView extends RecyclerView {
      * 加载更多完成，恢复默认状态
      */
     public void finishLoading() {
-        if(refreshWrapAdapter != null)
+        if (refreshWrapAdapter != null)
             refreshWrapAdapter.notifyDataSetChanged();
 
         isLoading = false;
