@@ -41,6 +41,7 @@
         <activity android:name="com.android.recyclerviewtest.activity.MultipleItemActivity" />
         <activity android:name="com.android.recyclerviewtest.activity.RefreshActivity" />
         <activity android:name="com.android.recyclerviewtest.activity.ItemTouchActivity" />
+        <activity android:name="com.android.recyclerviewtest.activity.MyRefreshRecyclerViewActivity" />
     </application>
 
 </manifest>

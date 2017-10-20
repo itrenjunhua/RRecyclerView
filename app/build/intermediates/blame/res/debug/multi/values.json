@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "outputFile": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -600,7 +600,7 @@
                     "endOffset": 2266
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 1,
@@ -619,7 +619,7 @@
                     "endOffset": 2313
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 1,
@@ -638,7 +638,7 @@
                     "endOffset": 2364
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 1,
@@ -809,7 +809,7 @@
                     "endOffset": 2968
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 1,
@@ -828,7 +828,7 @@
                     "endOffset": 3010
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 1,
@@ -847,7 +847,7 @@
                     "endOffset": 3055
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 1,
@@ -1417,7 +1417,7 @@
                     "endOffset": 4998
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 1,
@@ -1512,7 +1512,7 @@
                     "endOffset": 5329
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 1,
@@ -1531,7 +1531,7 @@
                     "endOffset": 5375
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 1,
@@ -1550,7 +1550,7 @@
                     "endOffset": 5417
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\colors.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 1,
@@ -2975,7 +2975,7 @@
                     "endOffset": 31393
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 1,
@@ -2994,7 +2994,7 @@
                     "endOffset": 31449
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 1,
@@ -3298,7 +3298,7 @@
                     "endOffset": 32668
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\dimens.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 1,
@@ -4495,7 +4495,7 @@
                     "endOffset": 36821
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 1,
@@ -4629,7 +4629,7 @@
                     "endOffset": 37630
                 },
                 "from": {
-                    "file": "C:\\Users\\Ren1994\\Desktop\\git\\RecyclerViewTest\\app\\src\\main\\res\\values\\styles.xml",
+                    "file": "C:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\src\\main\\res\\values\\styles.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 1,
