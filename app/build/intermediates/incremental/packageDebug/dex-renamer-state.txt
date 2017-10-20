@@ -1,7 +1,0 @@
-#Fri Oct 20 10:34:44 CST 2017
-base.0=C\:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_13977ec8fbde1fba091e7df91777043c05f964b0
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=C\:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_cb526e0880f94ae72e121de305b4ce99071fd1b1\\classes.dex
-base.1=C\:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_cb526e0880f94ae72e121de305b4ce99071fd1b1
-file.0=C\:\\Users\\Ren1994\\Desktop\\RecyclerViewTest\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_13977ec8fbde1fba091e7df91777043c05f964b0\\classes.dex
