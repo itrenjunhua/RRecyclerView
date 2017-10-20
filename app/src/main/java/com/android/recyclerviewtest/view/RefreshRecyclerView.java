@@ -83,6 +83,11 @@ public class RefreshRecyclerView extends RecyclerView {
 
     // 记录按下的位置和移动的位置的差值
     private int downY, dY;
+    // 定义摩擦系数，头布局显示的高度 = 实际移动高度 * 摩擦系数
+    private float frictionValue = 0.65f;
+    // 头布局显示的最大高度值，默认4倍头布局实际高度
+    private int headerViewMaxHeight;
+    // 包含头和尾的包裹适配器
     private RefreshWrapAdapter refreshWrapAdapter;
 
     public RefreshRecyclerView(Context context) {
@@ -154,7 +159,9 @@ public class RefreshRecyclerView extends RecyclerView {
                 int moveY = (int) ev.getY();
 
                 // 条件 RecyclerView的第一个条目的下标是0 && 往下拽的行为
-                dY = moveY - downY;
+                dY = (int) (moveY * frictionValue - downY);
+                if(dY > headerViewMaxHeight)
+                    dY = headerViewMaxHeight;
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int top = -headerViewHeight + dY;
                 if (firstVisibleItemPosition == 0 && dY > 0) {
@@ -249,6 +256,7 @@ public class RefreshRecyclerView extends RecyclerView {
         headerView.measure(0, 0);
         //获取测量后的高度
         headerViewHeight = headerView.getMeasuredHeight();
+        headerViewMaxHeight = headerViewHeight * 4;
         //隐藏头
         headerView.setPadding(0, -headerViewHeight, 0, 0);
     }
