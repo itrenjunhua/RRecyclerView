@@ -30,8 +30,10 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     private static final int DEFAULT_DIVIDER_HEIGHT = 1;
     private static final int DEFAULT_DIVIDER_COLOR = 0xFFDDDDDD;
     private Paint mPaint;
-    private int mDividerHeight = DEFAULT_DIVIDER_HEIGHT;
-
+    private int mHorizontalDividerHeight = DEFAULT_DIVIDER_HEIGHT; // 水平方向上的宽度
+    private int mVerticalDividerHeight = DEFAULT_DIVIDER_HEIGHT;   // 垂直方向上的宽度
+    private boolean mIsDrawLastLow = false; // 最后一行是否绘制分割线
+    private boolean mIsDrawLoatCol = false; // 最后一列是否绘制分割线
 
     public CustomItemDecoration() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -42,11 +44,38 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 指定分割线高度，单位 px ；默认 1px
      *
-     * @param dividerHeight
+     * @param dividerHeight 水平方向和垂直方向上的宽度相同
      * @return
      */
     public CustomItemDecoration dividerHeight(int dividerHeight) {
-        this.mDividerHeight = dividerHeight;
+        this.mHorizontalDividerHeight = dividerHeight;
+        this.mVerticalDividerHeight = dividerHeight;
+        return this;
+    }
+
+    /**
+     * 指定分割线高度，单位 px ；默认 1px
+     *
+     * @param horizontalDividerHeight 水平方向上的宽度
+     * @param verticalDividerHeight   垂直方向的宽度
+     * @return
+     */
+    public CustomItemDecoration dividerHeight(int horizontalDividerHeight, int verticalDividerHeight) {
+        this.mHorizontalDividerHeight = horizontalDividerHeight;
+        this.mVerticalDividerHeight = verticalDividerHeight;
+        return this;
+    }
+
+    /**
+     * 设置最后一行和最后一列是否需要绘制分割线
+     *
+     * @param isDrawLastLow 是否绘制最后一行  默认 false
+     * @param isDrawLoatCol 是否绘制最后一列  默认 false
+     * @return
+     */
+    public CustomItemDecoration isDrawLastLowAndCol(boolean isDrawLastLow, boolean isDrawLoatCol) {
+        this.mIsDrawLastLow = isDrawLastLow;
+        this.mIsDrawLoatCol = isDrawLoatCol;
         return this;
     }
 
@@ -71,23 +100,43 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         boolean lastCol = isLastCol(layoutManager, childCount, viewLayoutPosition);
         if (lastRaw) {
             if (lastCol) {
-                // 最后一行最后一列，底部和右边都不绘制
-                outRect.set(0, 0, 0, 0);
+                // 最后一行最后一列，判断是否绘制右边底部
+                if (mIsDrawLastLow && mIsDrawLoatCol) // 绘制右边和底部
+                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                else if (mIsDrawLastLow) // 绘制底部
+                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
+                else if (mIsDrawLoatCol) // 绘制右边
+                    outRect.set(0, 0, mVerticalDividerHeight, 0);
+                else
+                    outRect.set(0, 0, 0, 0);
             } else {
-                // 最后一行但是不是最后一列，底部不绘制
-                outRect.set(0, 0, mDividerHeight, 0);
+                // 最后一行但是不是最后一列，判断是否绘制底部
+                if (mIsDrawLastLow) // 绘制底部
+                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                else // 不绘制底部
+                    outRect.set(0, 0, mVerticalDividerHeight, 0);
             }
         } else if (lastCol) {
             if (lastRaw) {
-                // 最后一列最后一行，底部和右边都不绘制
-                outRect.set(0, 0, 0, 0);
+                // 最后一列最后一行，判断是否绘制右边底部
+                if (mIsDrawLastLow && mIsDrawLoatCol) // 绘制右边和底部
+                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                else if (mIsDrawLastLow) // 绘制底部
+                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
+                else if (mIsDrawLoatCol) // 绘制右边
+                    outRect.set(0, 0, mVerticalDividerHeight, 0);
+                else
+                    outRect.set(0, 0, 0, 0);
             } else {
-                // 最后一列但是不是最后一行，右边不绘制
-                outRect.set(0, 0, 0, mDividerHeight);
+                // 最后一列但是不是最后一行，判断是否绘制右边
+                if (mIsDrawLoatCol) // 绘制右边
+                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                else // 不绘制右边
+                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
             }
         } else {
             // 不是最后一行也不是最后一列，绘制右边和底部
-            outRect.set(0, 0, mDividerHeight, mDividerHeight);
+            outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
         }
     }
 
@@ -199,14 +248,14 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                 int left = childAt.getLeft() - layoutParams.leftMargin;
                 int right = childAt.getRight() + layoutParams.rightMargin;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + mDividerHeight;
+                int bottom = top + mHorizontalDividerHeight;
                 c.drawRect(left, top, right, bottom, mPaint);
             }
 
             if (!lastCol) {
                 // 画竖直方向的线
                 int left1 = childAt.getRight() + layoutParams.rightMargin;
-                int right1 = left1 + mDividerHeight;
+                int right1 = left1 + mVerticalDividerHeight;
                 int top1 = childAt.getTop() - layoutParams.topMargin;
                 int bottom1 = childAt.getBottom() + layoutParams.bottomMargin;
                 c.drawRect(left1, top1, right1, bottom1, mPaint);
@@ -215,9 +264,9 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
             if (!lastRaw && !lastCol) {
                 // 画水平方向和竖直方向的线的交叉点的背景
                 int left2 = childAt.getRight() + layoutParams.rightMargin;
-                int right2 = left2 + mDividerHeight;
+                int right2 = left2 + mVerticalDividerHeight;
                 int top2 = childAt.getBottom() + layoutParams.bottomMargin;
-                int bottom2 = top2 + mDividerHeight;
+                int bottom2 = top2 + mHorizontalDividerHeight;
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
         }
