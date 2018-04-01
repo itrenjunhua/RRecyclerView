@@ -111,47 +111,128 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         int viewLayoutPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         int childCount = parent.getAdapter().getItemCount();
+
+        boolean fastLow = isFastLow(layoutManager, viewLayoutPosition);
+        boolean fastCol = isFastCol(layoutManager, viewLayoutPosition);
+
         boolean lastRaw = isLastRaw(layoutManager, childCount, viewLayoutPosition);
         boolean lastCol = isLastCol(layoutManager, childCount, viewLayoutPosition);
+
+        boolean drawFastLow = fastLow && mIsDrawFastLow;
+        boolean drawFastCol = fastCol && mIsDrawFastCol;
         if (lastRaw) {
             if (lastCol) {
                 // 最后一行最后一列，判断是否绘制右边底部
                 if (mIsDrawLastLow && mIsDrawLastCol) // 绘制右边和底部
-                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, mHorizontalDividerHeight);
                 else if (mIsDrawLastLow) // 绘制底部
-                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, 0, mHorizontalDividerHeight);
                 else if (mIsDrawLastCol) // 绘制右边
-                    outRect.set(0, 0, mVerticalDividerHeight, 0);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, 0);
                 else
-                    outRect.set(0, 0, 0, 0);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, 0, 0);
             } else {
                 // 最后一行但是不是最后一列，判断是否绘制底部
                 if (mIsDrawLastLow) // 绘制底部
-                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, mHorizontalDividerHeight);
                 else // 不绘制底部
-                    outRect.set(0, 0, mVerticalDividerHeight, 0);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, 0);
             }
         } else if (lastCol) {
             if (lastRaw) {
                 // 最后一列最后一行，判断是否绘制右边底部
                 if (mIsDrawLastLow && mIsDrawLastCol) // 绘制右边和底部
-                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, mHorizontalDividerHeight);
                 else if (mIsDrawLastLow) // 绘制底部
-                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, 0, mHorizontalDividerHeight);
                 else if (mIsDrawLastCol) // 绘制右边
-                    outRect.set(0, 0, mVerticalDividerHeight, 0);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, 0);
                 else
-                    outRect.set(0, 0, 0, 0);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, 0, 0);
             } else {
                 // 最后一列但是不是最后一行，判断是否绘制右边
                 if (mIsDrawLastCol) // 绘制右边
-                    outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, mHorizontalDividerHeight);
                 else // 不绘制右边
-                    outRect.set(0, 0, 0, mHorizontalDividerHeight);
+                    outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, 0, mHorizontalDividerHeight);
             }
         } else {
             // 不是最后一行也不是最后一列，绘制右边和底部
-            outRect.set(0, 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+            outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0, mVerticalDividerHeight, mHorizontalDividerHeight);
+        }
+    }
+
+    /**
+     * 判断是否第一列
+     *
+     * @param layoutManager
+     * @param itemPosition
+     * @return
+     */
+    private boolean isFastCol(RecyclerView.LayoutManager layoutManager, int itemPosition) {
+        if (layoutManager instanceof GridLayoutManager) {
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            int spanCount = gridLayoutManager.getSpanCount();
+            int orientation = gridLayoutManager.getOrientation();
+            if (GridLayoutManager.VERTICAL == orientation) {
+                return itemPosition % spanCount == 0;
+            } else {
+                return (itemPosition + 1) <= spanCount;
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+            int spanCount = staggeredGridLayoutManager.getSpanCount();
+            int orientation = staggeredGridLayoutManager.getOrientation();
+            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
+                return itemPosition % spanCount == 0;
+            } else {
+                return (itemPosition + 1) <= spanCount;
+            }
+        } else {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+            int orientation = linearLayoutManager.getOrientation();
+            if (orientation == LinearLayoutManager.VERTICAL) {
+                return itemPosition == 0;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    /**
+     * 判断是否第一行
+     *
+     * @param layoutManager
+     * @param itemPosition
+     * @return
+     */
+    private boolean isFastLow(RecyclerView.LayoutManager layoutManager, int itemPosition) {
+        if (layoutManager instanceof GridLayoutManager) {
+            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            int spanCount = gridLayoutManager.getSpanCount();
+            int orientation = gridLayoutManager.getOrientation();
+            if (GridLayoutManager.VERTICAL == orientation) {
+                return (itemPosition + 1) <= spanCount;
+            } else {
+                return itemPosition % spanCount == 0;
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+            int spanCount = staggeredGridLayoutManager.getSpanCount();
+            int orientation = staggeredGridLayoutManager.getOrientation();
+            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
+                return (itemPosition + 1) <= spanCount;
+            } else {
+                return itemPosition % spanCount == 0;
+            }
+        } else {
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+            int orientation = linearLayoutManager.getOrientation();
+            if (orientation == LinearLayoutManager.VERTICAL) {
+                return itemPosition == 0;
+            } else {
+                return true;
+            }
         }
     }
 
@@ -189,7 +270,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
             int orientation = linearLayoutManager.getOrientation();
-            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
+            if (orientation == LinearLayoutManager.VERTICAL) {
                 return true;
             } else {
                 return (itemPosition + 1) == childCount;
@@ -232,7 +313,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
             int orientation = linearLayoutManager.getOrientation();
-            if (orientation == StaggeredGridLayoutManager.VERTICAL) {
+            if (orientation == LinearLayoutManager.VERTICAL) {
                 return (itemPosition + 1) == childCount;
             } else {
                 return true;
@@ -250,6 +331,27 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
             View childAt = parent.getChildAt(i);
             int viewLayoutPosition = ((RecyclerView.LayoutParams) childAt.getLayoutParams()).getViewLayoutPosition();
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
+
+            boolean fastLow = isFastLow(layoutManager, viewLayoutPosition);
+            boolean fastCol = isFastCol(layoutManager, viewLayoutPosition);
+
+            if (fastLow) {
+                // 第一行，并且需要绘制第一行之前的分割线
+                int left = childAt.getLeft() - layoutParams.leftMargin;
+                int right = childAt.getRight() + layoutParams.rightMargin;
+                int top = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
+                int bottom = childAt.getTop() - layoutParams.topMargin;
+                c.drawRect(left, top, right, bottom, mPaint);
+            }
+
+            if (fastCol) {
+                // 第一列，并且需要绘制第一列之前的分割线
+                int left = childAt.getLeft() - layoutParams.leftMargin - mVerticalDividerHeight;
+                int right = childAt.getLeft() - layoutParams.leftMargin;
+                int top = childAt.getTop() - layoutParams.topMargin;
+                int bottom = childAt.getBottom() + layoutParams.bottomMargin;
+                c.drawRect(left, top, right, bottom, mPaint);
+            }
 
             /**
              * 在此处如果不在对最后一行或者最后一列进行判断的话，
@@ -283,9 +385,9 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                 int top1 = childAt.getTop() - layoutParams.topMargin;
                 int bottom1 = childAt.getBottom() + layoutParams.bottomMargin;
                 c.drawRect(left1, top1, right1, bottom1, mPaint);
-            }else{
+            } else {
                 // 是最后一列，判断是否需要绘制最后一列垂直方向行的线
-                if(mIsDrawLastCol){
+                if (mIsDrawLastCol) {
                     int left1 = childAt.getRight() + layoutParams.rightMargin;
                     int right1 = left1 + mVerticalDividerHeight;
                     int top1 = childAt.getTop() - layoutParams.topMargin;
@@ -303,8 +405,35 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
 
-            if(mIsDrawLastLow || mIsDrawLastCol){
-                // 只要最后一行和最后一列有一个需要绘制，那么久需要画水平方向和竖直方向的线的交叉点的背景
+            if (fastLow && mIsDrawFastLow) {
+                // 绘制第一行时，交叉点的位置需要绘制
+                int left2 = childAt.getRight() + layoutParams.rightMargin;
+                int right2 = left2 + mVerticalDividerHeight;
+                int top2 = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
+                int bottom2 = childAt.getTop() - layoutParams.topMargin;
+                c.drawRect(left2, top2, right2, bottom2, mPaint);
+            }
+
+            if (fastCol && mIsDrawFastCol) {
+                // 绘制第一列时，交叉点的位置需要绘制
+                int left2 = childAt.getLeft() - layoutParams.rightMargin - mVerticalDividerHeight;
+                int right2 = childAt.getLeft() - layoutParams.rightMargin;
+                int top2 = childAt.getBottom() + layoutParams.bottomMargin;
+                int bottom2 = top2 + mHorizontalDividerHeight;
+                c.drawRect(left2, top2, right2, bottom2, mPaint);
+            }
+
+            if (fastLow && fastCol && mIsDrawFastLow && mIsDrawFastCol) {
+                // 解决第一行和第一列都需要绘制时，第一行第一列前面的位置不会绘制的问题
+                int left2 = childAt.getLeft() - layoutParams.rightMargin - mVerticalDividerHeight;
+                int right2 = childAt.getLeft() - layoutParams.rightMargin;
+                int top2 = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
+                int bottom2 = childAt.getTop() - layoutParams.topMargin;
+                c.drawRect(left2, top2, right2, bottom2, mPaint);
+            }
+
+            if ((lastRaw && mIsDrawLastLow) || (lastCol && mIsDrawLastCol)) {
+                // 只要最后一行和最后一列有一个需要绘制，那么就需要画水平方向和竖直方向的线的交叉点的背景
                 int left2 = childAt.getRight() + layoutParams.rightMargin;
                 int right2 = left2 + mVerticalDividerHeight;
                 int top2 = childAt.getBottom() + layoutParams.bottomMargin;
