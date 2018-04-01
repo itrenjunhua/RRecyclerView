@@ -1,6 +1,5 @@
 package com.android.recyclerviewtest.activity;
 
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -59,7 +58,8 @@ public class Grid1Activity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources().getDimension(R.dimen.line_height))
-                .dividerColor(getResources().getColor(R.color.line_bg)));
+                .dividerColor(getResources().getColor(R.color.colorAccent))
+        .isDrawLastLowAndCol(true,true));
 
         adapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<String>() {
             @Override
