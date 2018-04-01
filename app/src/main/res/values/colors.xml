@@ -4,6 +4,13 @@
 	<color name="colorAccent">#CCFF4081</color>
 	<color name="colorPrimary">#3F51B5</color>
 
+	<!--水平分割线颜色-->
+	<color name="colorH">#EE00FFFF</color>
+	<!--垂直分割线颜色-->
+	<color name="colorV">#CCFF00FF</color>
+	<!--交叉点颜色-->
+	<color name="colorP">#DDFFFF00</color>
+
 	<color name="title_bg">#AA51B535</color>
 	<color name="title_color">#FFFFFF</color>
 	<color name="item_bg">#884081FF</color>
