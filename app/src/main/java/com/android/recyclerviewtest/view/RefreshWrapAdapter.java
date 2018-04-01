@@ -18,8 +18,8 @@ import android.view.ViewGroup;
  * ======================================================================
  */
 public class RefreshWrapAdapter extends RecyclerView.Adapter {
-    private final static int ITEM_TYPE_HEADER = 1; // 头布局类型
-    private final static int ITEM_TYPE_FOOTER = 2; // 尾布局类型
+    private final static int ITEM_TYPE_HEADER = 10068; // 头布局类型
+    private final static int ITEM_TYPE_FOOTER = 10010; // 尾布局类型
 
     //头布局
     private View mHeaderView;

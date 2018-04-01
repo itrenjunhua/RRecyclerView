@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -160,7 +159,7 @@ public class RefreshRecyclerView extends RecyclerView {
 
                 // 条件 RecyclerView的第一个条目的下标是0 && 往下拽的行为
                 dY = (int) (moveY * frictionValue - downY);
-                if(dY > headerViewMaxHeight)
+                if (dY > headerViewMaxHeight)
                     dY = headerViewMaxHeight;
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 int top = -headerViewHeight + dY;
@@ -314,8 +313,17 @@ public class RefreshRecyclerView extends RecyclerView {
             int currY = scroller.getCurrY();
             headerView.setPadding(0, currY, 0, 0);
             postInvalidateOnAnimation();
-            Log.i("RefreshRecyclerView", "-----------------------------");
         }
+    }
+
+    /**
+     * 获取当前文职的条目类型
+     *
+     * @param position 位置
+     * @return 条目类型  注意：10068：头布局类型  10010：尾布局类型
+     */
+    public int getItemViewType(int position) {
+        return refreshWrapAdapter.getItemViewType(position);
     }
 
     /**
