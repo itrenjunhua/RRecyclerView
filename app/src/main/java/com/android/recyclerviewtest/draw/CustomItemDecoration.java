@@ -75,27 +75,45 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * 设置在第一行和第一列之前是否需要绘制分割线
+     * 设置在第一行之前是否需要绘制分割线
      *
      * @param isDrawFastLow 是否绘制第一行  默认 false
+     * @return
+     */
+    public CustomItemDecoration isDrawFastLowBefore(boolean isDrawFastLow) {
+        this.mIsDrawFastLow = isDrawFastLow;
+        return this;
+    }
+
+    /**
+     * 设置在第一列之前是否需要绘制分割线
+     *
      * @param isDrawFastCol 是否绘制第一列  默认 false
      * @return
      */
-    public CustomItemDecoration isDrawFastLowAndCol(boolean isDrawFastLow, boolean isDrawFastCol) {
-        this.mIsDrawFastLow = isDrawFastLow;
+    public CustomItemDecoration isDrawFastColBefore(boolean isDrawFastCol) {
         this.mIsDrawFastCol = isDrawFastCol;
         return this;
     }
 
     /**
-     * 设置在最后一行和最后一列之后是否需要绘制分割线
+     * 设置在最后一行之后是否需要绘制分割线
      *
      * @param isDrawLastLow 是否绘制最后一行  默认 false
+     * @return
+     */
+    public CustomItemDecoration isDrawLastLowAfter(boolean isDrawLastLow) {
+        this.mIsDrawLastLow = isDrawLastLow;
+        return this;
+    }
+
+    /**
+     * 设置在最后一列之后是否需要绘制分割线
+     *
      * @param isDrawLastCol 是否绘制最后一列  默认 false
      * @return
      */
-    public CustomItemDecoration isDrawLastLowAndCol(boolean isDrawLastLow, boolean isDrawLastCol) {
-        this.mIsDrawLastLow = isDrawLastLow;
+    public CustomItemDecoration isDrawLastColAfter(boolean isDrawLastCol) {
         this.mIsDrawLastCol = isDrawLastCol;
         return this;
     }
