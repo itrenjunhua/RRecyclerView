@@ -58,9 +58,11 @@ public class Grid2Activity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources().getDimension(R.dimen.line_height))
-                .dividerColor(getResources().getColor(R.color.colorH),getResources().getColor(R.color.colorV))
-        .isDrawLastLowAndCol(false,true)
-        .isDrawFastLowAndCol(true,false));
+                .isDrawFirstLowBefore(true)
+                .isDrawFirstColBefore(true)
+                .isDrawLastLowAfter(true)
+                .isDrawLastColAfter(true)
+        );
 
         // 给 item 添加长按事件
         adapter.setOnItemLongClickListener(new SingleTypeAdapter.OnItemLongClickListener<String>() {

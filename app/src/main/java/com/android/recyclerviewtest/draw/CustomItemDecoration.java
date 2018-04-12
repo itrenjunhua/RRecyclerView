@@ -34,14 +34,21 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     private int mHorizontalDividerHeight = DEFAULT_DIVIDER_HEIGHT; // 水平方向上的宽度
     private int mVerticalDividerHeight = DEFAULT_DIVIDER_HEIGHT;   // 垂直方向上的宽度
 
-    private boolean mIsDrawLastLow = false; // 最后一行之后是否绘制分割线
-    private boolean mIsDrawLastCol = false; // 最后一列之后是否绘制分割线
-    private boolean mIsDrawFastLow = false; // 第一列之前是否绘制分割线
-    private boolean mIsDrawFastCol = false; // 第一列之前是否绘制分割线
-
     private int mHorizontalDividerColor = DEFAULT_DIVIDER_COLOR; // 水平分割线颜色
     private int mVerticalDividerColor = DEFAULT_DIVIDER_COLOR;   // 垂直分割线颜色
     private int mCrossPointColor = mHorizontalDividerColor;   // 交叉点的分割线颜色，默认使用水平分割线的颜色
+
+    private boolean mIsDrawLastLow = false; // 最后一行之后是否绘制分割线
+    private boolean mIsDrawLastCol = false; // 最后一列之后是否绘制分割线
+    private boolean mIsDrawFirstLow = false; // 第一行之前是否绘制分割线
+    private boolean mIsDrawFirstCol = false; // 第一列之前是否绘制分割线
+
+    private int mLastLowColor = DEFAULT_DIVIDER_COLOR; // 最后一行之后分割线颜色
+    private int mLastColColor = DEFAULT_DIVIDER_COLOR; // 最后一列之后分割线颜色
+    private int mFirstLowColor = DEFAULT_DIVIDER_COLOR; // 第一行之前分割线颜色
+    private int mFirstColColor = DEFAULT_DIVIDER_COLOR; // 第一列之前分割线颜色
+    private int mBorderCrossPointColor = DEFAULT_DIVIDER_COLOR; // 四周分隔线交叉点颜色
+
 
     public CustomItemDecoration() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -77,29 +84,55 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 设置在第一行之前是否需要绘制分割线
      *
-     * @param isDrawFastLow 是否绘制第一行  默认 false
+     * @param isDrawFirstLow 是否绘制第一行之前分割线  默认 false
      * @return
      */
-    public CustomItemDecoration isDrawFastLowBefore(boolean isDrawFastLow) {
-        this.mIsDrawFastLow = isDrawFastLow;
+    public CustomItemDecoration isDrawFirstLowBefore(boolean isDrawFirstLow) {
+        this.mIsDrawFirstLow = isDrawFirstLow;
+        return this;
+    }
+
+    /**
+     * 设置在第一行之前是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawFirstLow 是否绘制第一行之前分割线  默认 false
+     * @param firstLowColor  分割线颜色
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstLowBefore(boolean isDrawFirstLow, int firstLowColor) {
+        this.mIsDrawFirstLow = isDrawFirstLow;
+        this.mFirstLowColor = firstLowColor;
         return this;
     }
 
     /**
      * 设置在第一列之前是否需要绘制分割线
      *
-     * @param isDrawFastCol 是否绘制第一列  默认 false
+     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
      * @return
      */
-    public CustomItemDecoration isDrawFastColBefore(boolean isDrawFastCol) {
-        this.mIsDrawFastCol = isDrawFastCol;
+    public CustomItemDecoration isDrawFirstColBefore(boolean isDrawFirstCol) {
+        this.mIsDrawFirstCol = isDrawFirstCol;
+        return this;
+    }
+
+    /**
+     * 设置在第一列之前是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
+     * @param firstColColor  分割线颜色
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstColBefore(boolean isDrawFirstCol, int firstColColor) {
+        this.mIsDrawFirstCol = isDrawFirstCol;
+        this.mFirstColColor = firstColColor;
         return this;
     }
 
     /**
      * 设置在最后一行之后是否需要绘制分割线
      *
-     * @param isDrawLastLow 是否绘制最后一行  默认 false
+     * @param isDrawLastLow 是否绘制最后一行之后分割线  默认 false
      * @return
      */
     public CustomItemDecoration isDrawLastLowAfter(boolean isDrawLastLow) {
@@ -108,13 +141,51 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
+     * 设置在最后一行之后是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawLastLow 是否绘制最后一行之后分割线  默认 false
+     * @param lastLowColor  分割线颜色
+     * @return
+     */
+    public CustomItemDecoration isDrawLastLowAfter(boolean isDrawLastLow, int lastLowColor) {
+        this.mIsDrawLastLow = isDrawLastLow;
+        this.mLastLowColor = lastLowColor;
+        return this;
+    }
+
+    /**
      * 设置在最后一列之后是否需要绘制分割线
      *
-     * @param isDrawLastCol 是否绘制最后一列  默认 false
+     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
      * @return
      */
     public CustomItemDecoration isDrawLastColAfter(boolean isDrawLastCol) {
         this.mIsDrawLastCol = isDrawLastCol;
+        return this;
+    }
+
+    /**
+     * 设置在最后一列之后是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
+     * @param lastColColor  分割线颜色
+     * @return
+     */
+    public CustomItemDecoration isDrawLastColAfter(boolean isDrawLastCol, int lastColColor) {
+        this.mIsDrawLastCol = isDrawLastCol;
+        this.mLastColColor = lastColColor;
+        return this;
+    }
+
+    /**
+     * 设置边界交叉点颜色(第一行之前、第一列之前、最后一行之后、最后一列之后组成的框的交叉点颜色)，<br/>
+     * 如果没有指定，那么行的交叉点使用水平方向上的颜色，列的交叉点使用垂直方向上的颜色
+     *
+     * @param borderCrossPointColor 边界交叉点颜色
+     * @return
+     */
+    public CustomItemDecoration borderCrossPointColor(int borderCrossPointColor) {
+        this.mBorderCrossPointColor = borderCrossPointColor;
         return this;
     }
 
@@ -128,6 +199,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         this.mHorizontalDividerColor = dividerColor;
         this.mVerticalDividerColor = dividerColor;
         this.mCrossPointColor = dividerColor;
+        setLowAndColColor(dividerColor, dividerColor);
         return this;
     }
 
@@ -142,6 +214,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         this.mHorizontalDividerColor = horizontalDividerColor;
         this.mVerticalDividerColor = verticalDividerColor;
         this.mCrossPointColor = horizontalDividerColor;
+        setLowAndColColor(horizontalDividerColor, verticalDividerColor);
         return this;
     }
 
@@ -157,7 +230,22 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         this.mHorizontalDividerColor = horizontalDividerColor;
         this.mVerticalDividerColor = verticalDividerColor;
         this.mCrossPointColor = crossPointColor;
+        setLowAndColColor(horizontalDividerColor, verticalDividerColor);
         return this;
+    }
+
+    /**
+     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的颜色值进行设置，<br/>
+     * 但是在设置之前需要先判断有没有单独为这几个位置设置过颜色，因为单独设置的优先级更高
+     *
+     * @param lowColor 行颜色
+     * @param colColor 列颜色
+     */
+    private void setLowAndColColor(int lowColor, int colColor) {
+        if (DEFAULT_DIVIDER_COLOR == mFirstLowColor) mFirstLowColor = lowColor;
+        if (DEFAULT_DIVIDER_COLOR == mLastLowColor) mLastLowColor = lowColor;
+        if (DEFAULT_DIVIDER_COLOR == mFirstColColor) mFirstColColor = colColor;
+        if (DEFAULT_DIVIDER_COLOR == mLastColColor) mLastColColor = colColor;
     }
 
     // 设置偏移量
@@ -168,39 +256,39 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         int childCount = parent.getAdapter().getItemCount();
 
         // 判断是否为第一行和第一列
-        boolean fastLow = isFastLow(layoutManager, viewLayoutPosition);
-        boolean fastCol = isFastCol(layoutManager, viewLayoutPosition);
+        boolean firstLow = isFirstLow(layoutManager, viewLayoutPosition);
+        boolean firstCol = isFirstCol(layoutManager, viewLayoutPosition);
         // 判断是否最后一行和最后一列
         boolean lastRaw = isLastRaw(layoutManager, childCount, viewLayoutPosition);
         boolean lastCol = isLastCol(layoutManager, childCount, viewLayoutPosition);
 
         // 定义变量确定第一行和第一列之前是否需要绘制分割线
-        boolean drawFastLow = fastLow && mIsDrawFastLow;
-        boolean drawFastCol = fastCol && mIsDrawFastCol;
+        boolean drawFirstLow = firstLow && mIsDrawFirstLow;
+        boolean drawFirstCol = firstCol && mIsDrawFirstCol;
 
         if (lastRaw) {
             if (lastCol) {
                 // 最后一行最后一列，判断是否绘制右边和底部
-                outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0,
+                outRect.set(drawFirstCol ? mVerticalDividerHeight : 0, drawFirstLow ? mHorizontalDividerHeight : 0,
                         mIsDrawLastCol ? mVerticalDividerHeight : 0, mIsDrawLastLow ? mHorizontalDividerHeight : 0);
             } else {
                 // 最后一行但是不是最后一列，判断是否绘制底部，右边一定需要绘制
-                outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0,
+                outRect.set(drawFirstCol ? mVerticalDividerHeight : 0, drawFirstLow ? mHorizontalDividerHeight : 0,
                         mVerticalDividerHeight, mIsDrawLastLow ? mHorizontalDividerHeight : 0);
             }
         } else if (lastCol) {
             if (lastRaw) {
                 // 最后一列最后一行，判断是否绘制右边和底部
-                outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0,
+                outRect.set(drawFirstCol ? mVerticalDividerHeight : 0, drawFirstLow ? mHorizontalDividerHeight : 0,
                         mIsDrawLastCol ? mVerticalDividerHeight : 0, mIsDrawLastLow ? mHorizontalDividerHeight : 0);
             } else {
                 // 最后一列但是不是最后一行，判断是否绘制右边，底部一定需要绘制
-                outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0,
+                outRect.set(drawFirstCol ? mVerticalDividerHeight : 0, drawFirstLow ? mHorizontalDividerHeight : 0,
                         mIsDrawLastCol ? mVerticalDividerHeight : 0, mHorizontalDividerHeight);
             }
         } else {
             // 不是最后一行也不是最后一列，绘制右边和底部
-            outRect.set(drawFastCol ? mVerticalDividerHeight : 0, drawFastLow ? mHorizontalDividerHeight : 0,
+            outRect.set(drawFirstCol ? mVerticalDividerHeight : 0, drawFirstLow ? mHorizontalDividerHeight : 0,
                     mVerticalDividerHeight, mHorizontalDividerHeight);
         }
     }
@@ -212,7 +300,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param itemPosition
      * @return
      */
-    private boolean isFastCol(RecyclerView.LayoutManager layoutManager, int itemPosition) {
+    private boolean isFirstCol(RecyclerView.LayoutManager layoutManager, int itemPosition) {
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             int spanCount = gridLayoutManager.getSpanCount();
@@ -249,7 +337,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param itemPosition
      * @return
      */
-    private boolean isFastLow(RecyclerView.LayoutManager layoutManager, int itemPosition) {
+    private boolean isFirstLow(RecyclerView.LayoutManager layoutManager, int itemPosition) {
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             int spanCount = gridLayoutManager.getSpanCount();
@@ -376,32 +464,32 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
 
             // --------------------【start】 绘制第一行和第一列之前的线 【start】--------------------//
-            boolean fastLow = isFastLow(layoutManager, viewLayoutPosition);
-            boolean fastCol = isFastCol(layoutManager, viewLayoutPosition);
+            boolean firstLow = isFirstLow(layoutManager, viewLayoutPosition);
+            boolean firstCol = isFirstCol(layoutManager, viewLayoutPosition);
 
-            if (fastLow) {
+            if (firstLow) {
                 // 第一行，并且需要绘制第一行之前的分割线
                 int left = childAt.getLeft() - layoutParams.leftMargin;
                 int right = childAt.getRight() + layoutParams.rightMargin;
                 int top = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
-                mPaint.setColor(mHorizontalDividerColor);
+                mPaint.setColor(mFirstLowColor);
                 c.drawRect(left, top, right, bottom, mPaint);
             }
 
-            if (fastCol) {
+            if (firstCol) {
                 // 第一列，并且需要绘制第一列之前的分割线
                 int left = childAt.getLeft() - layoutParams.leftMargin - mVerticalDividerHeight;
                 int right = childAt.getLeft() - layoutParams.leftMargin;
                 int top = childAt.getTop() - layoutParams.topMargin;
                 int bottom = childAt.getBottom() + layoutParams.bottomMargin;
-                mPaint.setColor(mVerticalDividerColor);
+                mPaint.setColor(mFirstColColor);
                 c.drawRect(left, top, right, bottom, mPaint);
             }
             // ----------------------【end】 绘制第一行和第一列之前的线 【end】----------------------//
 
 
-            // ------------------【start】 绘制最后一行和最后一列之后的线 【start】------------------//
+            // -----------【start】 绘制中间分割线以及最后一行和最后一列之后的线 【start】------------//
             /**
              * 在此处如果不在对最后一行或者最后一列进行判断的话，
              * 当在页面中给整个 RecyclerView 控件设置 padding 值时，依然会将最后一行的底部和最后一列的右边绘制出来
@@ -424,13 +512,13 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                     int right = childAt.getRight() + layoutParams.rightMargin;
                     int top = childAt.getBottom() + layoutParams.bottomMargin;
                     int bottom = top + mHorizontalDividerHeight;
-                    mPaint.setColor(mHorizontalDividerColor);
+                    mPaint.setColor(mLastLowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
 
             if (!lastCol) {
-                // 画竖直方向的线
+                // 不是最后一列，画竖直方向的线
                 int left1 = childAt.getRight() + layoutParams.rightMargin;
                 int right1 = left1 + mVerticalDividerHeight;
                 int top1 = childAt.getTop() - layoutParams.topMargin;
@@ -444,11 +532,11 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                     int right1 = left1 + mVerticalDividerHeight;
                     int top1 = childAt.getTop() - layoutParams.topMargin;
                     int bottom1 = childAt.getBottom() + layoutParams.bottomMargin;
-                    mPaint.setColor(mVerticalDividerColor);
+                    mPaint.setColor(mLastColColor);
                     c.drawRect(left1, top1, right1, bottom1, mPaint);
                 }
             }
-            // --------------------【end】 绘制最后一行和最后一列之后的线 【end】--------------------//
+            // -------------【end】 绘制中间分割线以及最后一行和最后一列之后的线 【end】--------------//
 
 
             // -----------------【start】 绘制水平方向和垂直方向交叉点的线 【start】-----------------//
@@ -462,33 +550,36 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
 
-            if (fastLow && mIsDrawFastLow) {
+            if (firstLow && mIsDrawFirstLow) {
                 // 绘制第一行时，交叉点的位置需要绘制
                 int left2 = childAt.getRight() + layoutParams.rightMargin;
                 int right2 = left2 + mVerticalDividerHeight;
                 int top2 = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
                 int bottom2 = childAt.getTop() - layoutParams.topMargin;
-                mPaint.setColor(mCrossPointColor);
+                // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
+                mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstLowColor : mBorderCrossPointColor);
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
 
-            if (fastCol && mIsDrawFastCol) {
+            if (firstCol && mIsDrawFirstCol) {
                 // 绘制第一列时，交叉点的位置需要绘制
                 int left2 = childAt.getLeft() - layoutParams.rightMargin - mVerticalDividerHeight;
                 int right2 = childAt.getLeft() - layoutParams.rightMargin;
                 int top2 = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom2 = top2 + mHorizontalDividerHeight;
-                mPaint.setColor(mCrossPointColor);
+                // 是否设置了边界交叉点位置颜色，没有设置就用第一列之前分割线的颜色
+                mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstColColor : mBorderCrossPointColor);
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
 
             // 解决第一行和第一列之前都需要绘制时，第一行第一列前面(左上角)的位置不会绘制的问题
-            if (fastLow && fastCol && mIsDrawFastLow && mIsDrawFastCol) {
+            if (firstLow && firstCol && mIsDrawFirstLow && mIsDrawFirstCol) {
                 int left2 = childAt.getLeft() - layoutParams.rightMargin - mVerticalDividerHeight;
                 int right2 = childAt.getLeft() - layoutParams.rightMargin;
                 int top2 = childAt.getTop() - layoutParams.topMargin - mHorizontalDividerHeight;
                 int bottom2 = childAt.getTop() - layoutParams.topMargin;
-                mPaint.setColor(mCrossPointColor);
+                // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
+                mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstLowColor : mBorderCrossPointColor);
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
 
@@ -498,7 +589,8 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
                 int right2 = left2 + mVerticalDividerHeight;
                 int top2 = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom2 = top2 + mHorizontalDividerHeight;
-                mPaint.setColor(mCrossPointColor);
+                // 是否设置了边界交叉点位置颜色，没有设置就用最后一行之后分割线的颜色
+                mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastColColor : mBorderCrossPointColor);
                 c.drawRect(left2, top2, right2, bottom2, mPaint);
             }
             // --------------------【end】绘制水平方向和垂直方向交叉点的线 【end】-------------------//

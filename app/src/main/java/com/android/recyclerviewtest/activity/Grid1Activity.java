@@ -59,8 +59,13 @@ public class Grid1Activity extends BaseActivity {
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40,(int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.colorH),getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
-        .isDrawLastLowAndCol(true,false)
-        .isDrawFastLowAndCol(false,true));
+                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
+                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow))
+                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
+                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow))
+                .isDrawLastColAfter(true, getResources().getColor(R.color.colorLastCol))
+                .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
+        );
 
         adapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<String>() {
             @Override

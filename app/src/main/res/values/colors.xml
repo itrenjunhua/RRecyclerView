@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimaryDark">#303F9F</color>
-	<color name="colorAccent">#CCFF4081</color>
-	<color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#CCFF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
 
-	<!--水平分割线颜色-->
-	<color name="colorH">#EE00FFFF</color>
-	<!--垂直分割线颜色-->
-	<color name="colorV">#CCFF00FF</color>
-	<!--交叉点颜色-->
-	<color name="colorP">#DDFFFF00</color>
+    <!--水平分割线颜色-->
+    <color name="colorH">#EE00FFFF</color>
+    <!--垂直分割线颜色-->
+    <color name="colorV">#CCFF00FF</color>
+    <!--交叉点颜色-->
+    <color name="colorP">#DDFFFF00</color>
+    <!--第一行之前颜色-->
+    <color name="colorFirstLow">#FF00FF00</color>
+    <!--第一列之前颜色-->
+    <color name="colorFirstCol">#DDFF0000</color>
+    <!--最后一行之后颜色-->
+    <color name="colorLastLow">#FF888800</color>
+    <!--最后一列之后颜色-->
+    <color name="colorLastCol">#FF0000FF</color>
+    <!--边界交叉点颜色-->
+    <color name="colorBorderPoint">#FF997833</color>
 
-	<color name="title_bg">#AA51B535</color>
-	<color name="title_color">#FFFFFF</color>
-	<color name="item_bg">#884081FF</color>
-	<color name="line_bg">#FFFFFF</color>
-	<color name="line_bg2">#80FF0000</color>
-	<color name="view_bg">#DDDDDD</color>
-	<color name="start_drag_color">#4F8FFF</color>
+    <color name="title_bg">#AA51B535</color>
+    <color name="title_color">#FFFFFF</color>
+    <color name="item_bg">#884081FF</color>
+    <color name="line_bg">#FFFFFF</color>
+    <color name="line_bg2">#80FF0000</color>
+    <color name="view_bg">#DDDDDD</color>
+    <color name="start_drag_color">#4F8FFF</color>
 </resources>
