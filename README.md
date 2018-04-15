@@ -1,5 +1,47 @@
 # Android RecyclerView 控件使用
 Android RecyclerView 控件详细使用方法及代码示例。
+
+## 更新RecyclerView分割线绘制类
+> 1.增加可以设置水平风向和垂直方方向的分割线的宽度和颜色以及交叉点点的颜色
+> 2.增加动态指定是否需要绘制四周(第一行之前、最后一行之后、第一列之前、最后一列之后)的分割线
+> 3.增加分别指定四周分割线的宽度和颜色以及交叉点的颜色
+
+**具体方法**
+1.指定水平方向的垂直方向的分割线宽
+* dividerHeight(int dividerHeight)
+* dividerHeight(int horizontalDividerHeight, int verticalDividerHeight)
+
+2.指定水平方向的垂直方向的分割线颜色以及交叉点颜色
+* dividerColor(int dividerColor)
+* dividerColor(int horizontalDividerColor, int verticalDividerColor)
+* dividerColor(int horizontalDividerColor, int verticalDividerColor, int crossPointColor)
+
+3.指定是否需要绘制四周分割线以及设置相关属性
+
+指定是否需要绘制第一行之前的分割线以及设置相关属性
+* isDrawFirstLowBefore(boolean isDrawFirstLow)
+* isDrawFirstLowBeforeColor(boolean isDrawFirstLow, int firstLowColor)
+* isDrawFirstLowBeforeHeight(boolean isDrawFirstLow, int firstLowHeight)
+* isDrawFirstLowBefore(boolean isDrawFirstLow, int firstLowColor, int firstLowHeight)
+
+指定是否需要绘制第一列之前的分割线以及设置相关属性
+* isDrawFirstColBefore(boolean isDrawFirstCol)
+* isDrawFirstColBeforeColor(boolean isDrawFirstCol, int firstColColor)
+* isDrawFirstColBeforeHeight(boolean isDrawFirstCol, int firstColHeight)
+* isDrawFirstColBefore(boolean isDrawFirstCol, int firstColColor, int firstColHeight)
+
+指定是否需要绘制最后一行之后的分割线以及设置相关属性
+* isDrawLastLowAfter(boolean isDrawLastLow)
+* isDrawLastLowAfterColor(boolean isDrawLastLow, int lastLowColor)
+* isDrawLastLowAfterHeight(boolean isDrawLastLow, int lastLowHeight)
+* isDrawLastLowAfter(boolean isDrawLastLow, int lastLowColor, int lastLowHeight)
+
+指定是否需要绘制最后一列之后的分割线以及设置相关属性
+* isDrawLastColAfter(boolean isDrawLastCol)
+* isDrawLastColAfterColor(boolean isDrawLastCol, int lastColColor)
+* isDrawLastColAfterHeight(boolean isDrawLastCol, int lastColHeight)
+* isDrawLastColAfter(boolean isDrawLastCol, int lastColColor, int lastColHeight)
+
 ## 更新(新增自定义下拉刷新和加载更多效果)
 扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView
 > 在布局文件中定义
