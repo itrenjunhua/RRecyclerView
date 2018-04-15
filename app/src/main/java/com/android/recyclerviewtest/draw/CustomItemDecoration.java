@@ -70,6 +70,7 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     public CustomItemDecoration dividerHeight(int dividerHeight) {
         this.mHorizontalDividerHeight = dividerHeight;
         this.mVerticalDividerHeight = dividerHeight;
+        setLowAndColHeight(dividerHeight, dividerHeight);
         return this;
     }
 
@@ -83,7 +84,22 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     public CustomItemDecoration dividerHeight(int horizontalDividerHeight, int verticalDividerHeight) {
         this.mHorizontalDividerHeight = horizontalDividerHeight;
         this.mVerticalDividerHeight = verticalDividerHeight;
+        setLowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
         return this;
+    }
+
+    /**
+     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的高度进行设置，<br/>
+     * 但是在设置之前需要先判断有没有单独为这几个位置设置过高度，因为单独设置的优先级更高
+     *
+     * @param lowHeight 行高度
+     * @param colHeight 列高度
+     */
+    private void setLowAndColHeight(int lowHeight, int colHeight) {
+        if (DEFAULT_DIVIDER_HEIGHT == mFirstLowHeight) mFirstLowHeight = lowHeight;
+        if (DEFAULT_DIVIDER_HEIGHT == mLastLowHeight) mLastLowHeight = lowHeight;
+        if (DEFAULT_DIVIDER_HEIGHT == mFirstColHeight) mFirstColHeight = colHeight;
+        if (DEFAULT_DIVIDER_HEIGHT == mLastColHeight) mLastColHeight = colHeight;
     }
 
     /**
