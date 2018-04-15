@@ -62,10 +62,10 @@ public class Grid1Activity extends BaseActivity {
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40,(int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.colorH),getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
-                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow))
-                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
-                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow))
-                .isDrawLastColAfter(true, getResources().getColor(R.color.colorLastCol))
+                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow),50)
+                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol),28)
+                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow),20)
+                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
 

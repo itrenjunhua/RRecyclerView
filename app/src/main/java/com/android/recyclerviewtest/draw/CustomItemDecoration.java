@@ -43,10 +43,10 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     private boolean mIsDrawFirstLow = false; // 第一行之前是否绘制分割线
     private boolean mIsDrawFirstCol = false; // 第一列之前是否绘制分割线
 
-    private int mFirstLowHeight = mHorizontalDividerHeight; // 第一行之前的分割线高度
-    private int mFirstColHeight = mVerticalDividerHeight;   // 第一列之前的分割线宽度
-    private int mLastLowHeight = mHorizontalDividerHeight;  // 最后一行之后的分割线高度
-    private int mLastColHeight = mVerticalDividerHeight;    // 最后一列之后的分割线宽度
+    private int mFirstLowHeight = DEFAULT_DIVIDER_HEIGHT; // 第一行之前的分割线高度
+    private int mFirstColHeight = DEFAULT_DIVIDER_HEIGHT;   // 第一列之前的分割线宽度
+    private int mLastLowHeight = DEFAULT_DIVIDER_HEIGHT;  // 最后一行之后的分割线高度
+    private int mLastColHeight = DEFAULT_DIVIDER_HEIGHT;    // 最后一列之后的分割线宽度
 
     private int mLastLowColor = DEFAULT_DIVIDER_COLOR; // 最后一行之后分割线颜色
     private int mLastColColor = DEFAULT_DIVIDER_COLOR; // 最后一列之后分割线颜色
@@ -104,9 +104,37 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param firstLowColor  分割线颜色
      * @return
      */
-    public CustomItemDecoration isDrawFirstLowBefore(boolean isDrawFirstLow, int firstLowColor) {
+    public CustomItemDecoration isDrawFirstLowBeforeColor(boolean isDrawFirstLow, int firstLowColor) {
         this.mIsDrawFirstLow = isDrawFirstLow;
         this.mFirstLowColor = firstLowColor;
+        return this;
+    }
+
+    /**
+     * 设置在第一行之前是否需要绘制分割线，并指定高度
+     *
+     * @param isDrawFirstLow 是否绘制第一行之前分割线  默认 false
+     * @param firstLowHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstLowBeforeHeight(boolean isDrawFirstLow, int firstLowHeight) {
+        this.mIsDrawFirstLow = isDrawFirstLow;
+        this.mFirstLowHeight = firstLowHeight;
+        return this;
+    }
+
+    /**
+     * 设置在第一行之前是否需要绘制分割线，并指定颜色和高度
+     *
+     * @param isDrawFirstLow 是否绘制第一行之前分割线  默认 false
+     * @param firstLowColor  分割线颜色
+     * @param firstLowHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstLowBefore(boolean isDrawFirstLow, int firstLowColor, int firstLowHeight) {
+        this.mIsDrawFirstLow = isDrawFirstLow;
+        this.mFirstLowColor = firstLowColor;
+        this.mFirstLowHeight = firstLowHeight;
         return this;
     }
 
@@ -128,9 +156,37 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param firstColColor  分割线颜色
      * @return
      */
-    public CustomItemDecoration isDrawFirstColBefore(boolean isDrawFirstCol, int firstColColor) {
+    public CustomItemDecoration isDrawFirstColBeforeColor(boolean isDrawFirstCol, int firstColColor) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         this.mFirstColColor = firstColColor;
+        return this;
+    }
+
+    /**
+     * 设置在第一列之前是否需要绘制分割线，并指定高度
+     *
+     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
+     * @param firstColHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstColBeforeHeight(boolean isDrawFirstCol, int firstColHeight) {
+        this.mIsDrawFirstCol = isDrawFirstCol;
+        this.mFirstColHeight = firstColHeight;
+        return this;
+    }
+
+    /**
+     * 设置在第一列之前是否需要绘制分割线，并指定颜色和高度
+     *
+     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
+     * @param firstColColor  分割线颜色
+     * @param firstColHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawFirstColBefore(boolean isDrawFirstCol, int firstColColor, int firstColHeight) {
+        this.mIsDrawFirstCol = isDrawFirstCol;
+        this.mFirstColColor = firstColColor;
+        this.mFirstColHeight = firstColHeight;
         return this;
     }
 
@@ -152,9 +208,37 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param lastLowColor  分割线颜色
      * @return
      */
-    public CustomItemDecoration isDrawLastLowAfter(boolean isDrawLastLow, int lastLowColor) {
+    public CustomItemDecoration isDrawLastLowAfterColor(boolean isDrawLastLow, int lastLowColor) {
         this.mIsDrawLastLow = isDrawLastLow;
         this.mLastLowColor = lastLowColor;
+        return this;
+    }
+
+    /**
+     * 设置在最后一行之后是否需要绘制分割线，并指定高度
+     *
+     * @param isDrawLastLow 是否绘制最后一行之后分割线  默认 false
+     * @param lastLowHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawLastLowAfterHeight(boolean isDrawLastLow, int lastLowHeight) {
+        this.mIsDrawLastLow = isDrawLastLow;
+        this.mLastLowHeight = lastLowHeight;
+        return this;
+    }
+
+    /**
+     * 设置在最后一行之后是否需要绘制分割线，并指定颜色和高度
+     *
+     * @param isDrawLastLow 是否绘制最后一行之后分割线  默认 false
+     * @param lastLowColor  分割线颜色
+     * @param lastLowHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawLastLowAfter(boolean isDrawLastLow, int lastLowColor, int lastLowHeight) {
+        this.mIsDrawLastLow = isDrawLastLow;
+        this.mLastLowColor = lastLowColor;
+        this.mLastLowHeight = lastLowHeight;
         return this;
     }
 
@@ -176,9 +260,37 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
      * @param lastColColor  分割线颜色
      * @return
      */
-    public CustomItemDecoration isDrawLastColAfter(boolean isDrawLastCol, int lastColColor) {
+    public CustomItemDecoration isDrawLastColAfterColor(boolean isDrawLastCol, int lastColColor) {
         this.mIsDrawLastCol = isDrawLastCol;
         this.mLastColColor = lastColColor;
+        return this;
+    }
+
+    /**
+     * 设置在最后一列之后是否需要绘制分割线，并指定颜色和高度
+     *
+     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
+     * @param lastColHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawLastColAfterHeight(boolean isDrawLastCol, int lastColHeight) {
+        this.mIsDrawLastCol = isDrawLastCol;
+        this.mLastColHeight = lastColHeight;
+        return this;
+    }
+
+    /**
+     * 设置在最后一列之后是否需要绘制分割线，并指定颜色和高度
+     *
+     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
+     * @param lastColColor  分割线颜色
+     * @param lastColHeight 分割线高度
+     * @return
+     */
+    public CustomItemDecoration isDrawLastColAfter(boolean isDrawLastCol, int lastColColor, int lastColHeight) {
+        this.mIsDrawLastCol = isDrawLastCol;
+        this.mLastColColor = lastColColor;
+        this.mLastColHeight = lastColHeight;
         return this;
     }
 
