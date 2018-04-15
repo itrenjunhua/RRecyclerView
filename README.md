@@ -1,5 +1,5 @@
 # Android RecyclerView 控件使用
-Android RecyclerView 控件详细使用方法及代码示例。
+Android RecyclerView 控件详细使用方法及代码示例，以及RecyclerView分割线悔之类封装。
 
 ## 更新RecyclerView分割线绘制类
 > 1.增加可以设置水平风向和垂直方方向的分割线的宽度和颜色以及交叉点点的颜色
@@ -42,6 +42,7 @@ Android RecyclerView 控件详细使用方法及代码示例。
 * isDrawLastColAfterHeight(boolean isDrawLastCol, int lastColHeight)
 * isDrawLastColAfter(boolean isDrawLastCol, int lastColColor, int lastColHeight)
 
+---
 ## 更新(新增自定义下拉刷新和加载更多效果)
 扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView
 > 在布局文件中定义
@@ -74,6 +75,8 @@ Android RecyclerView 控件详细使用方法及代码示例。
 > 设置是否还有更多
 
 	recyclerview.setHasMore(true);
+
+---
 ## 主要包含的代码示例
 > 1.使用不同的RecyclerView.LayoutManger实现不同风格的布局(ListView类型、GridView类型、瀑布流类型)  
 > 2.给RecyclerView添加分割线  
