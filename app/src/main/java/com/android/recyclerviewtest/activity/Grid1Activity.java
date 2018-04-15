@@ -47,6 +47,8 @@ public class Grid1Activity extends BaseActivity {
         title.setText("垂直方向网格（item 有点击事件）");
 
         datas = DataUtil.getTextData();
+        datas.add("AA");
+        datas.add("BB");
         setRecyclerView();
     }
 
