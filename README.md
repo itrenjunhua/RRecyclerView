@@ -2,11 +2,11 @@
 Android RecyclerView 控件详细使用方法及代码示例，以及RecyclerView分割线悔之类封装。
 
 ## 更新RecyclerView分割线绘制类
-> 1.增加可以设置水平风向和垂直方方向的分割线的宽度和颜色以及交叉点点的颜色
-> 2.增加动态指定是否需要绘制四周(第一行之前、最后一行之后、第一列之前、最后一列之后)的分割线
-> 3.增加分别指定四周分割线的宽度和颜色以及交叉点的颜色
+> 1.增加可以设置水平风向和垂直方方向的分割线的宽度和颜色以及交叉点点的颜色  
+> 2.增加动态指定是否需要绘制四周(第一行之前、最后一行之后、第一列之前、最后一列之后)的分割线  
+> 3.增加分别指定四周分割线的宽度和颜色以及交叉点的颜色  
 
-**具体方法**
+**具体方法**  
 1.指定水平方向的垂直方向的分割线宽
 * dividerHeight(int dividerHeight)
 * dividerHeight(int horizontalDividerHeight, int verticalDividerHeight)
@@ -44,7 +44,7 @@ Android RecyclerView 控件详细使用方法及代码示例，以及RecyclerVie
 
 ---
 ## 更新(新增自定义下拉刷新和加载更多效果)
-扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView
+扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView  
 > 在布局文件中定义
 
 	<com.android.recyclerviewtest.view.RefreshRecyclerView
