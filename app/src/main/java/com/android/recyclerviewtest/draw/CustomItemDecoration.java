@@ -17,10 +17,12 @@ import android.view.View;
  * 创建时间：20017-04-10    22:06
  * <p/>
  * 描述：给 RecyclerView 绘制分割线<br/><br/>
- * 提示：在 support 包的版本是 25或以上 时，系统提供了一个默认绘制分割线的实现 DividerItemDecoration，但是该实现只针对 LinearLayoutManager 。<br/><br/>
+ * <b>注意：</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ * <b>使用绘制类前必须先调用 {@link RecyclerView#setLayoutManager(RecyclerView.LayoutManager)} 设置 {@link RecyclerView.LayoutManager}，否则可能导致绘制出现问题 <br/><br/>
  * <b>说明：</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  * <b>该类主要兼容 LinearLayoutManager 和 GridLayoutManager 类型的水平和垂直方向的分割线，<br/>
- * 而对于 StaggeredGridLayoutManager，因为有多列时 item 的位置发生变化(按顺序是最后一列的和其他列交换了位置)导致绘制结果不对，需要改进。</b><br/>
+ * 而对于 StaggeredGridLayoutManager，因为有多列时 item 的位置发生变化(按顺序是最后一列的和其他列交换了位置)导致绘制结果不对，需要改进。</b><br/><br/>
+ * 提示：在 support 包的版本是 25或以上 时，系统提供了一个默认绘制分割线的实现 DividerItemDecoration，但是该实现只针对 LinearLayoutManager 。
  * <p/>
  * 修订历史：
  * <p/>
@@ -437,11 +439,16 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             int spanCount = gridLayoutManager.getSpanCount();
+
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
+            int spanIndex = spanSizeLookup.getSpanIndex(itemPosition, spanCount);
+            int spanGroupIndex = spanSizeLookup.getSpanGroupIndex(itemPosition, spanCount);
+
             int orientation = gridLayoutManager.getOrientation();
             if (GridLayoutManager.VERTICAL == orientation) {
-                return itemPosition % spanCount == 0;
+                return spanIndex == 0;
             } else {
-                return (itemPosition + 1) <= spanCount;
+                return spanGroupIndex == 0;
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
@@ -474,11 +481,16 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
             int spanCount = gridLayoutManager.getSpanCount();
+
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
+            int spanGroupIndex = gridLayoutManager.getSpanSizeLookup().getSpanGroupIndex(itemPosition, spanCount);
+            int spanIndex = spanSizeLookup.getSpanIndex(itemPosition, spanCount);
+
             int orientation = gridLayoutManager.getOrientation();
             if (GridLayoutManager.VERTICAL == orientation) {
-                return (itemPosition + 1) <= spanCount;
+                return spanGroupIndex == 0;
             } else {
-                return itemPosition % spanCount == 0;
+                return spanIndex == 0;
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
@@ -511,14 +523,17 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     private boolean isLastCol(RecyclerView.LayoutManager layoutManager, int childCount, int itemPosition) {
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
             int spanCount = gridLayoutManager.getSpanCount();
+            int spanIndex = spanSizeLookup.getSpanIndex(itemPosition, spanCount);
+            int spanSize = spanSizeLookup.getSpanSize(itemPosition);
+
             int orientation = gridLayoutManager.getOrientation();
             if (GridLayoutManager.VERTICAL == orientation) {
-                return (itemPosition + 1) % spanCount == 0;
+                return spanIndex + spanSize == spanCount;
             } else {
-                int yu = childCount % spanCount;
-                if (yu == 0) return itemPosition >= (childCount - spanCount);
-                else return itemPosition >= (childCount - yu);
+                return (childCount - itemPosition) / (spanCount * 1.0f) <= 1;
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
@@ -554,14 +569,16 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
         // 注意：GridLayoutManager extends LinearLayoutManager 使用 instanceof 一定要先判断 GridLayoutManager
         if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
-            int orientation = gridLayoutManager.getOrientation();
+            GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
             int spanCount = gridLayoutManager.getSpanCount();
+            int spanIndex = spanSizeLookup.getSpanIndex(itemPosition, spanCount);
+            int spanSize = spanSizeLookup.getSpanSize(itemPosition);
+
+            int orientation = gridLayoutManager.getOrientation();
             if (GridLayoutManager.VERTICAL == orientation) {
-                int yu = childCount % spanCount;
-                if (yu == 0) return itemPosition >= (childCount - spanCount);
-                else return itemPosition >= (childCount - yu);
+                return (childCount - itemPosition) / (spanCount * 1.0f) <= 1;
             } else {
-                return (itemPosition + 1) % spanCount == 0;
+                return spanIndex + spanSize == spanCount;
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;

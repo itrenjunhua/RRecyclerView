@@ -47,21 +47,37 @@ public class Grid2Activity extends BaseActivity {
         title.setText("水平方向网格（item 有长按事件）");
 
         datas = DataUtil.getTextData();
+        datas.add(0,"aa");
+        datas.add("AA");
+        datas.add("BB");
         setRecyclerView();
     }
 
     private void setRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3, GridLayoutManager.HORIZONTAL, false);
+
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position == 0)
+                    return 2;
+                return 1;
+            }
+        });
         ListGridAdapter adapter = new ListGridAdapter(this, datas, GridLayoutManager.HORIZONTAL);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
         // 增加分割线
-        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources().getDimension(R.dimen.line_height))
-                .isDrawFirstLowBefore(true)
-                .isDrawFirstColBefore(true)
-                .isDrawLastLowAfter(true)
-                .isDrawLastColAfter(true)
+        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40,(int) getResources().getDimension(R.dimen.line_height))
+                .dividerColor(getResources().getColor(R.color.colorH),getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
+                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV),getResources().getColor(R.color.colorP))
+                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow),50)
+                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol),28)
+                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow),20)
+                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
 
         // 给 item 添加长按事件

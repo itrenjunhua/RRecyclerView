@@ -47,13 +47,23 @@ public class Grid1Activity extends BaseActivity {
         title.setText("垂直方向网格（item 有点击事件）");
 
         datas = DataUtil.getTextData();
+        datas.add(0,"aa");
         datas.add("AA");
         datas.add("BB");
         setRecyclerView();
     }
 
     private void setRecyclerView() {
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if(position == 0)
+                    return 3;
+                return 1;
+            }
+        });
+
         final ListGridAdapter adapter = new ListGridAdapter(this, datas, GridLayoutManager.VERTICAL);
 
         recyclerView.setAdapter(adapter);
