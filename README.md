@@ -42,6 +42,8 @@ Android RecyclerView 控件详细使用方法及代码示例，以及RecyclerVie
 * isDrawLastColAfterHeight(boolean isDrawLastCol, int lastColHeight)
 * isDrawLastColAfter(boolean isDrawLastCol, int lastColColor, int lastColHeight)
 
+制定边界交叉点颜色
+* borderCrossPointColor(int borderCrossPointColor)
 ---
 ## 更新(新增自定义下拉刷新和加载更多效果)
 扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView  
