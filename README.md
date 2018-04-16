@@ -6,6 +6,8 @@ Android RecyclerView 控件详细使用方法及代码示例，以及RecyclerVie
 > 2.增加动态指定是否需要绘制四周(第一行之前、最后一行之后、第一列之前、最后一列之后)的分割线  
 > 3.增加分别指定四周分割线的宽度和颜色以及交叉点的颜色  
 
+![RecyclerView效果图目录](https://github.com/itrenjunhua/RecyclerViewTest/raw/master/images/draw_img.png)
+
 **具体方法**  
 1.指定水平方向的垂直方向的分割线宽
 * dividerHeight(int dividerHeight)
