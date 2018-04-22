@@ -372,27 +372,35 @@ public class RefreshRecyclerView extends RecyclerView {
      * 刷新完成，恢复默认状态
      */
     public void finishRefreshing() {
-        if (refreshWrapAdapter != null)
-            refreshWrapAdapter.notifyDataSetChanged();
-
-        //headerView.setPadding(0, -headerViewHeight, 0, 0);
+        // headerView.setPadding(0, -headerViewHeight, 0, 0);
         startMoveAnimation(0, -headerViewHeight);
         mHeaderCurrentState = DOWN_REFRESH_STATE;
         headerMsg.setText(DOWN_REFRESH);
         headerPb.setVisibility(INVISIBLE);
         arrowView.setVisibility(VISIBLE);
+
+        updatePage();
     }
 
     /**
      * 加载更多完成，恢复默认状态
      */
     public void finishLoading() {
-        if (refreshWrapAdapter != null)
-            refreshWrapAdapter.notifyDataSetChanged();
-
         isLoading = false;
         footerView.setPadding(0, -footerViewHeight, 0, 0);
         footerMsg.setText(LOADING);
+
+        updatePage();
+    }
+
+    /**
+     * 当调用 【{@link #setCanRefresh(boolean)} 方法并且参数为 {@code false} ，即 {@code setCanRefresh(false)}】 或者
+     * 调用 【{@link #setCanLoadMore(boolean)} 方法并且参数为 {@code false} ，即 {@code setCanLoadMore(false)}】时，
+     * 也就是不使用该控件的刷新和加载更多，而是使用其他的形式刷新或加载导致界面数据刷新失败时调用该方法刷新页面。
+     */
+    public void updatePage() {
+        if (refreshWrapAdapter != null)
+            refreshWrapAdapter.notifyDataSetChanged();
     }
 
     /************************* 刷新和加载更多监听设置 ***************************/
