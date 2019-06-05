@@ -6,10 +6,9 @@ import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
-import com.android.recyclerviewtest.adapter.cell.GridTextCell;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,18 +70,13 @@ public class Grid3Activity extends BaseActivity {
         });
 
 
-        List<GridTextCell> cells = new ArrayList<>();
         List<String> textData = DataUtil.getTextData();
         textData.add(0, "aa");
         textData.add("AA");
         textData.add("BB");
-        for (String data : textData) {
-            GridTextCell gridTextCell = new GridTextCell(data);
-            cells.add(gridTextCell);
-        }
-        RecyclerAdapter adapter = new RecyclerAdapter(cells);
-        recyclerView.setAdapter(adapter);
+        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createGridTextCell(textData));
 
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
 }

@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
-import com.android.recyclerviewtest.adapter.MultipleItemAdapter;
+import com.android.recyclerviewtest.adapter.IRecyclerCell;
+import com.android.recyclerviewtest.adapter.RecyclerAdapter;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
 
@@ -30,7 +32,6 @@ import java.util.Random;
 public class MultipleItemActivity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<String> datas;
 
     @Override
     protected int getLayoutId() {
@@ -44,13 +45,12 @@ public class MultipleItemActivity extends BaseActivity {
 
         title.setText("使用多种 item 类型（View 点击事件）");
 
-        initDta();
         setRecyclerView();
     }
 
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        MultipleItemAdapter adapter = new MultipleItemAdapter(this, datas);
+        RecyclerAdapter adapter = new RecyclerAdapter(createCells(initDta()));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -60,16 +60,29 @@ public class MultipleItemActivity extends BaseActivity {
                 .dividerColor(getResources().getColor(R.color.line_bg2)));
     }
 
+    private List createCells(List<String> dataList) {
+        List<IRecyclerCell> cells = new ArrayList<>();
+        for (String s : dataList) {
+            if (s.length() > 1) {
+                cells.add(CellFactory.createVerticalImageCell(s, glideUtils));
+            } else {
+                cells.add(CellFactory.createVerticalTextCell(s));
+            }
+        }
+        return cells;
+    }
+
     /**
      * 随机生成数据
      */
-    private void initDta() {
-        datas = new ArrayList<>();
+    private List<String> initDta() {
+        List<String> dataList = new ArrayList<>();
         Random random = new Random();
         for (int i = 'A', j = 0; i <= 'Z'; i++, j++) {
             int anInt = random.nextInt(2) + 1;
-            if (anInt % 2 == 0) datas.add((char) i + "");
-            else datas.add(DataUtil.getImageArray()[j]);
+            if (anInt % 2 == 0) dataList.add((char) i + "");
+            else dataList.add(DataUtil.getImageArray()[j]);
         }
+        return dataList;
     }
 }

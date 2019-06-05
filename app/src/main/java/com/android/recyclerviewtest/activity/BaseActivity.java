@@ -37,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         // 可以先拦截处理公共的点击事件，然后子类重写之后处理自己的点击事件
-        handerClick(v, v.getId());
+        handlerClick(v, v.getId());
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @param view
      * @param vId
      */
-    protected void handerClick(View view, int vId) {
+    protected void handlerClick(View view, int vId) {
 
     }
 

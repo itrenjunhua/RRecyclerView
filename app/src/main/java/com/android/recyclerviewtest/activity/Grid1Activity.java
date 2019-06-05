@@ -6,11 +6,10 @@ import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
-import com.android.recyclerviewtest.adapter.cell.VerticalTextCell;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,19 +56,13 @@ public class Grid1Activity extends BaseActivity {
             }
         });
 
-        List<VerticalTextCell> cells = new ArrayList<>();
         List<String> textData = DataUtil.getTextData();
         textData.add(0, "aa");
         textData.add("AA");
         textData.add("BB");
-        for (String data : textData) {
-            VerticalTextCell verticalTextCell = new VerticalTextCell(data);
-            cells.add(verticalTextCell);
-        }
+        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createVerticalTextCell(textData));
 
-        RecyclerAdapter adapter = new RecyclerAdapter(cells);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40, (int) getResources().getDimension(R.dimen.line_height))

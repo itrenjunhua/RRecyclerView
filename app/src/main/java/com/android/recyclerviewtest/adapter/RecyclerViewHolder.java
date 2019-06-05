@@ -96,7 +96,7 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    protected <T extends View> T getView(@IdRes int vId) {
+    public  <T extends View> T getView(@IdRes int vId) {
         View view = itemViews.get(vId);
         if (view == null) {
             view = getItemView().findViewById(vId);

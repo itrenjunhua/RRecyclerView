@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void handerClick(View view, int vId) {
+    protected void handlerClick(View view, int vId) {
         Intent intent;
         switch (vId) {
             case R.id.bt1:

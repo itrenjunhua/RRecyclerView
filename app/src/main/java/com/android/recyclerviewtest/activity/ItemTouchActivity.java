@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.adapter.cell.VerticalTextCell;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
 import com.android.recyclerviewtest.utils.RLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -194,14 +194,9 @@ public class ItemTouchActivity extends BaseActivity {
 
         layoutManager = new LinearLayoutManager(this);
         List<String> textData = DataUtil.getTextData();
-        cells = new ArrayList<>();
-        for (String data : textData) {
-            // VerticalTextCell verticalTextCell = new VerticalTextCell(data);
-            VerticalTextCell verticalTextCell = new VerticalTextCell(data, recyclerView, itemTouchHelper);
-            cells.add(verticalTextCell);
-        }
-
+        cells = CellFactory.createVerticalTextCell(textData);
         adapter = new RecyclerAdapter(cells);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 

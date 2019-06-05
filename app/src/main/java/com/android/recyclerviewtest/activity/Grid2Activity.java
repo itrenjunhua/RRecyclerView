@@ -6,11 +6,10 @@ import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
-import com.android.recyclerviewtest.adapter.cell.HorizontalTextCell;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,19 +57,13 @@ public class Grid2Activity extends BaseActivity {
             }
         });
 
-        List<HorizontalTextCell> cells = new ArrayList<>();
         List<String> textData = DataUtil.getTextData();
         textData.add(0, "aa");
         textData.add("AA");
         textData.add("BB");
-        for (String data : textData) {
-            HorizontalTextCell horizontalTextCell = new HorizontalTextCell(data);
-            cells.add(horizontalTextCell);
-        }
+        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createHorizontalTextCell(textData));
 
-        RecyclerAdapter adapter = new RecyclerAdapter(cells);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setLayoutManager(layoutManager);
 
         // 增加分割线

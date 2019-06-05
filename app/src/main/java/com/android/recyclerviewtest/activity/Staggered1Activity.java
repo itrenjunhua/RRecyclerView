@@ -4,17 +4,13 @@ package com.android.recyclerviewtest.activity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
-import com.android.recyclerviewtest.adapter.SingleTypeAdapter;
-import com.android.recyclerviewtest.adapter.Staggered1Adapter;
+import com.android.recyclerviewtest.adapter.RecyclerAdapter;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
+import com.android.recyclerviewtest.adapter.cell.StaggeredVerticalImageCell;
 import com.android.recyclerviewtest.data.DataUtil;
-import com.android.recyclerviewtest.utils.RLog;
-import com.android.recyclerviewtest.utils.ToastUtil;
-
-import java.util.List;
 
 /**
  * ======================================================================
@@ -66,7 +62,6 @@ import java.util.List;
 public class Staggered1Activity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<String> datas;
 
     @Override
     protected int getLayoutId() {
@@ -80,14 +75,13 @@ public class Staggered1Activity extends BaseActivity {
 
         title.setText("垂直方向瀑布流(点击 item 删除图片)");
 
-        datas = DataUtil.getImageList();
         setRecyclerView();
     }
 
     private void setRecyclerView() {
-        final Staggered1Adapter adapter = new Staggered1Adapter(this, datas, R.layout.item_staggred_1);
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerAdapter<StaggeredVerticalImageCell> adapter = new RecyclerAdapter<>(CellFactory.createStaggeredVerticalImageCell(DataUtil.getImageList(), glideUtils));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -103,25 +97,6 @@ public class Staggered1Activity extends BaseActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 layoutManager.invalidateSpanAssignments();
-            }
-        });
-
-        // 设置点击事件
-        adapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<String>() {
-            @Override
-            public void onItemClick(View itemView, int position, List<String> datas, String itemData) {
-                RLog.i("剩余数据个数：" + datas.size() + "; 删除位置：" + position);
-                ToastUtil.showSingleToast(Staggered1Activity.this, "删除位置：" + position);
-                datas.remove(position);
-
-                // 刷新全部，图片会发生跳动
-                // adapter.notifyDataSetChanged();
-
-                // 只刷新指定位置
-                adapter.notifyItemRemoved(position);  // 指定位置删除数据
-                adapter.notifyItemRangeChanged(position, datas.size() - position); // 一定要重新排列位置
-                // adapter.notifyItemChanged(position);  // 指定位置改变数据
-                // adapter.notifyItemInserted(position); // 指定位置新增数据
             }
         });
     }

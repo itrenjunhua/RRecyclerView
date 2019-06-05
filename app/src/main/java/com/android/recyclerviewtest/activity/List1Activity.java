@@ -2,16 +2,13 @@ package com.android.recyclerviewtest.activity;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
-import com.android.recyclerviewtest.adapter.ListGridAdapter;
-import com.android.recyclerviewtest.adapter.SingleTypeAdapter;
+import com.android.recyclerviewtest.adapter.RecyclerAdapter;
+import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
-import com.android.recyclerviewtest.utils.RLog;
-import com.android.recyclerviewtest.utils.ToastUtil;
 
 import java.util.List;
 
@@ -32,7 +29,6 @@ import java.util.List;
 public class List1Activity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<String> datas;
 
     @Override
     protected int getLayoutId() {
@@ -46,27 +42,18 @@ public class List1Activity extends BaseActivity {
 
         title.setText("垂直方向列表（item 有点击事件）");
 
-        datas = DataUtil.getTextData();
         setRecyclerView();
     }
 
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        ListGridAdapter adapter = new ListGridAdapter(this, datas, LinearLayoutManager.VERTICAL);
+        List<String> textData = DataUtil.getTextData();
+        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createVerticalTextCell(textData));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.line_bg)));
-
-        // 给 item 添加点击事件
-        adapter.setOnItemClickListener(new SingleTypeAdapter.OnItemClickListener<String>() {
-            @Override
-            public void onItemClick(View itemView, int position, List<String> datas, String itemData) {
-                RLog.i("点击 位置:" + position + "；数据:" + itemData);
-                ToastUtil.showSingleToast(List1Activity.this, "点击 位置:" + position + "；数据:" + itemData);
-            }
-        });
     }
 }

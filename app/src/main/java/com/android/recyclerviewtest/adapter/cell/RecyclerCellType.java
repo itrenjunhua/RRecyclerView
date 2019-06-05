@@ -15,7 +15,10 @@ package com.android.recyclerviewtest.adapter.cell;
  * ======================================================================
  */
 public interface RecyclerCellType {
-    int HORIZONTAL_TEXT_CELL = 0;
-    int VERTICAL_TEXT_CELL = 1;
-    int GRID_TEXT_CELL = 2;
+    int VERTICAL_TEXT_CELL = 0;
+    int HORIZONTAL_TEXT_CELL = 1;
+    int VERTICAL_IMAGE_CELL = 2;
+    int S_VERTICAL_IMAGE_CELL = 3;
+    int S_HORIZONTAL_IMAGE_CELL = 4;
+    int GRID_TEXT_CELL = 5;
 }

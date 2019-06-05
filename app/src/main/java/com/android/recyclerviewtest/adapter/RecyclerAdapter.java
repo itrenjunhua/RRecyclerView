@@ -118,32 +118,32 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
     public void addData(@NonNull List<T> dataList) {
         if (!isEmpty(dataList)) {
             this.cellList.addAll(dataList);
-            // notifyItemRangeChanged(this.cellList.size() - dataList.size(), this.cellList.size());
-            notifyItemRangeInserted(this.cellList.size(), dataList.size());
+            // notifyItemRangeInserted(this.cellList.size(), dataList.size());
+            notifyDataSetChanged();
         }
     }
 
     public void addData(int index, @NonNull List<T> dataList) {
         if (!isEmpty(dataList)) {
             this.cellList.addAll(index, dataList);
-            // notifyItemRangeChanged(index, index + dataList.size());
-            notifyItemRangeChanged(index, dataList.size());
+            // notifyItemRangeInserted(index, dataList.size());
+            notifyDataSetChanged();
         }
     }
 
     public void addData(@NonNull T data) {
         if (!isEmpty(data)) {
             this.cellList.add(data);
-            // notifyItemChanged(this.cellList.indexOf(data));
-            notifyItemInserted(this.cellList.indexOf(data));
+            // notifyItemInserted(this.cellList.indexOf(data));
+            notifyDataSetChanged();
         }
     }
 
     public void addData(int index, @NonNull T data) {
         if (!isEmpty(data)) {
             this.cellList.add(index, data);
-            // notifyItemChanged(index);
-            notifyItemInserted(index);
+            // notifyItemInserted(index);
+            notifyDataSetChanged();
         }
     }
 
@@ -154,8 +154,8 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
 
     public void remove(int index) {
         this.cellList.remove(index);
-        // notifyItemChanged(index);
-        notifyItemRemoved(index);
+        // notifyItemRemoved(index);
+        notifyDataSetChanged();
     }
 
     public void remove(int start, int count) {
@@ -163,8 +163,8 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
             return;
         }
         this.cellList.subList(start, start + count).clear();
-        // notifyItemRangeChanged(start,count);
-        notifyItemRangeRemoved(start, count);
+        // notifyItemRangeRemoved(start, count);
+        notifyDataSetChanged();
     }
 
     public void clear() {
