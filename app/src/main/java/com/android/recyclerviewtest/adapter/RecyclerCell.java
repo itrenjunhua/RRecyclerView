@@ -1,5 +1,6 @@
 package com.android.recyclerviewtest.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -18,7 +19,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public abstract class RecyclerCell<T> implements IRecyclerCell {
+public abstract class RecyclerCell<T> implements IRecyclerCell<T> {
     /**
      * item 数据
      */
@@ -29,31 +30,13 @@ public abstract class RecyclerCell<T> implements IRecyclerCell {
     }
 
     @Override
-    public void onAttachedToWindow(@NonNull RecyclerViewHolder holder) {
-
+    public T getItemData() {
+        return itemData;
     }
 
     @Override
-    public void addEventAndBindHolder(@NonNull RecyclerViewHolder holder, int position) {
-        final int tmpPosition = position;
-        holder.setOnItemViewClickListener(new RecyclerViewHolder.OnItemViewClickListener() {
-            @Override
-            public void onItemViewClick(View itemView) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.<T>onItemClick(itemView, tmpPosition, itemData);
-                }
-            }
-        });
-        holder.setOnItemViewLongClickListener(new RecyclerViewHolder.OnItemViewLongClickListener() {
-            @Override
-            public boolean onItemLongViewClick(View itemView) {
-                if (onItemLongClickListener != null) {
-                    return onItemLongClickListener.<T>onItemLongClick(itemView, tmpPosition, itemData);
-                }
-                return false;
-            }
-        });
-        onBindViewHolder(holder, position);
+    public void onAttachedToWindow(@NonNull RecyclerViewHolder holder) {
+
     }
 
     /**
@@ -66,18 +49,13 @@ public abstract class RecyclerCell<T> implements IRecyclerCell {
 
     }
 
-    /* ====================== item click listener event ======================= */
-    private OnItemClickListener onItemClickListener;
-    private OnItemLongClickListener onItemLongClickListener;
-
     @Override
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public void onItemClick(@NonNull Context context, @NonNull View itemView, int position, T itemData) {
+
     }
 
     @Override
-    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
-        this.onItemLongClickListener = onItemLongClickListener;
+    public boolean onItemLongClick(@NonNull Context context, @NonNull View itemView, int position, T itemData) {
+        return false;
     }
-
 }

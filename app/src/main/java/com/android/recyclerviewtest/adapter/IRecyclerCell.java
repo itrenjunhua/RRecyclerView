@@ -20,7 +20,8 @@ import android.view.ViewGroup;
  * <p>
  * ======================================================================
  */
-public interface IRecyclerCell {
+public interface IRecyclerCell<T> {
+
     void onAttachedToWindow(@NonNull RecyclerViewHolder holder);
 
     /**
@@ -32,6 +33,8 @@ public interface IRecyclerCell {
      */
     int getRecyclerItemType();
 
+    T getItemData();
+
     /**
      * 创建 ViewHolder
      *
@@ -41,36 +44,13 @@ public interface IRecyclerCell {
     RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType);
 
     /**
-     * 给 {@link IRecyclerCell} 增加相关事件，并调用 {@link #onBindViewHolder(RecyclerViewHolder, int)} 方法
-     */
-    void addEventAndBindHolder(@NonNull RecyclerViewHolder holder, int position);
-
-    /**
      * 绑定 holder，{@link RecyclerCell#itemData} 为 item 数据
      */
-    void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position);
+    void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, T itemData);
 
     void onDetachedFromWindow(@NonNull RecyclerViewHolder holder);
 
+    void onItemClick(@NonNull Context context, @NonNull View itemView, int position, T itemData);
 
-    /* ====================== item click listener event ======================= */
-
-    void setOnItemClickListener(OnItemClickListener onItemClickListener);
-
-    void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener);
-
-    /**
-     * {@link IRecyclerCell} 单击监听
-     */
-    interface OnItemClickListener {
-        <D> void onItemClick(View itemView, int position, D itemData);
-    }
-
-
-    /**
-     * {@link IRecyclerCell} 长按监听
-     */
-    interface OnItemLongClickListener {
-        <D> boolean onItemLongClick(View itemView, int position, D itemData);
-    }
+    boolean onItemLongClick(@NonNull Context context, @NonNull View itemView, int position, T itemData);
 }

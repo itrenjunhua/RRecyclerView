@@ -2,6 +2,7 @@ package com.android.recyclerviewtest.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -56,7 +57,21 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        cellList.get(position).addEventAndBindHolder(holder, position);
+        final int tmpPosition = position;
+        final T cell = this.cellList.get(position);
+        holder.setOnItemViewClickListener(new RecyclerViewHolder.OnItemViewClickListener() {
+            @Override
+            public void onItemViewClick(View itemView) {
+                cell.onItemClick(itemView.getContext(), itemView, tmpPosition, cell.getItemData());
+            }
+        });
+        holder.setOnItemViewLongClickListener(new RecyclerViewHolder.OnItemViewLongClickListener() {
+            @Override
+            public boolean onItemLongViewClick(View itemView) {
+                return cell.onItemLongClick(itemView.getContext(), itemView, tmpPosition, cell.getItemData());
+            }
+        });
+        cellList.get(position).onBindViewHolder(holder, position, cell.getItemData());
     }
 
     @Override

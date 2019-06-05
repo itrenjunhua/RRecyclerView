@@ -1,13 +1,17 @@
 package com.android.recyclerviewtest.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +53,10 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
                 return false;
             }
         });
+    }
+
+    public RecyclerViewHolder(@NonNull Context context, @NonNull ViewGroup parent, @LayoutRes int layoutId) {
+        this(LayoutInflater.from(context).inflate(layoutId, parent, false));
     }
 
     public View getItemView() {
