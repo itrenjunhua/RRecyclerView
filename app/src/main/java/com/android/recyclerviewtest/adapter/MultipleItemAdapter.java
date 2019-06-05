@@ -60,10 +60,10 @@ public class MultipleItemAdapter extends MultipleTypeAdapter<String> {
     @Override
     public void setData(CustomViewHolder holder, final String itemData, int position) {
         if (holder instanceof TextViewHolder) {
-            holder.setText(R.id.textview, itemData);
+            holder.setText(R.id.text_view, itemData);
 
             // 给控件添加点击事件
-            holder.clickView(R.id.textview)
+            holder.clickView(R.id.text_view)
                     .setOnClickListener(new CustomViewHolder.OnClickListener() {
                         @Override
                         public void onClick(View view, int vId) {

@@ -50,12 +50,12 @@ public abstract class RecyclerCell<T> implements IRecyclerCell<T> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull View itemView, int position, T itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, T itemData) {
 
     }
 
     @Override
-    public boolean onItemLongClick(@NonNull Context context, @NonNull View itemView, int position, T itemData) {
+    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, T itemData) {
         return false;
     }
 }

@@ -50,7 +50,7 @@ public interface IRecyclerCell<T> {
 
     void onDetachedFromWindow(@NonNull RecyclerViewHolder holder);
 
-    void onItemClick(@NonNull Context context, @NonNull View itemView, int position, T itemData);
+    void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, T itemData);
 
-    boolean onItemLongClick(@NonNull Context context, @NonNull View itemView, int position, T itemData);
+    boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, T itemData);
 }

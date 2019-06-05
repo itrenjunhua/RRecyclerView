@@ -7,17 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.recyclerviewtest.R;
-import com.android.recyclerviewtest.adapter.ListGridAdapter;
-import com.android.recyclerviewtest.adapter.SingleTypeAdapter;
+import com.android.recyclerviewtest.adapter.RecyclerAdapter;
+import com.android.recyclerviewtest.adapter.cell.VerticalTextCell;
 import com.android.recyclerviewtest.data.DataUtil;
 import com.android.recyclerviewtest.draw.CustomItemDecoration;
 import com.android.recyclerviewtest.utils.RLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,9 +39,9 @@ import java.util.List;
 public class ItemTouchActivity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<String> datas;
+    private List<VerticalTextCell> cells;
 
-    private ListGridAdapter adapter;
+    private RecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
     private int screenWidth;
 
@@ -83,8 +83,7 @@ public class ItemTouchActivity extends BaseActivity {
             int srcPosition = viewHolder.getAdapterPosition();
             int targetPosition = target.getAdapterPosition();
             // 交换两个位置的数据
-            List<String> datas = adapter.getDatas();
-            changePosition(srcPosition, targetPosition, datas);
+            changePosition(srcPosition, targetPosition, cells);
             // 更新Adapter
             adapter.notifyItemMoved(srcPosition, targetPosition);
             return true;
@@ -93,13 +92,13 @@ public class ItemTouchActivity extends BaseActivity {
         /**
          * List集合交换两个位置的数据
          */
-        private void changePosition(int srcPosition, int targetPosition, List<String> datas) {
-            String srcData = datas.get(srcPosition);
-            String targetData = datas.get(targetPosition);
-            datas.add(srcPosition, targetData);
-            datas.add(targetPosition + 1, srcData);
-            datas.remove(srcPosition + 1);
-            datas.remove(targetPosition + 1);
+        private void changePosition(int srcPosition, int targetPosition, List<VerticalTextCell> cells) {
+            VerticalTextCell srcData = cells.get(srcPosition);
+            VerticalTextCell targetData = cells.get(targetPosition);
+            cells.add(srcPosition, targetData);
+            cells.add(targetPosition + 1, srcData);
+            cells.remove(srcPosition + 1);
+            cells.remove(targetPosition + 1);
         }
 
         /**
@@ -111,12 +110,11 @@ public class ItemTouchActivity extends BaseActivity {
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             // 获取位置
             int adapterPosition = viewHolder.getAdapterPosition();
-            List<String> datas = adapter.getDatas();
             // 移除数据
-            datas.remove(adapterPosition);
+            cells.remove(adapterPosition);
             // 更新Adapter数据，一定要调用 notifyItemRangeChanged() 方法，否则角标会错乱
             adapter.notifyItemRemoved(adapterPosition);
-            adapter.notifyItemRangeChanged(adapterPosition, datas.size() - adapterPosition);
+            adapter.notifyItemRangeChanged(adapterPosition, cells.size() - adapterPosition);
 
             RLog.i("删除 item .......");
         }
@@ -187,33 +185,30 @@ public class ItemTouchActivity extends BaseActivity {
         title.setText("item 长按拖拽和侧滑删除");
 
         screenWidth();
-        datas = DataUtil.getTextData();
         setRecyclerView();
     }
 
     private void setRecyclerView() {
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new ListGridAdapter(this, datas, LinearLayoutManager.VERTICAL);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-
         // 将 RecyclerView 和 ItemTouchHelper 绑定到一起
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        layoutManager = new LinearLayoutManager(this);
+        List<String> textData = DataUtil.getTextData();
+        cells = new ArrayList<>();
+        for (String data : textData) {
+            VerticalTextCell verticalTextCell = new VerticalTextCell(data);
+            cells.add(verticalTextCell);
+        }
+
+        adapter = new RecyclerAdapter(cells);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
 
         // 增加分割线
         recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources()
                 .getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.line_bg)));
 
-        adapter.setOnItemLongClickListener(new SingleTypeAdapter.OnItemLongClickListener<String>() {
-            @Override
-            public boolean onItemLongClick(View itemView, int position, List<String> datas, String itemData) {
-                // 长按开始拖拽
-                itemTouchHelper.startDrag(recyclerView.getChildViewHolder(itemView));
-                return true;
-            }
-        });
     }
 
     /**

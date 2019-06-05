@@ -52,6 +52,6 @@ public class ListGridAdapter extends MultipleTypeAdapter<String> {
 
     @Override
     public void setData(final CustomViewHolder holder, final String itemData, final int position) {
-        holder.setText(R.id.textview, itemData);
+        holder.setText(R.id.text_view, itemData);
     }
 }
