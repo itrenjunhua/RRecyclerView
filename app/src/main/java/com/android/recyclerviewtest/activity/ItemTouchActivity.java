@@ -83,7 +83,7 @@ public class ItemTouchActivity extends BaseActivity {
             int srcPosition = viewHolder.getAdapterPosition();
             int targetPosition = target.getAdapterPosition();
             // 交换两个位置的数据
-            changePosition(srcPosition, targetPosition, cells);
+            changePosition(srcPosition, targetPosition, adapter.getCellList());
             // 更新Adapter
             adapter.notifyItemMoved(srcPosition, targetPosition);
             return true;
@@ -111,10 +111,10 @@ public class ItemTouchActivity extends BaseActivity {
             // 获取位置
             int adapterPosition = viewHolder.getAdapterPosition();
             // 移除数据
-            cells.remove(adapterPosition);
+            adapter.getCellList().remove(adapterPosition);
             // 更新Adapter数据，一定要调用 notifyItemRangeChanged() 方法，否则角标会错乱
             adapter.notifyItemRemoved(adapterPosition);
-            adapter.notifyItemRangeChanged(adapterPosition, cells.size() - adapterPosition);
+            adapter.notifyItemRangeChanged(adapterPosition, adapter.getCellList().size() - adapterPosition);
 
             RLog.i("删除 item .......");
         }
@@ -196,7 +196,8 @@ public class ItemTouchActivity extends BaseActivity {
         List<String> textData = DataUtil.getTextData();
         cells = new ArrayList<>();
         for (String data : textData) {
-            VerticalTextCell verticalTextCell = new VerticalTextCell(data);
+            // VerticalTextCell verticalTextCell = new VerticalTextCell(data);
+            VerticalTextCell verticalTextCell = new VerticalTextCell(data, recyclerView, itemTouchHelper);
             cells.add(verticalTextCell);
         }
 

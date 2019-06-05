@@ -39,6 +39,10 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
             this.cellList.addAll(cellList);
     }
 
+    public List<T> getCellList() {
+        return cellList;
+    }
+
     @Override
     public int getItemViewType(int position) {
         return cellList.get(position).getRecyclerItemType();
