@@ -103,11 +103,22 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
 
 
     private boolean isEmpty(Object obj) {
-        return obj == null;
+        if (obj == null)
+            return true;
+        if (obj instanceof List) {
+            List list = (List) obj;
+            return list.isEmpty();
+        }
+        return false;
     }
 
-    /* ======================== add or remove IRecyclerCell ======================== */
+    /* ======================== set/add/modify/remove IRecyclerCell ======================== */
 
+    /* -------------------------  set IRecyclerCell ------------------------- */
+
+    /**
+     * 设置数据，将原来的数据完全替换并刷新列表
+     */
     public void setData(@NonNull List<T> dataList) {
         this.cellList.clear();
         if (!isEmpty(dataList))
@@ -115,58 +126,272 @@ public class RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapt
         notifyDataSetChanged();
     }
 
-    public void addData(@NonNull List<T> dataList) {
+    /* -------------------------  add IRecyclerCell ------------------------- */
+
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void addAndNotifyAll(@NonNull List<T> dataList) {
+        add(dataList, true);
+    }
+
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void addAndNotifyItem(@NonNull List<T> dataList) {
+        add(dataList, false);
+    }
+
+    /**
+     * 增加数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void add(@NonNull List<T> dataList, boolean refreshAllItem) {
         if (!isEmpty(dataList)) {
-            this.cellList.addAll(dataList);
-            // notifyItemRangeInserted(this.cellList.size(), dataList.size());
-            notifyDataSetChanged();
+            if (refreshAllItem) {
+                this.cellList.addAll(dataList);
+                notifyDataSetChanged();
+            } else {
+                int size = this.cellList.size();
+                this.cellList.addAll(dataList);
+                notifyItemRangeInserted(size, dataList.size());
+            }
         }
     }
 
-    public void addData(int index, @NonNull List<T> dataList) {
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void addAndNotifyAll(int index, @NonNull List<T> dataList) {
+        add(index, dataList, true);
+    }
+
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void addAndNotifyItem(int index, @NonNull List<T> dataList) {
+        add(index, dataList, false);
+    }
+
+    /**
+     * 增加数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void add(int index, @NonNull List<T> dataList, boolean refreshAllItem) {
         if (!isEmpty(dataList)) {
-            this.cellList.addAll(index, dataList);
-            // notifyItemRangeInserted(index, dataList.size());
-            notifyDataSetChanged();
+            if (refreshAllItem) {
+                this.cellList.addAll(index, dataList);
+                notifyDataSetChanged();
+            } else {
+                this.cellList.addAll(index, dataList);
+                notifyItemRangeInserted(index, dataList.size());
+            }
         }
     }
 
-    public void addData(@NonNull T data) {
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void addAndNotifyAll(@NonNull T data) {
+        add(data, true);
+    }
+
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void addAndNotifyItem(@NonNull T data) {
+        add(data, false);
+    }
+
+    /**
+     * 增加数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void add(@NonNull T data, boolean refreshAllItem) {
         if (!isEmpty(data)) {
-            this.cellList.add(data);
-            // notifyItemInserted(this.cellList.indexOf(data));
-            notifyDataSetChanged();
+            if (refreshAllItem) {
+                this.cellList.add(data);
+                notifyDataSetChanged();
+            } else {
+                this.cellList.add(data);
+                notifyItemInserted(this.cellList.indexOf(data));
+            }
         }
     }
 
-    public void addData(int index, @NonNull T data) {
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void addAndNotifyAll(int index, @NonNull T data) {
+        add(index, data, true);
+    }
+
+    /**
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void addAndNotifyItem(int index, @NonNull T data) {
+        add(index, data, false);
+    }
+
+    /**
+     * 增加数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void add(int index, @NonNull T data, boolean refreshAllItem) {
         if (!isEmpty(data)) {
-            this.cellList.add(index, data);
-            // notifyItemInserted(index);
-            notifyDataSetChanged();
+            if (refreshAllItem) {
+                this.cellList.add(index, data);
+                notifyDataSetChanged();
+            } else {
+                this.cellList.add(index, data);
+                notifyItemInserted(index);
+            }
         }
     }
 
-    public void remove(@NonNull T data) {
+    /* -------------------------  modify IRecyclerCell ------------------------- */
+
+    public void modifyAndNotifyAll(int index, @NonNull T data) {
+        modify(index, data, true);
+    }
+
+    public void modifyAndNotifyItem(int index, @NonNull T data) {
+        modify(index, data, false);
+    }
+
+    /**
+     * 修改数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemChanged(int)} 方法刷新列表
+     */
+    public void modify(int index, @NonNull T data, boolean refreshAllItem) {
+        if (index < 0 || index >= this.cellList.size())
+            return;
+        if (isEmpty(data))
+            return;
+
+        this.cellList.set(index, data);
+        if (refreshAllItem)
+            notifyDataSetChanged();
+        else
+            notifyItemChanged(index);
+    }
+
+    /* -------------------------  remove IRecyclerCell ------------------------- */
+
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void removeAndNotifyAll(@NonNull T data) {
+        remove(data, true);
+    }
+
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void removeAndNotifyItem(@NonNull T data) {
+        remove(data, false);
+    }
+
+    /**
+     * 移除数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
+     *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void remove(@NonNull T data, boolean refreshAllItem) {
         if (!isEmpty(data))
-            remove(this.cellList.indexOf(data));
+            remove(this.cellList.indexOf(data), refreshAllItem);
     }
 
-    public void remove(int index) {
-        this.cellList.remove(index);
-        // notifyItemRemoved(index);
-        notifyDataSetChanged();
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void removeAndNotifyAll(int index) {
+        remove(index, true);
     }
 
-    public void remove(int start, int count) {
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void removeAndNotifyItem(int index) {
+        remove(index, false);
+    }
+
+    /**
+     * 移除数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
+     *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void remove(int index, boolean refreshAllItem) {
+        if (index < 0 || index >= this.cellList.size())
+            return;
+
+        if (refreshAllItem) {
+            this.cellList.remove(index);
+            notifyDataSetChanged();
+        } else {
+            this.cellList.remove(index);
+            notifyItemRemoved(index);
+            // 重新排列位置，防止删除错乱 和 IndexOutOfIndexException 等问题
+            notifyItemRangeChanged(index, this.cellList.size() - index);
+        }
+    }
+
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     */
+    public void removeAndNotifyAll(int start, int count) {
+        remove(start, count, true);
+    }
+
+    /**
+     * 移除数据，调用 {@link RecyclerAdapter#notifyItemRangeRemoved(int, int)}
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void removeAndNotifyItem(int start, int count) {
+        remove(start, count, false);
+    }
+
+    /**
+     * 移除数据
+     *
+     * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     *                       false：调用 {@link RecyclerAdapter#notifyItemRangeRemoved(int, int)}
+     *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     */
+    public void remove(int start, int count, boolean refreshAllItem) {
         if ((start + count) > this.cellList.size()) {
             return;
         }
-        this.cellList.subList(start, start + count).clear();
-        // notifyItemRangeRemoved(start, count);
-        notifyDataSetChanged();
+        if (refreshAllItem) {
+            this.cellList.subList(start, start + count).clear();
+            notifyDataSetChanged();
+        } else {
+            this.cellList.subList(start, start + count).clear();
+            notifyItemRangeRemoved(start, count);
+            // 重新排列位置，防止删除错乱 和 IndexOutOfIndexException 等问题
+            notifyItemRangeChanged(start, this.cellList.size() - start);
+        }
     }
 
+    /**
+     * 清空数据并刷新列表
+     */
     public void clear() {
         this.cellList.clear();
         notifyDataSetChanged();

@@ -46,7 +46,7 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
             switch (msg.what) {
                 case WHAT_FINISH_REFRESHING:
                     // 模拟数据
-                    adapter.addData(0, CellFactory.createVerticalTextCell(DataUtil.refreshData(3)));
+                    adapter.addAndNotifyAll(0, CellFactory.createVerticalTextCell(DataUtil.refreshData(3)));
                     recyclerView.finishRefreshing();
                     ToastUtil.showSingleToast(MyRefreshRecyclerViewActivity.this, "刷新完成");
                     break;
@@ -54,7 +54,7 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
                     if (loadingCount < 2) {
                         loadingCount++;
                         // 模拟数据
-                        adapter.addData(CellFactory.createVerticalTextCell(DataUtil.loadMoreData(3)));
+                        adapter.addAndNotifyAll(CellFactory.createVerticalTextCell(DataUtil.loadMoreData(3)));
                         recyclerView.finishLoading();
                         ToastUtil.showSingleToast(MyRefreshRecyclerViewActivity.this, "加载完成");
                     } else {

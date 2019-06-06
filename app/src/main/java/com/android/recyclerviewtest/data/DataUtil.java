@@ -32,7 +32,7 @@ public class DataUtil {
     public static List<String> refreshData(int dataCount) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < dataCount; i++) {
-            result.add("刷新数据 - " + i);
+            result.add("刷新数据 - " + System.currentTimeMillis() + " : " + i);
         }
         return result;
     }
@@ -40,7 +40,7 @@ public class DataUtil {
     public static List<String> loadMoreData(int dataCount) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < dataCount; i++) {
-            result.add("加载更多数据 - " + i);
+            result.add("加载更多数据 - " + System.currentTimeMillis() + " : " + i);
         }
         return result;
     }

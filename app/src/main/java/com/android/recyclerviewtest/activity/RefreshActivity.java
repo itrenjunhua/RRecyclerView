@@ -51,7 +51,7 @@ public class RefreshActivity extends BaseActivity {
                 case MSG_REFRESH:
                     ToastUtil.showSingleToast(RefreshActivity.this, "刷新完成");
                     List<VerticalTextCell> refreshData = (List<VerticalTextCell>) msg.obj;
-                    adapter.addData(0, refreshData);
+                    adapter.addAndNotifyAll(0, refreshData);
 
                     // 停止刷新动画
                     swipeRefreshLayout.setRefreshing(false);
@@ -60,7 +60,7 @@ public class RefreshActivity extends BaseActivity {
                     isLoading = false;
                     ToastUtil.showSingleToast(RefreshActivity.this, "加载更多完成");
                     List<VerticalTextCell> loadMoreData = (List<VerticalTextCell>) msg.obj;
-                    adapter.addData(loadMoreData);
+                    adapter.addAndNotifyAll(loadMoreData);
                     break;
                 default:
                     break;

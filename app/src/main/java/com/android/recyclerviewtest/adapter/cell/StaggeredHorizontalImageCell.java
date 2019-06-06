@@ -14,7 +14,6 @@ import com.android.recyclerviewtest.utils.ToastUtil;
 import com.android.recyclerviewtest.utils.imageutil.GlideUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -73,17 +72,7 @@ public class StaggeredHorizontalImageCell extends RecyclerCell<String> {
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
         ToastUtil.showSingleToast(context, "删除位置：" + position);
-        List cellList = recyclerAdapter.getCellList();
-        cellList.remove(position);
-
-        // 刷新全部，图片会发生跳动
-        // adapter.notifyDataSetChanged();
-
-        // 只刷新指定位置
-        recyclerAdapter.notifyItemRemoved(position);  // 指定位置删除数据
-        recyclerAdapter.notifyItemRangeChanged(position, cellList.size() - position); // 一定要重新排列位置
-        // recyclerAdapter.notifyItemChanged(position);  // 指定位置改变数据
-        // recyclerAdapter.notifyItemInserted(position); // 指定位置新增数据
+        recyclerAdapter.removeAndNotifyItem(position);
     }
 
 }
