@@ -8,6 +8,7 @@ import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
 import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
+import com.android.recyclerviewtest.draw.CustomItemDecoration;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class Grid3Activity extends BaseActivity {
     }
 
     private void setRecyclerView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 6, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 7, GridLayoutManager.VERTICAL, false);
 
         // 设置当前位置占用的列数
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -78,5 +79,15 @@ public class Grid3Activity extends BaseActivity {
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+        // 增加分割线
+        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40, (int) getResources().getDimension(R.dimen.line_height))
+                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow), 50)
+                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
+                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow), 20)
+                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
+        );
     }
 }
