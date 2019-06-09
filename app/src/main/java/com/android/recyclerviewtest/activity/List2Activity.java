@@ -8,7 +8,7 @@ import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
 import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
-import com.android.recyclerviewtest.draw.CustomItemDecoration;
+import com.android.recyclerviewtest.draw.LinearItemDecoration;
 
 import java.util.List;
 
@@ -53,7 +53,8 @@ public class List2Activity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
-        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources().getDimension(R.dimen.line_height))
+        recyclerView.addItemDecoration(new LinearItemDecoration(RecyclerView.HORIZONTAL)
+                .dividerHeight((int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.line_bg)));
     }
 }

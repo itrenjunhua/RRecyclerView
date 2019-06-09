@@ -36,7 +36,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     public GridItemDecoration dividerHeight(int dividerHeight) {
         mHorizontalDividerHeight = dividerHeight;
         mVerticalDividerHeight = dividerHeight;
-        setLowAndColHeight(dividerHeight, dividerHeight);
+        setRowAndColHeight(dividerHeight, dividerHeight);
         return this;
     }
 
@@ -51,7 +51,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     public GridItemDecoration dividerHeight(int horizontalDividerHeight, int verticalDividerHeight) {
         mHorizontalDividerHeight = horizontalDividerHeight;
         mVerticalDividerHeight = verticalDividerHeight;
-        setLowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
+        setRowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
         return this;
     }
 
@@ -66,7 +66,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         mHorizontalDividerColor = dividerColor;
         mVerticalDividerColor = dividerColor;
         mCrossPointColor = dividerColor;
-        setLowAndColColor(dividerColor, dividerColor);
+        setRowAndColColor(dividerColor, dividerColor);
         return this;
     }
 
@@ -82,7 +82,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         mHorizontalDividerColor = horizontalDividerColor;
         mVerticalDividerColor = verticalDividerColor;
         mCrossPointColor = horizontalDividerColor;
-        setLowAndColColor(horizontalDividerColor, verticalDividerColor);
+        setRowAndColColor(horizontalDividerColor, verticalDividerColor);
         return this;
     }
 
@@ -99,7 +99,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         mHorizontalDividerColor = horizontalDividerColor;
         mVerticalDividerColor = verticalDividerColor;
         mCrossPointColor = crossPointColor;
-        setLowAndColColor(horizontalDividerColor, verticalDividerColor);
+        setRowAndColColor(horizontalDividerColor, verticalDividerColor);
         return this;
     }
 

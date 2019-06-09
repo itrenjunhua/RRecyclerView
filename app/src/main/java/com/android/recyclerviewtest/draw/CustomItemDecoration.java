@@ -463,9 +463,9 @@ public class CustomItemDecoration extends RecyclerView.ItemDecoration {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
             int orientation = linearLayoutManager.getOrientation();
             if (orientation == LinearLayoutManager.VERTICAL) {
-                return itemPosition == 0;
-            } else {
                 return true;
+            } else {
+                return itemPosition == 0;
             }
         }
     }
