@@ -112,7 +112,6 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
 
     @Override
     protected void draw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         int childCountTotal = parent.getAdapter().getItemCount();
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
@@ -124,7 +123,7 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
             boolean firstRow = isFirstRow(viewLayoutPosition);
             boolean firstCol = isFirstCol(viewLayoutPosition);
 
-            if (firstRow) {
+            if (firstRow && mIsDrawFirstRow) {
                 // 第一行，并且需要绘制第一行之前的分割线
                 int left = childAt.getLeft() - layoutParams.leftMargin;
                 int right = childAt.getRight() + layoutParams.rightMargin;
@@ -134,7 +133,7 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 c.drawRect(left, top, right, bottom, mPaint);
             }
 
-            if (firstCol) {
+            if (firstCol && mIsDrawFirstCol) {
                 // 第一列，并且需要绘制第一列之前的分割线
                 int left = childAt.getLeft() - layoutParams.leftMargin - mFirstColHeight;
                 int right = childAt.getLeft() - layoutParams.leftMargin;
@@ -154,7 +153,15 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
             boolean lastRaw = isLastRow(childCountTotal, viewLayoutPosition);
             boolean lastCol = isLastCol(childCountTotal, viewLayoutPosition);
 
-            if (!lastRaw) {
+            if (lastRaw && mIsDrawLastRow) {
+                // 是最后一行，并且需要绘制最后一行水平方向行的线
+                int left = childAt.getLeft() - layoutParams.leftMargin;
+                int right = childAt.getRight() + layoutParams.rightMargin;
+                int top = childAt.getBottom() + layoutParams.bottomMargin;
+                int bottom = top + mLastRowHeight;
+                mPaint.setColor(mLastRowColor);
+                c.drawRect(left, top, right, bottom, mPaint);
+            } else {
                 // 不是最后一行，画水平方向的线
                 int left = childAt.getLeft() - layoutParams.leftMargin;
                 int right = childAt.getRight() + layoutParams.rightMargin;
@@ -162,19 +169,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int bottom = top + mHorizontalDividerHeight;
                 mPaint.setColor(mHorizontalDividerColor);
                 c.drawRect(left, top, right, bottom, mPaint);
-            } else {
-                // 是最后一行，判断是否需要绘制最后一行水平方向行的线
-                if (mIsDrawLastRow) {
-                    int left = childAt.getLeft() - layoutParams.leftMargin;
-                    int right = childAt.getRight() + layoutParams.rightMargin;
-                    int top = childAt.getBottom() + layoutParams.bottomMargin;
-                    int bottom = top + mLastRowHeight;
-                    mPaint.setColor(mLastRowColor);
-                    c.drawRect(left, top, right, bottom, mPaint);
-                }
             }
 
-            if (!lastCol) {
+            if (lastCol && mIsDrawLastCol) {
+                // 是最后一列，并且需要绘制最后一列垂直方向行的线
+                int left = childAt.getRight() + layoutParams.rightMargin;
+                int right = left + mLastColHeight;
+                int top = childAt.getTop() - layoutParams.topMargin;
+                int bottom = childAt.getBottom() + layoutParams.bottomMargin;
+                mPaint.setColor(mLastColColor);
+                c.drawRect(left, top, right, bottom, mPaint);
+            } else {
                 // 不是最后一列，画竖直方向的线
                 int left = childAt.getRight() + layoutParams.rightMargin;
                 int right = left + mHorizontalDividerHeight;
@@ -182,16 +187,6 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int bottom = childAt.getBottom() + layoutParams.bottomMargin;
                 mPaint.setColor(mHorizontalDividerColor);
                 c.drawRect(left, top, right, bottom, mPaint);
-            } else {
-                // 是最后一列，判断是否需要绘制最后一列垂直方向行的线
-                if (mIsDrawLastCol) {
-                    int left = childAt.getRight() + layoutParams.rightMargin;
-                    int right = left + mLastColHeight;
-                    int top = childAt.getTop() - layoutParams.topMargin;
-                    int bottom = childAt.getBottom() + layoutParams.bottomMargin;
-                    mPaint.setColor(mLastColColor);
-                    c.drawRect(left, top, right, bottom, mPaint);
-                }
             }
             // -------------【end】 绘制中间分割线以及最后一行和最后一列之后的线 【end】--------------//
 
