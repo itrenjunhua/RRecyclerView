@@ -56,11 +56,11 @@ public class List1Activity extends BaseActivity {
         recyclerView.addItemDecoration(new LinearItemDecoration(RecyclerView.VERTICAL)
                 .dividerHeight((int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .isDrawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow), 50)
-                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
-                .isDrawLastRowAfter(true, getResources().getColor(R.color.colorLastLow), 20)
-                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .dividerRowAndColHeight(40, 40)
+                .drawFirstRowBeforeColor(true, getResources().getColor(R.color.colorFirstLow))
+                .drawFirstColBeforeColor(true, getResources().getColor(R.color.colorFirstCol))
+                .drawLastRowAfterColor(true, getResources().getColor(R.color.colorLastLow))
+                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
     }

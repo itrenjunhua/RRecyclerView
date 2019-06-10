@@ -34,10 +34,8 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     protected boolean mIsDrawFirstRow = false; // 第一行之前是否绘制分割线
     protected boolean mIsDrawFirstCol = false; // 第一列之前是否绘制分割线
 
-    protected int mFirstRowHeight = DEFAULT_DIVIDER_HEIGHT; // 第一行之前的分割线高度
-    protected int mFirstColHeight = DEFAULT_DIVIDER_HEIGHT;   // 第一列之前的分割线宽度
-    protected int mLastRowHeight = DEFAULT_DIVIDER_HEIGHT;  // 最后一行之后的分割线高度
-    protected int mLastColHeight = DEFAULT_DIVIDER_HEIGHT;    // 最后一列之后的分割线宽度
+    protected int mTopAndBottomRowHeight = DEFAULT_DIVIDER_HEIGHT; // 第一行之前和最后一列之后的分割线高度
+    protected int mLeftAndRightColHeight = DEFAULT_DIVIDER_HEIGHT;   // 第一列之前和最后一行之后的分割线宽度
 
     protected int mLastRowColor = DEFAULT_DIVIDER_COLOR; // 最后一行之后分割线颜色
     protected int mLastColColor = DEFAULT_DIVIDER_COLOR; // 最后一列之后分割线颜色
@@ -61,7 +59,8 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      */
     public <T extends RecyclerItemDecoration> T dividerHeight(int dividerHeight) {
         this.mHorizontalDividerHeight = dividerHeight;
-        setRowAndColHeight(dividerHeight, dividerHeight);
+        if (mTopAndBottomRowHeight == DEFAULT_DIVIDER_HEIGHT && mLeftAndRightColHeight == DEFAULT_DIVIDER_HEIGHT)
+            dividerRowAndColHeight(dividerHeight, dividerHeight);
         return (T) this;
     }
 
@@ -74,22 +73,21 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      */
     public <T extends RecyclerItemDecoration> T dividerHeight(int horizontalDividerHeight, int verticalDividerHeight) {
         this.mHorizontalDividerHeight = horizontalDividerHeight;
-        setRowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
+        if (mTopAndBottomRowHeight == DEFAULT_DIVIDER_HEIGHT && mLeftAndRightColHeight == DEFAULT_DIVIDER_HEIGHT)
+            dividerRowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
         return (T) this;
     }
 
     /**
-     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的高度进行设置，<br/>
-     * 但是在设置之前需要先判断有没有单独为这几个位置设置过高度，因为单独设置的优先级更高
+     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的高度进行设置
      *
-     * @param lowHeight 行高度
-     * @param colHeight 列高度
+     * @param lowHeight 第一行之前和最后一列之后的分割线高度
+     * @param colHeight 第一列之前和最后一行之后的分割线宽度
      */
-    protected void setRowAndColHeight(int lowHeight, int colHeight) {
-        if (DEFAULT_DIVIDER_HEIGHT == mFirstRowHeight) mFirstRowHeight = lowHeight;
-        if (DEFAULT_DIVIDER_HEIGHT == mLastRowHeight) mLastRowHeight = lowHeight;
-        if (DEFAULT_DIVIDER_HEIGHT == mFirstColHeight) mFirstColHeight = colHeight;
-        if (DEFAULT_DIVIDER_HEIGHT == mLastColHeight) mLastColHeight = colHeight;
+    public <T extends RecyclerItemDecoration> T dividerRowAndColHeight(int lowHeight, int colHeight) {
+        mTopAndBottomRowHeight = lowHeight;
+        mLeftAndRightColHeight = colHeight;
+        return (T) this;
     }
 
     /**
@@ -110,37 +108,9 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawFirstRowBeforeColor(boolean isDrawFirstRow, int firstRowColor) {
+    public <T extends RecyclerItemDecoration> T drawFirstRowBeforeColor(boolean isDrawFirstRow, int firstRowColor) {
         this.mIsDrawFirstRow = isDrawFirstRow;
         this.mFirstRowColor = firstRowColor;
-        return (T) this;
-    }
-
-    /**
-     * 设置在第一行之前是否需要绘制分割线，并指定高度
-     *
-     * @param isDrawFirstRow 是否绘制第一行之前分割线  默认 false
-     * @param firstRowHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawFirstRowBeforeHeight(boolean isDrawFirstRow, int firstRowHeight) {
-        this.mIsDrawFirstRow = isDrawFirstRow;
-        this.mFirstRowHeight = firstRowHeight;
-        return (T) this;
-    }
-
-    /**
-     * 设置在第一行之前是否需要绘制分割线，并指定颜色和高度
-     *
-     * @param isDrawFirstRow 是否绘制第一行之前分割线  默认 false
-     * @param firstRowColor  分割线颜色
-     * @param firstRowHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawFirstRowBefore(boolean isDrawFirstRow, int firstRowColor, int firstRowHeight) {
-        this.mIsDrawFirstRow = isDrawFirstRow;
-        this.mFirstRowColor = firstRowColor;
-        this.mFirstRowHeight = firstRowHeight;
         return (T) this;
     }
 
@@ -150,7 +120,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawFirstColBefore(boolean isDrawFirstCol) {
+    public <T extends RecyclerItemDecoration> T drawFirstColBefore(boolean isDrawFirstCol) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         return (T) this;
     }
@@ -162,37 +132,9 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawFirstColBeforeColor(boolean isDrawFirstCol, int firstColColor) {
+    public <T extends RecyclerItemDecoration> T drawFirstColBeforeColor(boolean isDrawFirstCol, int firstColColor) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         this.mFirstColColor = firstColColor;
-        return (T) this;
-    }
-
-    /**
-     * 设置在第一列之前是否需要绘制分割线，并指定高度
-     *
-     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
-     * @param firstColHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawFirstColBeforeHeight(boolean isDrawFirstCol, int firstColHeight) {
-        this.mIsDrawFirstCol = isDrawFirstCol;
-        this.mFirstColHeight = firstColHeight;
-        return (T) this;
-    }
-
-    /**
-     * 设置在第一列之前是否需要绘制分割线，并指定颜色和高度
-     *
-     * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
-     * @param firstColColor  分割线颜色
-     * @param firstColHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawFirstColBefore(boolean isDrawFirstCol, int firstColColor, int firstColHeight) {
-        this.mIsDrawFirstCol = isDrawFirstCol;
-        this.mFirstColColor = firstColColor;
-        this.mFirstColHeight = firstColHeight;
         return (T) this;
     }
 
@@ -202,7 +144,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param isDrawLastRow 是否绘制最后一行之后分割线  默认 false
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawLastRowAfter(boolean isDrawLastRow) {
+    public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow) {
         this.mIsDrawLastRow = isDrawLastRow;
         return (T) this;
     }
@@ -214,39 +156,12 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawLastRowAfterColor(boolean isDrawLastRow, int lastRowColor) {
+    public <T extends RecyclerItemDecoration> T drawLastRowAfterColor(boolean isDrawLastRow, int lastRowColor) {
         this.mIsDrawLastRow = isDrawLastRow;
         this.mLastRowColor = lastRowColor;
         return (T) this;
     }
 
-    /**
-     * 设置在最后一行之后是否需要绘制分割线，并指定高度
-     *
-     * @param isDrawLastRow 是否绘制最后一行之后分割线  默认 false
-     * @param lastRowHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawLastRowAfterHeight(boolean isDrawLastRow, int lastRowHeight) {
-        this.mIsDrawLastRow = isDrawLastRow;
-        this.mLastRowHeight = lastRowHeight;
-        return (T) this;
-    }
-
-    /**
-     * 设置在最后一行之后是否需要绘制分割线，并指定颜色和高度
-     *
-     * @param isDrawLastRow 是否绘制最后一行之后分割线  默认 false
-     * @param lastRowColor  分割线颜色
-     * @param lastRowHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawLastRowAfter(boolean isDrawLastRow, int lastRowColor, int lastRowHeight) {
-        this.mIsDrawLastRow = isDrawLastRow;
-        this.mLastRowColor = lastRowColor;
-        this.mLastRowHeight = lastRowHeight;
-        return (T) this;
-    }
 
     /**
      * 设置在最后一列之后是否需要绘制分割线
@@ -254,7 +169,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawLastColAfter(boolean isDrawLastCol) {
+    public <T extends RecyclerItemDecoration> T drawLastColAfter(boolean isDrawLastCol) {
         this.mIsDrawLastCol = isDrawLastCol;
         return (T) this;
     }
@@ -266,37 +181,9 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawLastColAfterColor(boolean isDrawLastCol, int lastColColor) {
+    public <T extends RecyclerItemDecoration> T drawLastColAfterColor(boolean isDrawLastCol, int lastColColor) {
         this.mIsDrawLastCol = isDrawLastCol;
         this.mLastColColor = lastColColor;
-        return (T) this;
-    }
-
-    /**
-     * 设置在最后一列之后是否需要绘制分割线，并指定颜色和高度
-     *
-     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
-     * @param lastColHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawLastColAfterHeight(boolean isDrawLastCol, int lastColHeight) {
-        this.mIsDrawLastCol = isDrawLastCol;
-        this.mLastColHeight = lastColHeight;
-        return (T) this;
-    }
-
-    /**
-     * 设置在最后一列之后是否需要绘制分割线，并指定颜色和高度
-     *
-     * @param isDrawLastCol 是否绘制最后一列之后分割线  默认 false
-     * @param lastColColor  分割线颜色
-     * @param lastColHeight 分割线高度
-     * @return
-     */
-    public <T extends RecyclerItemDecoration> T isDrawLastColAfter(boolean isDrawLastCol, int lastColColor, int lastColHeight) {
-        this.mIsDrawLastCol = isDrawLastCol;
-        this.mLastColColor = lastColColor;
-        this.mLastColHeight = lastColHeight;
         return (T) this;
     }
 

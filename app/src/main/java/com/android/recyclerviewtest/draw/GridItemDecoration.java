@@ -37,7 +37,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     public GridItemDecoration dividerHeight(int dividerHeight) {
         mHorizontalDividerHeight = dividerHeight;
         mVerticalDividerHeight = dividerHeight;
-        setRowAndColHeight(dividerHeight, dividerHeight);
+        dividerRowAndColHeight(dividerHeight, dividerHeight);
         return this;
     }
 
@@ -52,7 +52,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     public GridItemDecoration dividerHeight(int horizontalDividerHeight, int verticalDividerHeight) {
         mHorizontalDividerHeight = horizontalDividerHeight;
         mVerticalDividerHeight = verticalDividerHeight;
-        setRowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
+        dividerRowAndColHeight(horizontalDividerHeight, verticalDividerHeight);
         return this;
     }
 
@@ -125,15 +125,15 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
         if (mIsDrawFirstCol && mIsDrawLastCol) {
             // 第一列和最后一列都绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mFirstColHeight - mLastColHeight;
+            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight - mLeftAndRightColHeight;
             int allItemWidth = parentWidth - allDividerWidth;
         } else if (mIsDrawFirstCol) {
             // 第一列绘制，最后一列不绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mFirstColHeight;
+            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight;
             int allItemWidth = parentWidth - allDividerWidth;
         } else if (mIsDrawLastCol) {
             // 第一列不绘制，最后一列绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLastColHeight;
+            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight;
             int allItemWidth = parentWidth - allDividerWidth;
         } else {
             // 第一列和最后一列都不绘制
@@ -141,11 +141,11 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             //int allItemWidth = parentWidth - allDividerWidth;
             int offset = (int) ((spanCount - 1) * 1.0f / spanCount * mVerticalDividerHeight) / 2;
             if (firstCol) {
-                outRect.set(0, isDrawFirstRow ? mFirstRowHeight : 0, lastCol ? 0 : offset * (spanCount - 1), lastRow ? (mIsDrawLastRow ? mLastRowHeight : 0) : mHorizontalDividerHeight);
+                outRect.set(0, isDrawFirstRow ? mTopAndBottomRowHeight : 0, lastCol ? 0 : offset * (spanCount - 1), lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
             } else if (lastCol) {
-                outRect.set(offset * (spanCount - 1), isDrawFirstRow ? mFirstRowHeight : 0, 0, lastRow ? (mIsDrawLastRow ? mLastRowHeight : 0) : mHorizontalDividerHeight);
+                outRect.set(offset * (spanCount - 1), isDrawFirstRow ? mTopAndBottomRowHeight : 0, 0, lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
             } else {
-                outRect.set(offset, isDrawFirstRow ? mFirstRowHeight : 0, offset, lastRow ? (mIsDrawLastRow ? mLastRowHeight : 0) : mHorizontalDividerHeight);
+                outRect.set(offset, isDrawFirstRow ? mTopAndBottomRowHeight : 0, offset, lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
             }
 
         }
@@ -232,7 +232,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
                 // 第一行，并且需要绘制第一行之前的分割线
                 int left = childAt.getLeft() - layoutParams.leftMargin;
                 int right = childAt.getRight() + layoutParams.rightMargin;
-                int top = childAt.getTop() - layoutParams.topMargin - mFirstRowHeight;
+                int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
                 mPaint.setColor(mFirstRowColor);
                 c.drawRect(left, top, right, bottom, mPaint);
@@ -240,7 +240,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
             if (firstCol) {
                 // 第一列，并且需要绘制第一列之前的分割线
-                int left = childAt.getLeft() - layoutParams.leftMargin - mFirstColHeight;
+                int left = childAt.getLeft() - layoutParams.leftMargin - mLeftAndRightColHeight;
                 int right = childAt.getLeft() - layoutParams.leftMargin;
                 int top = childAt.getTop() - layoutParams.topMargin;
                 int bottom = childAt.getBottom() + layoutParams.bottomMargin;
@@ -272,7 +272,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
                     int left = childAt.getLeft() - layoutParams.leftMargin;
                     int right = childAt.getRight() + layoutParams.rightMargin;
                     int top = childAt.getBottom() + layoutParams.bottomMargin;
-                    int bottom = top + mLastRowHeight;
+                    int bottom = top + mTopAndBottomRowHeight;
                     mPaint.setColor(mLastRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
@@ -290,7 +290,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
                 // 是最后一列，判断是否需要绘制最后一列垂直方向行的线
                 if (mIsDrawLastCol) {
                     int left = childAt.getRight() + layoutParams.rightMargin;
-                    int right = left + mLastColHeight;
+                    int right = left + mLeftAndRightColHeight;
                     int top = childAt.getTop() - layoutParams.topMargin;
                     int bottom = childAt.getBottom() + layoutParams.bottomMargin;
                     mPaint.setColor(mLastColColor);
@@ -317,7 +317,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             if (firstRow && !lastCol && mIsDrawFirstRow) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
                 int right = left + mVerticalDividerHeight;
-                int top = childAt.getTop() - layoutParams.topMargin - mFirstRowHeight;
+                int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
                 // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
@@ -326,7 +326,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
             // 绘制第一列，但是不是最后一行，交叉点的位置需要绘制
             if (firstCol && !lastRaw && mIsDrawFirstCol) {
-                int left = childAt.getLeft() - layoutParams.rightMargin - mFirstColHeight;
+                int left = childAt.getLeft() - layoutParams.rightMargin - mLeftAndRightColHeight;
                 int right = childAt.getLeft() - layoutParams.rightMargin;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mHorizontalDividerHeight;
@@ -338,7 +338,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             // 是最后一列，但不是最后一行，交叉点的位置需要绘制
             if (lastCol && !lastRaw && mIsDrawLastCol) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
-                int right = left + mLastColHeight;
+                int right = left + mLeftAndRightColHeight;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mHorizontalDividerHeight;
                 // 是否设置了边界交叉点位置颜色，没有设置就用最后一列之后分割线的颜色
@@ -351,7 +351,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
                 int left = childAt.getRight() + layoutParams.rightMargin;
                 int right = left + mVerticalDividerHeight;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + mLastRowHeight;
+                int bottom = top + mTopAndBottomRowHeight;
                 // 是否设置了边界交叉点位置颜色，没有设置就用最后一行之后分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
                 c.drawRect(left, top, right, bottom, mPaint);
@@ -363,9 +363,9 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
             // 左上角位置交叉点
             if (firstRow && firstCol && mIsDrawFirstRow && mIsDrawFirstCol) {
-                int left = childAt.getLeft() - layoutParams.rightMargin - mFirstColHeight;
+                int left = childAt.getLeft() - layoutParams.rightMargin - mLeftAndRightColHeight;
                 int right = childAt.getLeft() - layoutParams.rightMargin;
-                int top = childAt.getTop() - layoutParams.topMargin - mFirstRowHeight;
+                int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
                 // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
@@ -375,8 +375,8 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             // 右上角位置交叉点
             if (firstRow && lastCol && mIsDrawFirstRow && mIsDrawLastCol) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
-                int right = left + mLastColHeight;
-                int top = childAt.getTop() - layoutParams.topMargin - mFirstRowHeight;
+                int right = left + mLeftAndRightColHeight;
+                int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
                 // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
@@ -386,9 +386,9 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             // 右下角位置交叉点
             if (lastRaw && lastCol && mIsDrawLastRow && mIsDrawLastCol) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
-                int right = left + mLastColHeight;
+                int right = left + mLeftAndRightColHeight;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + mLastRowHeight;
+                int bottom = top + mTopAndBottomRowHeight;
                 // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
                 c.drawRect(left, top, right, bottom, mPaint);
@@ -396,10 +396,10 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
             // 左下角位置交叉点
             if (lastRaw && firstCol && mIsDrawLastRow && mIsDrawFirstCol) {
-                int left = childAt.getLeft() - layoutParams.rightMargin - mFirstColHeight;
+                int left = childAt.getLeft() - layoutParams.rightMargin - mLeftAndRightColHeight;
                 int right = childAt.getLeft() - layoutParams.rightMargin;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
-                int bottom = top + mLastRowHeight;
+                int bottom = top + mTopAndBottomRowHeight;
                 // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
                 mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
                 c.drawRect(left, top, right, bottom, mPaint);
