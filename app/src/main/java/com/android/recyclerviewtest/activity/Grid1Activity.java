@@ -65,13 +65,14 @@ public class Grid1Activity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
-        recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.VERTICAL).dividerHeight(40, 40/*(int) getResources().getDimension(R.dimen.line_height)*/)
+        recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.VERTICAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+                .dividerRowAndColHeight(40,50)
                 .drawFirstRowBeforeColor(true, getResources().getColor(R.color.colorFirstLow))
-                //.drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
+                //.drawFirstColBeforeColor(true, getResources().getColor(R.color.colorFirstCol))
                 .drawLastRowAfterColor(true, getResources().getColor(R.color.colorLastLow))
-                //.drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
         // 增加分割线

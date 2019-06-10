@@ -107,10 +107,13 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     @Override
     protected void itemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = layoutManager.getSpanSizeLookup();
         int viewLayoutPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         int itemCount = parent.getAdapter().getItemCount();
         int spanCount = layoutManager.getSpanCount();
         int parentWidth = parent.getWidth();
+        int spanSize = spanSizeLookup.getSpanSize(viewLayoutPosition);
+        int spanIndex = spanSizeLookup.getSpanIndex(viewLayoutPosition, spanCount);
 
         boolean firstCol = isFirstCol(layoutManager, viewLayoutPosition);
         boolean firstRow = isFirstRow(layoutManager, viewLayoutPosition);
@@ -122,33 +125,49 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         boolean isDrawLastRow = lastRow && mIsDrawLastRow;
         boolean isDrawLastCol = lastCol && mIsDrawLastCol;
 
-
         if (mIsDrawFirstCol && mIsDrawLastCol) {
-            // 第一列和最后一列都绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight - mLeftAndRightColHeight;
-            int allItemWidth = parentWidth - allDividerWidth;
-        } else if (mIsDrawFirstCol) {
-            // 第一列绘制，最后一列不绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight;
-            int allItemWidth = parentWidth - allDividerWidth;
-        } else if (mIsDrawLastCol) {
-            // 第一列不绘制，最后一列绘制
-            int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight - mLeftAndRightColHeight;
-            int allItemWidth = parentWidth - allDividerWidth;
-        } else {
-            // 第一列和最后一列都不绘制
-            //int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight;
-            //int allItemWidth = parentWidth - allDividerWidth;
-            int offset = (int) ((spanCount - 1) * 1.0f / spanCount * mVerticalDividerHeight) / 2;
-            if (firstCol) {
-                outRect.set(0, isDrawFirstRow ? mTopAndBottomRowHeight : 0, lastCol ? 0 : offset * (spanCount - 1), lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
-            } else if (lastCol) {
-                outRect.set(offset * (spanCount - 1), isDrawFirstRow ? mTopAndBottomRowHeight : 0, 0, lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
+            if (mOrientation == GridLayoutManager.VERTICAL) {
+                // 第一列和最后一列都绘制
+                int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight + mLeftAndRightColHeight + mLeftAndRightColHeight;
+                verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
             } else {
-                outRect.set(offset, isDrawFirstRow ? mTopAndBottomRowHeight : 0, offset, lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight);
-            }
 
+            }
+        } else if (mIsDrawFirstCol || mIsDrawLastCol) {
+            if (mOrientation == GridLayoutManager.VERTICAL) {
+                // 第一列绘制，或者最后一列绘制
+                int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight + mLeftAndRightColHeight;
+                verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
+            } else {
+
+            }
+        } else {
+            if (mOrientation == GridLayoutManager.VERTICAL) {
+                // 第一列和最后一列都不绘制
+                int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight;
+                verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
+            } else {
+
+            }
         }
+
+    }
+
+    private void verticalOutRect(Rect outRect, int spanCount, int spanIndex, boolean lastRow, boolean isDrawFirstRow, int allDividerWidth, boolean lastCol) {
+        // 计算每个item需要移动的宽度
+        int itemDividerWidth = allDividerWidth / spanCount;
+        int left = spanIndex * (mVerticalDividerHeight - itemDividerWidth) + (mIsDrawFirstCol ? mLeftAndRightColHeight : 0);
+        int right = itemDividerWidth - left;
+        // 主要是对 调用了 GridLayoutManager#setSpanSizeLookup(SpanSizeLookup) 方法的 GridLayoutManager 进行处理
+        if (lastCol) {
+            if (mIsDrawLastCol)
+                right = mLeftAndRightColHeight;
+            else
+                right = 0;
+        }
+        int top = isDrawFirstRow ? mTopAndBottomRowHeight : 0;
+        int bottom = lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight;
+        outRect.set(left, top, right, bottom);
     }
 
     /**
