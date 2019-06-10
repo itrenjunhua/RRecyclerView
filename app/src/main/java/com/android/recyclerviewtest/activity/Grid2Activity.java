@@ -8,7 +8,7 @@ import com.android.recyclerviewtest.R;
 import com.android.recyclerviewtest.adapter.RecyclerAdapter;
 import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.data.DataUtil;
-import com.android.recyclerviewtest.draw.CustomItemDecoration;
+import com.android.recyclerviewtest.draw.GridItemDecoration;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class Grid2Activity extends BaseActivity {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0)
-                    return 2;
+                    return 3;
                 return 1;
             }
         });
@@ -67,15 +67,26 @@ public class Grid2Activity extends BaseActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // 增加分割线
-        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40, (int) getResources().getDimension(R.dimen.line_height))
+        recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.HORIZONTAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow), 50)
-                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
-                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow), 20)
-                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .dividerRowAndColHeight(40,50)
+                .drawFirstRowBeforeColor(true, getResources().getColor(R.color.colorFirstLow))
+                .drawFirstColBeforeColor(true, getResources().getColor(R.color.colorFirstCol))
+                .drawLastRowAfterColor(true, getResources().getColor(R.color.colorLastLow))
+                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
+        // 增加分割线
+//        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40, (int) getResources().getDimension(R.dimen.line_height))
+//                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+//                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+//                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow), 50)
+//                .isDrawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
+//                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow), 20)
+//                .isDrawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+//                .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
+//        );
 
     }
 }

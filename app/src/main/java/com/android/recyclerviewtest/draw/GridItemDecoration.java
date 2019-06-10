@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.android.recyclerviewtest.utils.RLog;
+
 /**
  * ======================================================================
  * <p>
@@ -125,32 +127,55 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         boolean isDrawLastRow = lastRow && mIsDrawLastRow;
         boolean isDrawLastCol = lastCol && mIsDrawLastCol;
 
-        if (mIsDrawFirstCol && mIsDrawLastCol) {
-            if (mOrientation == GridLayoutManager.VERTICAL) {
+        if (mOrientation == GridLayoutManager.VERTICAL) {
+            if (mIsDrawFirstCol && mIsDrawLastCol) {
                 // 第一列和最后一列都绘制
                 int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight + mLeftAndRightColHeight + mLeftAndRightColHeight;
                 verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
-            } else {
-
-            }
-        } else if (mIsDrawFirstCol || mIsDrawLastCol) {
-            if (mOrientation == GridLayoutManager.VERTICAL) {
+            } else if (mIsDrawFirstCol || mIsDrawLastCol) {
                 // 第一列绘制，或者最后一列绘制
                 int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight + mLeftAndRightColHeight;
                 verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
             } else {
-
-            }
-        } else {
-            if (mOrientation == GridLayoutManager.VERTICAL) {
                 // 第一列和最后一列都不绘制
                 int allDividerWidth = (spanCount - 1) * mVerticalDividerHeight;
                 verticalOutRect(outRect, spanCount, spanIndex, lastRow, isDrawFirstRow, allDividerWidth, lastCol);
-            } else {
+            }
+        } else {
+            if (mIsDrawFirstRow && mIsDrawLastRow) {
+                // 第一列和最后一列都绘制
+                int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight + mTopAndBottomRowHeight + mTopAndBottomRowHeight;
+                horizontalOutRect(outRect, spanCount, spanIndex, lastCol, lastRow, isDrawFirstCol, allDividerWidth);
 
+            } else if (mIsDrawFirstRow || mIsDrawLastRow) {
+                // 第一列绘制，或者最后一列绘制
+                int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight + mTopAndBottomRowHeight;
+                horizontalOutRect(outRect, spanCount, spanIndex, lastCol, lastRow, isDrawFirstCol, allDividerWidth);
+            } else {
+                // 第一列和最后一列都不绘制
+                int allDividerWidth = (spanCount - 1) * mHorizontalDividerHeight;
+                horizontalOutRect(outRect, spanCount, spanIndex, lastCol, lastRow, isDrawFirstCol, allDividerWidth);
             }
         }
 
+    }
+
+    private void horizontalOutRect(Rect outRect, int spanCount, int spanIndex, boolean lastCol, boolean lastRow, boolean isDrawFirstCol, int allDividerWidth) {
+        // 计算每个item需要移动的宽度
+        int itemDividerWidth = allDividerWidth / spanCount;
+        int left = isDrawFirstCol ? mLeftAndRightColHeight : 0;
+        int right = lastCol ? (mIsDrawLastCol ? mLeftAndRightColHeight : 0) : mVerticalDividerHeight;
+
+        int top = spanIndex * (mHorizontalDividerHeight - itemDividerWidth) + (mIsDrawFirstRow ? mTopAndBottomRowHeight : 0);
+        int bottom = itemDividerWidth - top;
+        // 主要是对 调用了 GridLayoutManager#setSpanSizeLookup(SpanSizeLookup) 方法的 GridLayoutManager 进行处理
+        if (lastRow) {
+            if (mIsDrawLastRow)
+                bottom = mTopAndBottomRowHeight;
+            else
+                bottom = 0;
+        }
+        outRect.set(left, top, right, bottom);
     }
 
     private void verticalOutRect(Rect outRect, int spanCount, int spanIndex, boolean lastRow, boolean isDrawFirstRow, int allDividerWidth, boolean lastCol) {
@@ -165,6 +190,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             else
                 right = 0;
         }
+        RLog.i("spanIndex => " + spanIndex + " left => " + left + " right => " + right);
         int top = isDrawFirstRow ? mTopAndBottomRowHeight : 0;
         int bottom = lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight;
         outRect.set(left, top, right, bottom);
