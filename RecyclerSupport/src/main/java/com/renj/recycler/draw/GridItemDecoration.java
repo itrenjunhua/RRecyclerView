@@ -2,6 +2,7 @@ package com.renj.recycler.draw;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.view.View;
 public class GridItemDecoration extends RecyclerItemDecoration {
     private int mVerticalDividerHeight = DEFAULT_DIVIDER_HEIGHT;   // 垂直方向上的宽度
     private int mVerticalDividerColor = DEFAULT_DIVIDER_COLOR;   // 垂直分割线颜色
+    private Drawable mVerticalDividerDrawable;
 
     public GridItemDecoration(@RecyclerView.Orientation int orientation) {
         super(orientation);
@@ -72,6 +74,21 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     }
 
     /**
+     * 指定分割线显色
+     *
+     * @param dividerDrawable 水平方向、垂直方向上和交叉点的颜色相同  交叉点默认使用水平方向上的 Drawable
+     * @return
+     */
+    @Override
+    public GridItemDecoration dividerDrawable(Drawable dividerDrawable) {
+        mHorizontalDividerDrawable = dividerDrawable;
+        mVerticalDividerDrawable = dividerDrawable;
+        mBorderCrossPointDrawable = dividerDrawable;
+        setRowAndColDrawable(dividerDrawable, dividerDrawable);
+        return this;
+    }
+
+    /**
      * 分别指定水平方向上和垂直方向上的分割线显色，交叉点的分割线的颜色与水平方向上的颜色一致  默认 0xFFDDDDDD
      *
      * @param horizontalDividerColor 水平方向上分割线的颜色，交叉点的分割线的颜色与水平方向上的颜色一致
@@ -84,6 +101,22 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         mVerticalDividerColor = verticalDividerColor;
         mCrossPointColor = horizontalDividerColor;
         setRowAndColColor(horizontalDividerColor, verticalDividerColor);
+        return this;
+    }
+
+    /**
+     * 分别指定水平方向上和垂直方向上的分割线显 Drawable，交叉点的分割线的颜色与水平方向上的颜色一致
+     *
+     * @param horizontalDividerDrawable 水平方向上分割线的 Drawable，交叉点的分割线的颜色与水平方向上的颜色一致
+     * @param verticalDividerDrawable   垂直方向上分割线的 Drawable
+     * @return
+     */
+    @Override
+    public GridItemDecoration dividerDrawable(Drawable horizontalDividerDrawable, Drawable verticalDividerDrawable) {
+        mHorizontalDividerDrawable = horizontalDividerDrawable;
+        mVerticalDividerDrawable = verticalDividerDrawable;
+        mCrossPointDrawable = horizontalDividerDrawable;
+        setRowAndColDrawable(horizontalDividerDrawable, verticalDividerDrawable);
         return this;
     }
 
@@ -101,6 +134,23 @@ public class GridItemDecoration extends RecyclerItemDecoration {
         mVerticalDividerColor = verticalDividerColor;
         mCrossPointColor = crossPointColor;
         setRowAndColColor(horizontalDividerColor, verticalDividerColor);
+        return this;
+    }
+
+    /**
+     * 分别指定水平方向上、垂直方向上以及交叉点的分割线显色
+     *
+     * @param horizontalDividerDrawable 水平方向上分割线的 Drawable
+     * @param verticalDividerDrawable   垂直方向上分割线的 Drawable
+     * @param crossPointDrawable        交叉点的分割线的 Drawable
+     * @return
+     */
+    @Override
+    public GridItemDecoration dividerDrawable(Drawable horizontalDividerDrawable, Drawable verticalDividerDrawable, Drawable crossPointDrawable) {
+        mHorizontalDividerDrawable = horizontalDividerDrawable;
+        mVerticalDividerDrawable = verticalDividerDrawable;
+        mCrossPointDrawable = crossPointDrawable;
+        setRowAndColDrawable(horizontalDividerDrawable, verticalDividerDrawable);
         return this;
     }
 

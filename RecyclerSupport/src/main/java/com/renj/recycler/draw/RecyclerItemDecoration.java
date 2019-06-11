@@ -3,6 +3,7 @@ package com.renj.recycler.draw;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -27,7 +28,9 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
 
     protected int mHorizontalDividerHeight = DEFAULT_DIVIDER_HEIGHT; // 水平方向上的宽度
     protected int mHorizontalDividerColor = DEFAULT_DIVIDER_COLOR; // 水平分割线颜色
+    protected Drawable mHorizontalDividerDrawable; // 水平分割线 Drawable
     protected int mCrossPointColor = mHorizontalDividerColor;   // 交叉点的分割线颜色，默认使用水平分割线的颜色
+    protected Drawable mCrossPointDrawable; // 交叉点的分割线 Drawable，默认使用水平分割线的 Drawable
 
     protected boolean mIsDrawLastRow = false; // 最后一行之后是否绘制分割线
     protected boolean mIsDrawLastCol = false; // 最后一列之后是否绘制分割线
@@ -38,10 +41,15 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     protected int mLeftAndRightColHeight = DEFAULT_DIVIDER_HEIGHT;   // 第一列之前和最后一行之后的分割线宽度
 
     protected int mLastRowColor = DEFAULT_DIVIDER_COLOR; // 最后一行之后分割线颜色
+    protected Drawable mLastRowDrawable;
     protected int mLastColColor = DEFAULT_DIVIDER_COLOR; // 最后一列之后分割线颜色
+    protected Drawable mLastColDrawable;
     protected int mFirstRowColor = DEFAULT_DIVIDER_COLOR; // 第一行之前分割线颜色
+    protected Drawable mFirstRowDrawable;
     protected int mFirstColColor = DEFAULT_DIVIDER_COLOR; // 第一列之前分割线颜色
+    protected Drawable mFirstColDrawable;
     protected int mBorderCrossPointColor = DEFAULT_DIVIDER_COLOR; // 四周分隔线交叉点颜色
+    protected Drawable mBorderCrossPointDrawable;
 
 
     public RecyclerItemDecoration(@RecyclerView.Orientation int orientation) {
@@ -124,6 +132,19 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
+     * 设置在第一行之前是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawFirstRow   是否绘制第一行之前分割线  默认 false
+     * @param firstRowDrawable 分割线 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T drawFirstRowBefore(boolean isDrawFirstRow, Drawable firstRowDrawable) {
+        this.mIsDrawFirstRow = isDrawFirstRow;
+        this.mFirstRowDrawable = firstRowDrawable;
+        return (T) this;
+    }
+
+    /**
      * 设置在第一列之前是否需要绘制分割线
      *
      * @param isDrawFirstCol 是否绘制第一列之前分割线  默认 false
@@ -148,6 +169,19 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
+     * 设置在第一列之前是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawFirstCol   是否绘制第一列之前分割线  默认 false
+     * @param firstColDrawable 分割线 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T drawFirstColBefore(boolean isDrawFirstCol, Drawable firstColDrawable) {
+        this.mIsDrawFirstCol = isDrawFirstCol;
+        this.mFirstColDrawable = firstColDrawable;
+        return (T) this;
+    }
+
+    /**
      * 设置在最后一行之后是否需要绘制分割线
      *
      * @param isDrawLastRow 是否绘制最后一行之后分割线  默认 false
@@ -168,6 +202,19 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow, int lastRowColor) {
         this.mIsDrawLastRow = isDrawLastRow;
         this.mLastRowColor = lastRowColor;
+        return (T) this;
+    }
+
+    /**
+     * 设置在最后一行之后是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawLastRow   是否绘制最后一行之后分割线  默认 false
+     * @param lastRowDrawable 分割线 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow, Drawable lastRowDrawable) {
+        this.mIsDrawLastRow = isDrawLastRow;
+        this.mLastRowDrawable = lastRowDrawable;
         return (T) this;
     }
 
@@ -197,6 +244,19 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
+     * 设置在最后一列之后是否需要绘制分割线，并指定颜色
+     *
+     * @param isDrawLastCol   是否绘制最后一列之后分割线  默认 false
+     * @param lastColDrawable 分割线 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T drawLastColAfter(boolean isDrawLastCol, Drawable lastColDrawable) {
+        this.mIsDrawLastCol = isDrawLastCol;
+        this.mLastColDrawable = lastColDrawable;
+        return (T) this;
+    }
+
+    /**
      * 设置边界交叉点颜色(第一行之前、第一列之前、最后一行之后、最后一列之后组成的框的交叉点颜色)，<br/>
      * 如果没有指定，那么行的交叉点使用水平方向上的颜色，列的交叉点使用垂直方向上的颜色
      *
@@ -205,6 +265,18 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      */
     public <T extends RecyclerItemDecoration> T borderCrossPointColor(int borderCrossPointColor) {
         this.mBorderCrossPointColor = borderCrossPointColor;
+        return (T) this;
+    }
+
+    /**
+     * 设置边界交叉点颜色(第一行之前、第一列之前、最后一行之后、最后一列之后组成的框的交叉点颜色)，<br/>
+     * 如果没有指定，那么行的交叉点使用水平方向上的颜色，列的交叉点使用垂直方向上的颜色
+     *
+     * @param borderCrossPointDrawable 边界交叉点 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T borderCrossPointDrawable(Drawable borderCrossPointDrawable) {
+        this.mBorderCrossPointDrawable = borderCrossPointDrawable;
         return (T) this;
     }
 
@@ -222,6 +294,19 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
+     * 指定分割线显色，默认 0xFFDDDDDD
+     *
+     * @param dividerDrawable 水平方向、垂直方向上和交叉点的颜色相同  交叉点默认使用水平方向上的 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T dividerDrawable(Drawable dividerDrawable) {
+        this.mHorizontalDividerDrawable = dividerDrawable;
+        this.mCrossPointDrawable = dividerDrawable;
+        setRowAndColDrawable(dividerDrawable, dividerDrawable);
+        return (T) this;
+    }
+
+    /**
      * 分别指定水平方向上和垂直方向上的分割线显色，交叉点的分割线的颜色与水平方向上的颜色一致  默认 0xFFDDDDDD
      *
      * @param horizontalDividerColor 水平方向上分割线的颜色，交叉点的分割线的颜色与水平方向上的颜色一致
@@ -232,6 +317,20 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
         this.mHorizontalDividerColor = horizontalDividerColor;
         this.mCrossPointColor = horizontalDividerColor;
         setRowAndColColor(horizontalDividerColor, verticalDividerColor);
+        return (T) this;
+    }
+
+    /**
+     * 分别指定水平方向上和垂直方向上的分割线显色，交叉点的分割线的颜色与水平方向上的颜色一致  默认 0xFFDDDDDD
+     *
+     * @param horizontalDividerDrawable 水平方向上分割线的 Drawable，交叉点的分割线的颜色与水平方向上的颜色一致
+     * @param verticalDividerDrawable   垂直方向上分割线的 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T dividerDrawable(Drawable horizontalDividerDrawable, Drawable verticalDividerDrawable) {
+        this.mHorizontalDividerDrawable = horizontalDividerDrawable;
+        this.mCrossPointDrawable = horizontalDividerDrawable;
+        setRowAndColDrawable(horizontalDividerDrawable, verticalDividerDrawable);
         return (T) this;
     }
 
@@ -251,17 +350,46 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
+     * 分别指定水平方向上、垂直方向上以及交叉点的分割线显色
+     *
+     * @param horizontalDividerDrawable 水平方向上分割线的 Drawable
+     * @param verticalDividerDrawable   垂直方向上分割线的 Drawable
+     * @param crossPointDrawable        交叉点的分割线的 Drawable
+     * @return
+     */
+    public <T extends RecyclerItemDecoration> T dividerDrawable(Drawable horizontalDividerDrawable, Drawable verticalDividerDrawable, Drawable crossPointDrawable) {
+        this.mHorizontalDividerDrawable = horizontalDividerDrawable;
+        this.mCrossPointDrawable = crossPointDrawable;
+        setRowAndColDrawable(horizontalDividerDrawable, verticalDividerDrawable);
+        return (T) this;
+    }
+
+    /**
      * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的颜色值进行设置，<br/>
      * 但是在设置之前需要先判断有没有单独为这几个位置设置过颜色，因为单独设置的优先级更高
      *
-     * @param lowColor 行颜色
+     * @param rowColor 行颜色
      * @param colColor 列颜色
      */
-    protected void setRowAndColColor(int lowColor, int colColor) {
-        if (DEFAULT_DIVIDER_COLOR == mFirstRowColor) mFirstRowColor = lowColor;
-        if (DEFAULT_DIVIDER_COLOR == mLastRowColor) mLastRowColor = lowColor;
+    protected void setRowAndColColor(int rowColor, int colColor) {
+        if (DEFAULT_DIVIDER_COLOR == mFirstRowColor) mFirstRowColor = rowColor;
+        if (DEFAULT_DIVIDER_COLOR == mLastRowColor) mLastRowColor = rowColor;
         if (DEFAULT_DIVIDER_COLOR == mFirstColColor) mFirstColColor = colColor;
         if (DEFAULT_DIVIDER_COLOR == mLastColColor) mLastColColor = colColor;
+    }
+
+    /**
+     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的颜色值进行设置，<br/>
+     * 但是在设置之前需要先判断有没有单独为这几个位置设置过颜色，因为单独设置的优先级更高
+     *
+     * @param rowDrawable 行 Drawable
+     * @param colDrawable 列 Drawable
+     */
+    protected void setRowAndColDrawable(Drawable rowDrawable, Drawable colDrawable) {
+        if (mFirstRowDrawable == null) mFirstRowDrawable = rowDrawable;
+        if (mLastRowDrawable == null) mLastRowDrawable = rowDrawable;
+        if (mFirstColDrawable == null) mFirstColDrawable = colDrawable;
+        if (mLastColDrawable == null) mLastColDrawable = colDrawable;
     }
 
     // 设置偏移量
