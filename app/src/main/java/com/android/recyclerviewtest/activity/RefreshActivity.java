@@ -13,7 +13,7 @@ import com.android.recyclerviewtest.adapter.RecyclerAdapter;
 import com.android.recyclerviewtest.adapter.cell.CellFactory;
 import com.android.recyclerviewtest.adapter.cell.VerticalTextCell;
 import com.android.recyclerviewtest.data.DataUtil;
-import com.android.recyclerviewtest.draw.CustomItemDecoration;
+import com.android.recyclerviewtest.draw.LinearItemDecoration;
 import com.android.recyclerviewtest.utils.ToastUtil;
 
 import java.util.List;
@@ -93,8 +93,8 @@ public class RefreshActivity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
-        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight((int) getResources()
-                .getDimension(R.dimen.line_height))
+        recyclerView.addItemDecoration(new LinearItemDecoration(LinearLayoutManager.VERTICAL)
+                .dividerHeight((int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.line_bg)));
 
         // 改变颜色，还可设置其他属性

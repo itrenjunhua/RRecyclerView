@@ -6,8 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.android.recyclerviewtest.utils.RLog;
-
 /**
  * ======================================================================
  * <p>
@@ -15,7 +13,7 @@ import com.android.recyclerviewtest.utils.RLog;
  * <p>
  * 创建时间：2019-06-09   18:00
  * <p>
- * 描述：
+ * 描述：{@link GridLayoutManager} 类型的分割线
  * <p>
  * 修订历史：
  * <p>
@@ -25,7 +23,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
     private int mVerticalDividerHeight = DEFAULT_DIVIDER_HEIGHT;   // 垂直方向上的宽度
     private int mVerticalDividerColor = DEFAULT_DIVIDER_COLOR;   // 垂直分割线颜色
 
-    public GridItemDecoration(int orientation) {
+    public GridItemDecoration(@RecyclerView.Orientation int orientation) {
         super(orientation);
     }
 
@@ -108,12 +106,16 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
     @Override
     protected void itemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+        RecyclerView.LayoutManager layoutManager1 = parent.getLayoutManager();
+        if (!(layoutManager1 instanceof GridLayoutManager))
+            throw new IllegalStateException("The RecyclerView.LayoutManager is not GridLayoutManager.");
+
+        GridLayoutManager layoutManager = (GridLayoutManager) layoutManager1;
+
         GridLayoutManager.SpanSizeLookup spanSizeLookup = layoutManager.getSpanSizeLookup();
         int viewLayoutPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         int itemCount = parent.getAdapter().getItemCount();
         int spanCount = layoutManager.getSpanCount();
-        int parentWidth = parent.getWidth();
         int spanSize = spanSizeLookup.getSpanSize(viewLayoutPosition);
         int spanIndex = spanSizeLookup.getSpanIndex(viewLayoutPosition, spanCount);
 
@@ -124,8 +126,6 @@ public class GridItemDecoration extends RecyclerItemDecoration {
 
         boolean isDrawFirstCol = firstCol && mIsDrawFirstCol;
         boolean isDrawFirstRow = firstRow && mIsDrawFirstRow;
-        boolean isDrawLastRow = lastRow && mIsDrawLastRow;
-        boolean isDrawLastCol = lastCol && mIsDrawLastCol;
 
         if (mOrientation == GridLayoutManager.VERTICAL) {
             if (mIsDrawFirstCol && mIsDrawLastCol) {
@@ -194,7 +194,6 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             else
                 right = 0;
         }
-        RLog.i("spanSize => " + spanSize + "  spanIndex => " + spanIndex);
         int top = isDrawFirstRow ? mTopAndBottomRowHeight : 0;
         int bottom = lastRow ? (mIsDrawLastRow ? mTopAndBottomRowHeight : 0) : mHorizontalDividerHeight;
         outRect.set(left, top, right, bottom);

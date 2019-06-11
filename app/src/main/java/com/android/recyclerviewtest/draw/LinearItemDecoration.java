@@ -13,7 +13,7 @@ import android.view.View;
  * <p>
  * 创建时间：2019-06-09   18:09
  * <p>
- * 描述：
+ * 描述：{@link LinearLayoutManager} 类型的分割线
  * <p>
  * 修订历史：
  * <p>
@@ -26,6 +26,10 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
 
     @Override
     protected void itemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (!(layoutManager instanceof LinearLayoutManager))
+            throw new IllegalStateException("The RecyclerView.LayoutManager is not LinearLayoutManager.");
+
         int viewLayoutPosition = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
         int itemCount = parent.getAdapter().getItemCount();
 

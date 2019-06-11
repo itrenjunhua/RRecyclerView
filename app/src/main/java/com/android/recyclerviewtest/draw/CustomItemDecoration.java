@@ -16,7 +16,7 @@ import android.view.View;
  * <p/>
  * 创建时间：20017-04-10    22:06
  * <p/>
- * 描述：给 RecyclerView 绘制分割线<br/><br/>
+ * 描述：给 RecyclerView 绘制分割线<br/><br/> 已过时，建议使用 {@link LinearItemDecoration} 和 {@link GridItemDecoration} 类
  * <b>注意：</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  * <b>使用绘制类前必须先调用 {@link RecyclerView#setLayoutManager(RecyclerView.LayoutManager)} 设置 {@link RecyclerView.LayoutManager}，否则可能导致绘制出现问题 <br/><br/>
  * <b>说明：</b><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -28,6 +28,7 @@ import android.view.View;
  * <p/>
  * ======================================================================
  */
+@Deprecated
 public class CustomItemDecoration extends RecyclerView.ItemDecoration {
     private static final int DEFAULT_DIVIDER_HEIGHT = 1; // 默认宽度
     private static final int DEFAULT_DIVIDER_COLOR = 0xFFDDDDDD; // 默认分割线颜色
