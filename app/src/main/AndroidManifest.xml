@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.android.recyclerviewtest"
+<manifest package="com.android.test"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -13,29 +13,29 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
-		<!-- 配置Gliede的GlideModule -->
+		<!-- 配置Glide的GlideModule -->
 		<meta-data
-			android:name="com.android.recyclerviewtest.utils.imageutil.ConsumerGlideModule"
+			android:name="com.android.test.utils.imageutil.ConsumerGlideModule"
 			android:value="GlideModule"/>
 
-		<activity android:name=".activity.MainActivity">
+		<activity android:name="com.android.test.activity.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".activity.List1Activity"/>
-		<activity android:name=".activity.List2Activity"/>
-		<activity android:name=".activity.Grid1Activity"/>
-		<activity android:name=".activity.Grid2Activity"/>
-		<activity android:name=".activity.Grid3Activity"/>
-		<activity android:name=".activity.Staggered1Activity"/>
-		<activity android:name=".activity.Staggered2Activity"/>
-		<activity android:name=".activity.MultipleItemActivity"/>
-		<activity android:name=".activity.RefreshActivity"/>
-		<activity android:name=".activity.ItemTouchActivity"/>
-		<activity android:name=".activity.MyRefreshRecyclerViewActivity"/>
+		<activity android:name="com.android.test.activity.List1Activity"/>
+		<activity android:name="com.android.test.activity.List2Activity"/>
+		<activity android:name="com.android.test.activity.Grid1Activity"/>
+		<activity android:name="com.android.test.activity.Grid2Activity"/>
+		<activity android:name="com.android.test.activity.Grid3Activity"/>
+		<activity android:name="com.android.test.activity.Staggered1Activity"/>
+		<activity android:name="com.android.test.activity.Staggered2Activity"/>
+		<activity android:name="com.android.test.activity.MultipleItemActivity"/>
+		<activity android:name="com.android.test.activity.RefreshActivity"/>
+		<activity android:name="com.android.test.activity.ItemTouchActivity"/>
+		<activity android:name="com.android.test.activity.MyRefreshRecyclerViewActivity"/>
 	</application>
 
 </manifest>
