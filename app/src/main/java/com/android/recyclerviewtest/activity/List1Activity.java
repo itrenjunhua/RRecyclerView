@@ -57,10 +57,10 @@ public class List1Activity extends BaseActivity {
                 .dividerHeight((int) getResources().getDimension(R.dimen.line_height))
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
                 .dividerRowAndColHeight(40, 40)
-                .drawFirstRowBeforeColor(true, getResources().getColor(R.color.colorFirstLow))
-                .drawFirstColBeforeColor(true, getResources().getColor(R.color.colorFirstCol))
-                .drawLastRowAfterColor(true, getResources().getColor(R.color.colorLastLow))
-                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .drawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow))
+                .drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
+                .drawLastRowAfter(true, getResources().getColor(R.color.colorLastLow))
+                .drawLastColAfter(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
     }

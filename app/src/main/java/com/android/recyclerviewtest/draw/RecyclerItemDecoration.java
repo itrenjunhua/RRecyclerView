@@ -79,7 +79,16 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
     }
 
     /**
-     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的高度进行设置
+     * 这个方法主要用于在设置水平方向和垂直方向时对第一行之前和最后一行之后、第一列之前和最后一列之后的高度进行设置<br/>
+     * 若要生效(绘制分割线) 需要调用
+     * {@link #drawFirstRowBefore(boolean)}/
+     * {@link #drawFirstRowBefore(boolean, int)}、
+     * {@link #drawFirstColBefore(boolean)}/
+     * {@link #drawFirstColBefore(boolean, int)}、
+     * {@link #drawLastRowAfter(boolean)}/
+     * {@link #drawLastRowAfter(boolean, int)}、
+     * {@link #drawLastRowAfter(boolean)}/
+     * {@link #drawLastColAfter(boolean, int)}等方法，并指定参数为 true
      *
      * @param lowHeight 第一行之前和最后一列之后的分割线高度
      * @param colHeight 第一列之前和最后一行之后的分割线宽度
@@ -96,7 +105,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param isDrawFirstRow 是否绘制第一行之前分割线  默认 false
      * @return
      */
-    public <T extends RecyclerItemDecoration> T isDrawFirstRowBefore(boolean isDrawFirstRow) {
+    public <T extends RecyclerItemDecoration> T drawFirstRowBefore(boolean isDrawFirstRow) {
         this.mIsDrawFirstRow = isDrawFirstRow;
         return (T) this;
     }
@@ -108,7 +117,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstRowBeforeColor(boolean isDrawFirstRow, int firstRowColor) {
+    public <T extends RecyclerItemDecoration> T drawFirstRowBefore(boolean isDrawFirstRow, int firstRowColor) {
         this.mIsDrawFirstRow = isDrawFirstRow;
         this.mFirstRowColor = firstRowColor;
         return (T) this;
@@ -132,7 +141,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstColBeforeColor(boolean isDrawFirstCol, int firstColColor) {
+    public <T extends RecyclerItemDecoration> T drawFirstColBefore(boolean isDrawFirstCol, int firstColColor) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         this.mFirstColColor = firstColColor;
         return (T) this;
@@ -156,7 +165,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastRowAfterColor(boolean isDrawLastRow, int lastRowColor) {
+    public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow, int lastRowColor) {
         this.mIsDrawLastRow = isDrawLastRow;
         this.mLastRowColor = lastRowColor;
         return (T) this;
@@ -181,7 +190,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastColAfterColor(boolean isDrawLastCol, int lastColColor) {
+    public <T extends RecyclerItemDecoration> T drawLastColAfter(boolean isDrawLastCol, int lastColColor) {
         this.mIsDrawLastCol = isDrawLastCol;
         this.mLastColColor = lastColColor;
         return (T) this;

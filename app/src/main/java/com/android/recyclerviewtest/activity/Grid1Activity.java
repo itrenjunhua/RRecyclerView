@@ -51,7 +51,7 @@ public class Grid1Activity extends BaseActivity {
             @Override
             public int getSpanSize(int position) {
                 if (position == 0)
-                    return 3;
+                    return 2;
                 return 1;
             }
         });
@@ -67,24 +67,12 @@ public class Grid1Activity extends BaseActivity {
         // 增加分割线
         recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.VERTICAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
                 .dividerRowAndColHeight(40,50)
-                .drawFirstRowBeforeColor(true, getResources().getColor(R.color.colorFirstLow))
-                //.drawFirstColBeforeColor(true, getResources().getColor(R.color.colorFirstCol))
-                .drawLastRowAfterColor(true, getResources().getColor(R.color.colorLastLow))
-                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
+                .drawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow))
+                //.drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
+                .drawLastRowAfter(true, getResources().getColor(R.color.colorLastLow))
+                .drawLastColAfter(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );
-        // 增加分割线
-//        recyclerView.addItemDecoration(new CustomItemDecoration().dividerHeight(40, (int) getResources().getDimension(R.dimen.line_height))
-//                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-//                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-//                .isDrawFirstLowBefore(true, getResources().getColor(R.color.colorFirstLow), 50)
-//                .drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol), 28)
-//                .isDrawLastLowAfter(true, getResources().getColor(R.color.colorLastLow), 20)
-//                .drawLastColAfterColor(true, getResources().getColor(R.color.colorLastCol))
-//                .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
-//        );
-
     }
 }
