@@ -37,7 +37,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
      */
     @Override
     public GridItemDecoration dividerHeight(int dividerHeight) {
-        mHorizontalDividerHeight = dividerHeight;
+        super.dividerHeight(dividerHeight);
         mVerticalDividerHeight = dividerHeight;
         return this;
     }
@@ -63,9 +63,8 @@ public class GridItemDecoration extends RecyclerItemDecoration {
      */
     @Override
     public GridItemDecoration dividerColor(int dividerColor) {
-        mHorizontalDividerColor = dividerColor;
+        super.dividerColor(dividerColor);
         mVerticalDividerColor = dividerColor;
-        mCrossPointColor = dividerColor;
         return this;
     }
 
@@ -77,9 +76,8 @@ public class GridItemDecoration extends RecyclerItemDecoration {
      */
     @Override
     public GridItemDecoration dividerDrawable(Drawable dividerDrawable) {
-        mHorizontalDividerDrawable = dividerDrawable;
+        super.dividerDrawable(dividerDrawable);
         mVerticalDividerDrawable = dividerDrawable;
-        mBorderCrossPointDrawable = dividerDrawable;
         return this;
     }
 
@@ -92,9 +90,8 @@ public class GridItemDecoration extends RecyclerItemDecoration {
      */
     @Override
     public GridItemDecoration dividerColor(int horizontalDividerColor, int verticalDividerColor) {
-        mHorizontalDividerColor = horizontalDividerColor;
+        super.dividerColor(horizontalDividerColor, horizontalDividerColor);
         mVerticalDividerColor = verticalDividerColor;
-        mCrossPointColor = horizontalDividerColor;
         return this;
     }
 
@@ -107,9 +104,8 @@ public class GridItemDecoration extends RecyclerItemDecoration {
      */
     @Override
     public GridItemDecoration dividerDrawable(Drawable horizontalDividerDrawable, Drawable verticalDividerDrawable) {
-        mHorizontalDividerDrawable = horizontalDividerDrawable;
+        super.dividerDrawable(horizontalDividerDrawable, horizontalDividerDrawable);
         mVerticalDividerDrawable = verticalDividerDrawable;
-        mCrossPointDrawable = horizontalDividerDrawable;
         return this;
     }
 
