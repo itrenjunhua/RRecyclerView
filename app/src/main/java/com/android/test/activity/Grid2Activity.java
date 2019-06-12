@@ -70,9 +70,9 @@ public class Grid2Activity extends BaseActivity {
         recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.HORIZONTAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
                 .dividerRowAndColHeight(40,50)
-                .drawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow))
+                .drawFirstRowBefore(true, getResources().getDrawable(R.drawable.shape_divider_bg))
                 .drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
-                .drawLastRowAfter(true, getResources().getColor(R.color.colorLastLow))
+                .drawLastRowAfter(true, getResources().getDrawable(R.drawable.shape_divider_bg))
                 .drawLastColAfter(true, getResources().getColor(R.color.colorLastCol))
                 .borderCrossPointColor(getResources().getColor(R.color.colorBorderPoint))
         );

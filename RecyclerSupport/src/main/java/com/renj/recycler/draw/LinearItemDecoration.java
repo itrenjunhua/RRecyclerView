@@ -256,17 +256,18 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
 
-                if (mBorderCrossPointDrawable != null || mFirstRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mCrossPointDrawable.draw(c);
-                    } else {
-                        mFirstRowDrawable.setBounds(left, top, right, bottom);
-                        mFirstRowDrawable.draw(c);
-                    }
-                } else {
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
                     // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mFirstRowDrawable != null) {
+                    mFirstRowDrawable.setBounds(left, top, right, bottom);
+                    mFirstRowDrawable.draw(c);
+                } else {
+                    mPaint.setColor(mFirstRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -278,17 +279,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mHorizontalDividerHeight;
 
-                if (mBorderCrossPointDrawable != null || mFirstColDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mFirstColDrawable.setBounds(left, top, right, bottom);
-                        mFirstColDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mFirstColDrawable != null) {
+                    mFirstColDrawable.setBounds(left, top, right, bottom);
+                    mFirstColDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用第一列之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstColColor : mBorderCrossPointColor);
+                    mPaint.setColor(mFirstColColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -300,17 +301,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mHorizontalDividerHeight;
 
-                if (mBorderCrossPointDrawable != null || mLastColDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mLastColDrawable.setBounds(left, top, right, bottom);
-                        mLastColDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mLastColDrawable != null) {
+                    mLastColDrawable.setBounds(left, top, right, bottom);
+                    mLastColDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用最后一列之后分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastColColor : mBorderCrossPointColor);
+                    mPaint.setColor(mLastColColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -322,17 +323,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mTopAndBottomRowHeight;
 
-                if (mBorderCrossPointDrawable != null || mLastRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mLastRowDrawable.setBounds(left, top, right, bottom);
-                        mLastRowDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mLastRowDrawable != null) {
+                    mLastRowDrawable.setBounds(left, top, right, bottom);
+                    mLastRowDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用最后一行之后分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mLastRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -348,17 +349,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
 
-                if (mBorderCrossPointDrawable != null || mFirstRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mFirstRowDrawable.setBounds(left, top, right, bottom);
-                        mFirstRowDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mFirstRowDrawable != null) {
+                    mFirstRowDrawable.setBounds(left, top, right, bottom);
+                    mFirstRowDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mFirstRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -370,17 +371,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
 
-                if (mBorderCrossPointDrawable != null || mFirstRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mFirstRowDrawable.setBounds(left, top, right, bottom);
-                        mFirstRowDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mFirstRowDrawable != null) {
+                    mFirstRowDrawable.setBounds(left, top, right, bottom);
+                    mFirstRowDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mFirstRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mFirstRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -392,17 +393,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mTopAndBottomRowHeight;
 
-                if (mBorderCrossPointDrawable != null || mLastRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mLastRowDrawable.setBounds(left, top, right, bottom);
-                        mLastRowDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mLastRowDrawable != null) {
+                    mLastRowDrawable.setBounds(left, top, right, bottom);
+                    mLastRowDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mLastRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }
@@ -414,17 +415,17 @@ public class LinearItemDecoration extends RecyclerItemDecoration {
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mTopAndBottomRowHeight;
 
-                if (mBorderCrossPointDrawable != null || mLastRowDrawable != null) {
-                    if (mBorderCrossPointDrawable != null) {
-                        mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
-                        mBorderCrossPointDrawable.draw(c);
-                    } else {
-                        mLastRowDrawable.setBounds(left, top, right, bottom);
-                        mLastRowDrawable.draw(c);
-                    }
+                if (mBorderCrossPointDrawable != null) {
+                    mBorderCrossPointDrawable.setBounds(left, top, right, bottom);
+                    mBorderCrossPointDrawable.draw(c);
+                } else if (DEFAULT_DIVIDER_COLOR != mBorderCrossPointColor) {
+                    mPaint.setColor(mBorderCrossPointColor);
+                    c.drawRect(left, top, right, bottom, mPaint);
+                } else if (mLastRowDrawable != null) {
+                    mLastRowDrawable.setBounds(left, top, right, bottom);
+                    mLastRowDrawable.draw(c);
                 } else {
-                    // 是否设置了边界交叉点位置颜色，没有设置就用第一行之前分割线的颜色
-                    mPaint.setColor(DEFAULT_DIVIDER_COLOR == mBorderCrossPointColor ? mLastRowColor : mBorderCrossPointColor);
+                    mPaint.setColor(mLastRowColor);
                     c.drawRect(left, top, right, bottom, mPaint);
                 }
             }

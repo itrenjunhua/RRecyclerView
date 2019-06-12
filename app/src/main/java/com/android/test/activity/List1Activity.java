@@ -55,7 +55,7 @@ public class List1Activity extends BaseActivity {
         // 增加分割线
         recyclerView.addItemDecoration(new LinearItemDecoration(RecyclerView.VERTICAL)
                 .dividerHeight((int) getResources().getDimension(R.dimen.line_height))
-                .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
+                .dividerDrawable(getResources().getDrawable(R.drawable.shape_divider_bg))
                 .dividerRowAndColHeight(40, 40)
                 .drawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow))
                 .drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
