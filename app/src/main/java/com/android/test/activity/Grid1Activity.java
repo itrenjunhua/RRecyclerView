@@ -65,9 +65,9 @@ public class Grid1Activity extends BaseActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
         // 增加分割线
-        recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.VERTICAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
+        recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.VERTICAL).dividerHeight(40, 60/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .dividerRowAndColHeight(40,50)
+                .dividerRowAndColHeight(40,30)
                 .drawFirstRowBefore(true, getResources().getColor(R.color.colorFirstLow))
                 //.drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
                 .drawLastRowAfter(true, getResources().getColor(R.color.colorLastLow))

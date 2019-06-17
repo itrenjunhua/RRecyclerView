@@ -441,7 +441,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             // 绘制第一行，但是不是最后一列，交叉点的位置需要绘制
             if (firstRow && !lastCol && mIsDrawFirstRow) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
-                int right = left + mHorizontalDividerHeight;
+                int right = left + mVerticalDividerHeight;
                 int top = childAt.getTop() - layoutParams.topMargin - mTopAndBottomRowHeight;
                 int bottom = childAt.getTop() - layoutParams.topMargin;
 
@@ -508,7 +508,7 @@ public class GridItemDecoration extends RecyclerItemDecoration {
             // 是最后一行，但不是最后一列，交叉点的位置需要绘制
             if (lastRaw && !lastCol && mIsDrawLastRow) {
                 int left = childAt.getRight() + layoutParams.rightMargin;
-                int right = left + mHorizontalDividerHeight;
+                int right = left + mVerticalDividerHeight;
                 int top = childAt.getBottom() + layoutParams.bottomMargin;
                 int bottom = top + mTopAndBottomRowHeight;
 
