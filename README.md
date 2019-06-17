@@ -17,6 +17,8 @@ Android `RecyclerView` 控件使用方法及代码示例，以及 `RecyclerView`
 > 2.支持自定义设置水平分割线高度、颜色(或Drawable)，垂直分割线高度、颜色(或Drawable)；以及水平分割线和垂直分割线交叉点的颜色(或Drawable)  
 > 3.支持自定义是否需要绘制第一行之前、第一列之前、最后一行之后、最后一列之后的分割线，并指定其宽度和颜色(或Drawable)  
 
+[Android RecyclerView —— 自定义分割线](https://blog.csdn.net/ITRenj/article/details/92649029)
+
 ## RecyclerView Adapter封装
 #### 封装说明：
 定义一个 `RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapter<RecyclerViewHolder>` 插件类，
@@ -26,6 +28,8 @@ Android `RecyclerView` 控件使用方法及代码示例，以及 `RecyclerView`
 > 1.所有的 `RecyclerView` 都可以使用同一个 `RecyclerAdapter` 类，不需要重复的创建 `Adapter` 类；  
 > 2.如果一个列表有多重类型的 item 样式，只需要创建一个 cell 类，增加到 `RecyclerAdapter` 类 中即可，不需要修改 Adapter 中的代码，实现解耦；  
 > 3.当应用中有相同的 item 类型时，可以实现代码的复用(因为每一个 item 就是一个独立的 cell，与具体的页面和 Adapter 无关了)
+
+[Android RecyclerView —— 适配器封装探索](https://blog.csdn.net/ITRenj/article/details/92405204)
 
 ## 自定义下拉刷新和加载更多效果
 扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView  
@@ -60,7 +64,13 @@ Android `RecyclerView` 控件使用方法及代码示例，以及 `RecyclerView`
 
 	recyclerview.setHasMore(true);
 
-博客说明地址：<http://blog.csdn.net/itrenj/article/details/70163238>
+博客说明地址：
+
+[Android RecyclerView —— 基本使用](https://blog.csdn.net/ITRenj/article/details/91556719)
+
+[Android RecyclerView —— 适配器封装探索](https://blog.csdn.net/ITRenj/article/details/92405204)
+
+[Android RecyclerView —— 自定义分割线](https://blog.csdn.net/ITRenj/article/details/92649029)
 ## 效果图
 ![RecyclerView效果图目录](https://github.com/itrenjunhua/RRecyclerView/raw/master/images/image_list1.jpg) 
 ![RecyclerView效果图目录](https://github.com/itrenjunhua/RRecyclerView/raw/master/images/image_list2.jpg) 
