@@ -48,7 +48,8 @@ public class HorizontalTextCell extends RecyclerCell<String> {
     }
 
     @Override
-    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
         ToastUtil.showSingleToast(context, "长按 位置:" + position + "；数据:" + itemData);
         return false;
     }

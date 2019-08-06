@@ -47,7 +47,8 @@ public class GridTextCell extends RecyclerCell<String> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder,
+                            @NonNull View itemView, int position, String itemData) {
         ToastUtil.showSingleToast(context, "点击TextView控件 - " + itemData);
     }
 }

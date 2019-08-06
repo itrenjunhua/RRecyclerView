@@ -52,7 +52,8 @@ public class VerticalImageCell extends RecyclerCell<String> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
         ToastUtil.showSingleToast(context, "图片链接 - " + itemData);
     }
 }

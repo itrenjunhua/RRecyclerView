@@ -71,7 +71,8 @@ public class StaggeredVerticalImageCell extends RecyclerCell<String> {
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull View itemView, int position, String itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
         ToastUtil.showSingleToast(context, "删除位置：" + position);
         recyclerAdapter.removeAndNotifyItem(position);
     }
