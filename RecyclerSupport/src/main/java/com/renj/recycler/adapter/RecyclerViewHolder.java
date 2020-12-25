@@ -55,14 +55,6 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public RecyclerViewHolder(@NonNull Context context, @NonNull ViewGroup parent, @LayoutRes int layoutId) {
-        this(LayoutInflater.from(context).inflate(layoutId, parent, false));
-    }
-
-    public View getItemView() {
-        return itemView;
-    }
-
     public TextView getTextView(@IdRes int vId) {
         return getView(vId);
     }
@@ -75,12 +67,8 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         getTextView(vId).setText(strId);
     }
 
-    public Button getButton(@IdRes int vId) {
-        return getView(vId);
-    }
-
     public void setEnabled(@IdRes int vId, boolean enable) {
-        getButton(vId).setEnabled(enable);
+        getView(vId).setEnabled(enable);
     }
 
     public ImageView getImageView(@IdRes int vId) {
@@ -96,10 +84,10 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public  <T extends View> T getView(@IdRes int vId) {
+    public <T extends View> T getView(@IdRes int vId) {
         View view = itemViews.get(vId);
         if (view == null) {
-            view = getItemView().findViewById(vId);
+            view = itemView.findViewById(vId);
             itemViews.put(vId, view);
         }
         return (T) view;

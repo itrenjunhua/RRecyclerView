@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
 /**
@@ -25,21 +25,10 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class HorizontalTextCell extends RecyclerCell<String> {
+public class HorizontalTextCell extends BaseRecyclerCell<String> {
 
     public HorizontalTextCell(String itemData) {
-        super(itemData);
-    }
-
-    @Override
-    public int getRecyclerItemType() {
-        return RecyclerCellType.HORIZONTAL_TEXT_CELL;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.item_recycler_view2);
+        super(RecyclerCellType.HORIZONTAL_TEXT_CELL, R.layout.item_recycler_view2, itemData);
     }
 
     @Override

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
 /**
@@ -27,30 +27,19 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class VerticalTextCell extends RecyclerCell<String> {
+public class VerticalTextCell extends BaseRecyclerCell<String> {
 
     private RecyclerView recyclerView;
     private ItemTouchHelper itemTouchHelper;
 
     public VerticalTextCell(String itemData) {
-        super(itemData);
+        super(RecyclerCellType.VERTICAL_TEXT_CELL, R.layout.item_recycler_view1, itemData);
     }
 
     public VerticalTextCell(String itemData, RecyclerView recyclerView, ItemTouchHelper itemTouchHelper) {
-        super(itemData);
+        super(RecyclerCellType.VERTICAL_TEXT_CELL, R.layout.item_recycler_view1, itemData);
         this.recyclerView = recyclerView;
         this.itemTouchHelper = itemTouchHelper;
-    }
-
-    @Override
-    public int getRecyclerItemType() {
-        return RecyclerCellType.VERTICAL_TEXT_CELL;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.item_recycler_view1);
     }
 
     @Override

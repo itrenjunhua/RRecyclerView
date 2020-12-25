@@ -10,7 +10,7 @@ import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.android.test.utils.imageutil.GlideUtils;
 import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
 import java.util.HashMap;
@@ -30,26 +30,15 @@ import java.util.Random;
  * <p>
  * ======================================================================
  */
-public class StaggeredHorizontalImageCell extends RecyclerCell<String> {
+public class StaggeredHorizontalImageCell extends BaseRecyclerCell<String> {
     // 保存每一个 item 的高度，防止瀑布流图片闪烁问题
     private HashMap<String, Integer> saveHeight = new HashMap<>();
     private Random random = new Random();
     private GlideUtils glideUtils;
 
     public StaggeredHorizontalImageCell(String itemData, GlideUtils glideUtils) {
-        super(itemData);
+        super(RecyclerCellType.S_HORIZONTAL_IMAGE_CELL, R.layout.item_staggred_2, itemData);
         this.glideUtils = glideUtils;
-    }
-
-    @Override
-    public int getRecyclerItemType() {
-        return RecyclerCellType.S_HORIZONTAL_IMAGE_CELL;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.item_staggred_2);
     }
 
     @Override

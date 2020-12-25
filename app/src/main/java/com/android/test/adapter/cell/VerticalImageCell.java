@@ -9,7 +9,7 @@ import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.android.test.utils.imageutil.GlideUtils;
 import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerCell;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
 /**
@@ -26,24 +26,13 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class VerticalImageCell extends RecyclerCell<String> {
+public class VerticalImageCell extends BaseRecyclerCell<String> {
 
     private GlideUtils glideUtils;
 
     public VerticalImageCell(String itemData, GlideUtils glideUtils) {
-        super(itemData);
+        super(RecyclerCellType.VERTICAL_IMAGE_CELL, R.layout.item_multiple_img, itemData);
         this.glideUtils = glideUtils;
-    }
-
-    @Override
-    public int getRecyclerItemType() {
-        return RecyclerCellType.VERTICAL_IMAGE_CELL;
-    }
-
-    @NonNull
-    @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull Context context, @NonNull ViewGroup parent, int viewType) {
-        return new RecyclerViewHolder(context, parent, R.layout.item_multiple_img);
     }
 
     @Override

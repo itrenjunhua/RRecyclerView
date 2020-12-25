@@ -7,8 +7,8 @@ import android.widget.TextView;
 import com.android.test.R;
 import com.android.test.adapter.cell.CellFactory;
 import com.android.test.data.DataUtil;
-import com.renj.recycler.adapter.IRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.draw.LinearItemDecoration;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class MultipleItemActivity extends BaseActivity {
     }
 
     private List createCells(List<String> dataList) {
-        List<IRecyclerCell> cells = new ArrayList<>();
+        List<BaseRecyclerCell> cells = new ArrayList<>();
         for (String s : dataList) {
             if (s.length() > 1) {
                 cells.add(CellFactory.createVerticalImageCell(s, glideUtils));
