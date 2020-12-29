@@ -1,14 +1,20 @@
 package com.android.test.activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.UserDataCell;
+import com.android.test.cell.VerticalImageCell;
+import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
-import com.renj.recycler.adapter.RecyclerAdapter;
+import com.android.test.data.UserData;
 import com.renj.recycler.adapter.BaseRecyclerCell;
+import com.renj.recycler.adapter.MultiItemAdapter;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.draw.LinearItemDecoration;
 
 import java.util.ArrayList;
@@ -50,7 +56,18 @@ public class MultipleItemActivity extends BaseActivity {
 
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerAdapter adapter = new RecyclerAdapter(createCells(initDta()));
+        MultiItemAdapter adapter = new MultiItemAdapter(initDta()) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                if (itemTypeValue == RecyclerCellType.VERTICAL_TEXT_CELL)
+                    return new VerticalTextCell();
+                else if (itemTypeValue == RecyclerCellType.USER_DATA_CELL)
+                    return new UserDataCell();
+                else
+                    return new VerticalImageCell(glideUtils);
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -60,28 +77,22 @@ public class MultipleItemActivity extends BaseActivity {
                 .dividerColor(getResources().getColor(R.color.line_bg2)));
     }
 
-    private List createCells(List<String> dataList) {
-        List<BaseRecyclerCell> cells = new ArrayList<>();
-        for (String s : dataList) {
-            if (s.length() > 1) {
-                cells.add(CellFactory.createVerticalImageCell(s, glideUtils));
-            } else {
-                cells.add(CellFactory.createVerticalTextCell(s));
-            }
-        }
-        return cells;
-    }
-
     /**
      * 随机生成数据
      */
-    private List<String> initDta() {
-        List<String> dataList = new ArrayList<>();
+    private List<SimpleMultiItemEntity> initDta() {
+        List<SimpleMultiItemEntity> dataList = new ArrayList<>();
         Random random = new Random();
+        SimpleMultiItemEntity[] imageArray = DataUtil.getImageArray(RecyclerCellType.VERTICAL_IMAGE_CELL);
         for (int i = 'A', j = 0; i <= 'Z'; i++, j++) {
-            int anInt = random.nextInt(2) + 1;
-            if (anInt % 2 == 0) dataList.add((char) i + "");
-            else dataList.add(DataUtil.getImageArray()[j]);
+            int anInt = random.nextInt(3) + 1;
+            if (anInt % 3 == 0)
+                dataList.add(new SimpleMultiItemEntity(RecyclerCellType.VERTICAL_TEXT_CELL, "多种条目——文字类型 " + i));
+            else if (anInt % 3 == 1) {
+                dataList.add(new SimpleMultiItemEntity(RecyclerCellType.USER_DATA_CELL, new UserData("张三 - " + i, i)));
+            } else {
+                dataList.add(imageArray[j]);
+            }
         }
         return dataList;
     }

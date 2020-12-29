@@ -1,14 +1,14 @@
-package com.android.test.adapter.cell;
+package com.android.test.cell;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
-import com.renj.recycler.adapter.RecyclerAdapter;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.BaseRecyclerCell;
+import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerViewHolder;
 
 /**
@@ -25,19 +25,19 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class GridTextCell extends BaseRecyclerCell<String> {
-    public GridTextCell(String itemData) {
-        super(RecyclerCellType.GRID_TEXT_CELL, R.layout.item_grid, itemData);
+public class GridTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+    public GridTextCell() {
+        super(R.layout.item_grid);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
-        holder.setText(R.id.text_grid, itemData);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+        holder.setText(R.id.text_grid, itemData.getData());
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder,
-                            @NonNull View itemView, int position, String itemData) {
-        ToastUtil.showSingleToast(context, "点击TextView控件 - " + itemData);
+                            @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+        ToastUtil.showSingleToast(context, "点击TextView控件 - " + itemData.getData());
     }
 }

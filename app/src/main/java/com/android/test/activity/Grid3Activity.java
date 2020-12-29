@@ -1,12 +1,16 @@
 package com.android.test.activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
+import com.android.test.cell.GridTextCell;
+import com.android.test.cell.RecyclerCellType;
 import com.android.test.data.DataUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.GridItemDecoration;
 
@@ -71,11 +75,17 @@ public class Grid3Activity extends BaseActivity {
         });
 
 
-        List<String> textData = DataUtil.getTextData();
-        textData.add(0, "aa");
-        textData.add("AA");
-        textData.add("BB");
-        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createGridTextCell(textData));
+        List<SimpleMultiItemEntity> textData = DataUtil.getTextData(RecyclerCellType.GRID_TEXT_CELL);
+        textData.add(0, new SimpleMultiItemEntity<>(RecyclerCellType.GRID_TEXT_CELL, "aa"));
+        textData.add(new SimpleMultiItemEntity<>(RecyclerCellType.GRID_TEXT_CELL, "AA"));
+        textData.add(new SimpleMultiItemEntity<>(RecyclerCellType.GRID_TEXT_CELL, "BB"));
+        RecyclerAdapter<SimpleMultiItemEntity> adapter = new RecyclerAdapter<SimpleMultiItemEntity>(textData){
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new GridTextCell();
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

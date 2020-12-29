@@ -1,4 +1,4 @@
-package com.android.test.adapter.cell;
+package com.android.test.cell;
 
 /**
  * ======================================================================
@@ -21,4 +21,5 @@ public interface RecyclerCellType {
     int S_VERTICAL_IMAGE_CELL = 3;
     int S_HORIZONTAL_IMAGE_CELL = 4;
     int GRID_TEXT_CELL = 5;
+    int USER_DATA_CELL = 5;
 }

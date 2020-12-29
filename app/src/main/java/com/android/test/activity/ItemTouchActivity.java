@@ -1,6 +1,7 @@
 package com.android.test.activity;
 
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,12 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
-import com.android.test.adapter.cell.VerticalTextCell;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
 import com.android.test.utils.RLog;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -39,7 +42,6 @@ import java.util.List;
 public class ItemTouchActivity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<VerticalTextCell> cells;
 
     private RecyclerAdapter adapter;
     private LinearLayoutManager layoutManager;
@@ -83,7 +85,7 @@ public class ItemTouchActivity extends BaseActivity {
             int srcPosition = viewHolder.getAdapterPosition();
             int targetPosition = target.getAdapterPosition();
             // 交换两个位置的数据
-            changePosition(srcPosition, targetPosition, adapter.getCellList());
+            changePosition(srcPosition, targetPosition, adapter.getDataList());
             // 更新Adapter
             adapter.notifyItemMoved(srcPosition, targetPosition);
             return true;
@@ -92,13 +94,13 @@ public class ItemTouchActivity extends BaseActivity {
         /**
          * List集合交换两个位置的数据
          */
-        private void changePosition(int srcPosition, int targetPosition, List<VerticalTextCell> cells) {
-            VerticalTextCell srcData = cells.get(srcPosition);
-            VerticalTextCell targetData = cells.get(targetPosition);
-            cells.add(srcPosition, targetData);
-            cells.add(targetPosition + 1, srcData);
-            cells.remove(srcPosition + 1);
-            cells.remove(targetPosition + 1);
+        private void changePosition(int srcPosition, int targetPosition, List<SimpleMultiItemEntity> dataList) {
+            SimpleMultiItemEntity srcData = dataList.get(srcPosition);
+            SimpleMultiItemEntity targetData = dataList.get(targetPosition);
+            dataList.add(srcPosition, targetData);
+            dataList.add(targetPosition + 1, srcData);
+            dataList.remove(srcPosition + 1);
+            dataList.remove(targetPosition + 1);
         }
 
         /**
@@ -111,10 +113,10 @@ public class ItemTouchActivity extends BaseActivity {
             // 获取位置
             int adapterPosition = viewHolder.getAdapterPosition();
             // 移除数据
-            adapter.getCellList().remove(adapterPosition);
+            adapter.getDataList().remove(adapterPosition);
             // 更新Adapter数据，一定要调用 notifyItemRangeChanged() 方法，否则角标会错乱
             adapter.notifyItemRemoved(adapterPosition);
-            adapter.notifyItemRangeChanged(adapterPosition, adapter.getCellList().size() - adapterPosition);
+            adapter.notifyItemRangeChanged(adapterPosition, adapter.getDataList().size() - adapterPosition);
 
             RLog.i("删除 item .......");
         }
@@ -193,9 +195,14 @@ public class ItemTouchActivity extends BaseActivity {
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         layoutManager = new LinearLayoutManager(this);
-        List<String> textData = DataUtil.getTextData();
-        cells = CellFactory.createVerticalTextCell(textData);
-        adapter = new RecyclerAdapter(cells);
+        List<SimpleMultiItemEntity> textData = DataUtil.getTextData(RecyclerCellType.VERTICAL_TEXT_CELL);
+        adapter = new RecyclerAdapter(textData) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new VerticalTextCell(recyclerView, itemTouchHelper);
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

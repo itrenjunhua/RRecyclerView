@@ -3,16 +3,19 @@ package com.android.test.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
-import com.android.test.adapter.cell.VerticalTextCell;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
 import com.android.test.utils.ToastUtil;
 import com.android.test.view.RefreshRecyclerView;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -32,7 +35,7 @@ import com.renj.recycler.draw.LinearItemDecoration;
 public class MyRefreshRecyclerViewActivity extends BaseActivity {
     private TextView title;
     private RefreshRecyclerView recyclerView;
-    private RecyclerAdapter<VerticalTextCell> adapter;
+    private RecyclerAdapter<SimpleMultiItemEntity> adapter;
 
     // 定义加载更多的次数
     private int loadingCount = 0;
@@ -46,7 +49,7 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
             switch (msg.what) {
                 case WHAT_FINISH_REFRESHING:
                     // 模拟数据
-                    adapter.addAndNotifyAll(0, CellFactory.createVerticalTextCell(DataUtil.refreshData(3)));
+                    adapter.addAndNotifyAll(0, DataUtil.refreshData(RecyclerCellType.VERTICAL_TEXT_CELL, 3));
                     recyclerView.finishRefreshing();
                     ToastUtil.showSingleToast(MyRefreshRecyclerViewActivity.this, "刷新完成");
                     break;
@@ -54,7 +57,7 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
                     if (loadingCount < 2) {
                         loadingCount++;
                         // 模拟数据
-                        adapter.addAndNotifyAll(CellFactory.createVerticalTextCell(DataUtil.loadMoreData(3)));
+                        adapter.addAndNotifyAll(DataUtil.loadMoreData(RecyclerCellType.VERTICAL_TEXT_CELL, 3));
                         recyclerView.finishLoading();
                         ToastUtil.showSingleToast(MyRefreshRecyclerViewActivity.this, "加载完成");
                     } else {
@@ -80,7 +83,13 @@ public class MyRefreshRecyclerViewActivity extends BaseActivity {
         title.setText("使用自定义的刷新RecyclerView控件");
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new RecyclerAdapter<>(CellFactory.createVerticalTextCell(DataUtil.getTextData()));
+        adapter = new RecyclerAdapter(DataUtil.getTextData(RecyclerCellType.VERTICAL_TEXT_CELL)) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new VerticalTextCell();
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

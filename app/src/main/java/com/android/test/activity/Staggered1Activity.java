@@ -1,15 +1,18 @@
 package com.android.test.activity;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
-import com.android.test.adapter.cell.StaggeredVerticalImageCell;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.StaggeredVerticalImageCell;
 import com.android.test.data.DataUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 
 /**
@@ -81,7 +84,13 @@ public class Staggered1Activity extends BaseActivity {
     private void setRecyclerView() {
 
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        RecyclerAdapter<StaggeredVerticalImageCell> adapter = new RecyclerAdapter<>(CellFactory.createStaggeredVerticalImageCell(DataUtil.getImageList(), glideUtils));
+        RecyclerAdapter<SimpleMultiItemEntity> adapter = new RecyclerAdapter(DataUtil.getImageList(RecyclerCellType.S_VERTICAL_IMAGE_CELL)) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new StaggeredVerticalImageCell(glideUtils);
+            }
+        };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 

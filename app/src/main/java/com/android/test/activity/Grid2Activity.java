@@ -1,12 +1,16 @@
 package com.android.test.activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
+import com.android.test.cell.HorizontalTextCell;
+import com.android.test.cell.RecyclerCellType;
 import com.android.test.data.DataUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.GridItemDecoration;
 
@@ -57,11 +61,17 @@ public class Grid2Activity extends BaseActivity {
             }
         });
 
-        List<String> textData = DataUtil.getTextData();
-        textData.add(0, "aa");
-        textData.add("AA");
-        textData.add("BB");
-        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createHorizontalTextCell(textData));
+        List<SimpleMultiItemEntity> textData = DataUtil.getTextData(RecyclerCellType.HORIZONTAL_TEXT_CELL);
+        textData.add(0, new SimpleMultiItemEntity(RecyclerCellType.HORIZONTAL_TEXT_CELL, "aa"));
+        textData.add(new SimpleMultiItemEntity(RecyclerCellType.HORIZONTAL_TEXT_CELL, "AA"));
+        textData.add(new SimpleMultiItemEntity(RecyclerCellType.HORIZONTAL_TEXT_CELL, "BB"));
+        RecyclerAdapter adapter = new RecyclerAdapter(textData) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new HorizontalTextCell();
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
@@ -69,7 +79,7 @@ public class Grid2Activity extends BaseActivity {
         // 增加分割线
         recyclerView.addItemDecoration(new GridItemDecoration(GridLayoutManager.HORIZONTAL).dividerHeight(40, 30/*(int) getResources().getDimension(R.dimen.line_height)*/)
                 .dividerColor(getResources().getColor(R.color.colorH), getResources().getColor(R.color.colorV), getResources().getColor(R.color.colorP))
-                .dividerRowAndColHeight(40,50)
+                .dividerRowAndColHeight(40, 50)
                 .drawFirstRowBefore(true, getResources().getDrawable(R.drawable.shape_divider_bg))
                 .drawFirstColBefore(true, getResources().getColor(R.color.colorFirstCol))
                 .drawLastRowAfter(true, getResources().getDrawable(R.drawable.shape_divider_bg))

@@ -3,16 +3,19 @@ package com.android.test.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
-import com.android.test.adapter.cell.VerticalTextCell;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
 import com.android.test.utils.ToastUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -37,7 +40,7 @@ public class RefreshActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
 
-    private RecyclerAdapter<VerticalTextCell> adapter;
+    private RecyclerAdapter<SimpleMultiItemEntity> adapter;
     private LinearLayoutManager layoutManager;
     private int lastVisibleItem; // 当前页面最后一个显示的position
     private boolean isLoading = false; // 是否正在加载更多标记
@@ -50,7 +53,7 @@ public class RefreshActivity extends BaseActivity {
             switch (msg.what) {
                 case MSG_REFRESH:
                     ToastUtil.showSingleToast(RefreshActivity.this, "刷新完成");
-                    List<VerticalTextCell> refreshData = (List<VerticalTextCell>) msg.obj;
+                    List<SimpleMultiItemEntity> refreshData = (List<SimpleMultiItemEntity>) msg.obj;
                     adapter.addAndNotifyAll(0, refreshData);
 
                     // 停止刷新动画
@@ -59,7 +62,7 @@ public class RefreshActivity extends BaseActivity {
                 case MSG_LOAD_MORE:
                     isLoading = false;
                     ToastUtil.showSingleToast(RefreshActivity.this, "加载更多完成");
-                    List<VerticalTextCell> loadMoreData = (List<VerticalTextCell>) msg.obj;
+                    List<SimpleMultiItemEntity> loadMoreData = (List<SimpleMultiItemEntity>) msg.obj;
                     adapter.addAndNotifyAll(loadMoreData);
                     break;
                 default:
@@ -85,9 +88,14 @@ public class RefreshActivity extends BaseActivity {
     }
 
     private void setRecyclerView() {
-        List<String> textData = DataUtil.getTextData();
-        List<VerticalTextCell> cells = CellFactory.createVerticalTextCell(textData);
-        adapter = new RecyclerAdapter<>(cells);
+        List<SimpleMultiItemEntity> textData = DataUtil.getTextData(RecyclerCellType.VERTICAL_TEXT_CELL);
+        adapter = new RecyclerAdapter(textData){
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new VerticalTextCell();
+            }
+        };
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -111,11 +119,9 @@ public class RefreshActivity extends BaseActivity {
                     @Override
                     public void run() {
                         SystemClock.sleep(2000);
-                        List<String> refreshData = DataUtil.refreshData(3);
-                        List<VerticalTextCell> cells = CellFactory.createVerticalTextCell(refreshData);
                         Message msg = Message.obtain();
                         msg.what = MSG_REFRESH;
-                        msg.obj = cells;
+                        msg.obj = DataUtil.refreshData(RecyclerCellType.VERTICAL_TEXT_CELL, 3);
                         handler.sendMessage(msg);
                     }
                 });
@@ -148,11 +154,9 @@ public class RefreshActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 SystemClock.sleep(2000);
-                                List<String> loadMoreData = DataUtil.loadMoreData(2);
-                                List<VerticalTextCell> cells = CellFactory.createVerticalTextCell(loadMoreData);
                                 Message msg = Message.obtain();
                                 msg.what = MSG_LOAD_MORE;
-                                msg.obj = cells;
+                                msg.obj = DataUtil.loadMoreData(RecyclerCellType.VERTICAL_TEXT_CELL, 2);
                                 handler.sendMessage(msg);
                             }
                         });

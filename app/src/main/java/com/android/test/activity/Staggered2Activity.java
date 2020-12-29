@@ -1,15 +1,18 @@
 package com.android.test.activity;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
-import com.android.test.adapter.cell.StaggeredHorizontalImageCell;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.StaggeredHorizontalImageCell;
 import com.android.test.data.DataUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 
 import java.util.List;
@@ -64,7 +67,7 @@ import java.util.List;
 public class Staggered2Activity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
-    private List<String> datas;
+    private List<SimpleMultiItemEntity> datas;
 
     @Override
     protected int getLayoutId() {
@@ -78,13 +81,19 @@ public class Staggered2Activity extends BaseActivity {
 
         title.setText("水平方向瀑布流(长按 item 删除图片)");
 
-        datas = DataUtil.getImageList();
+        datas = DataUtil.getImageList(RecyclerCellType.S_HORIZONTAL_IMAGE_CELL);
         setRecyclerView();
     }
 
     private void setRecyclerView() {
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
-        RecyclerAdapter<StaggeredHorizontalImageCell> adapter = new RecyclerAdapter<>(CellFactory.createStaggeredHorizontalImageCell(DataUtil.getImageList(), glideUtils));
+        RecyclerAdapter<SimpleMultiItemEntity> adapter = new RecyclerAdapter(datas) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell<SimpleMultiItemEntity<String>> getRecyclerCell(int itemTypeValue) {
+                return new StaggeredHorizontalImageCell(glideUtils);
+            }
+        };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 

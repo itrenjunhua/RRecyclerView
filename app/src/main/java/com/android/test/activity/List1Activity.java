@@ -1,12 +1,16 @@
 package com.android.test.activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
-import com.android.test.adapter.cell.CellFactory;
+import com.android.test.cell.RecyclerCellType;
+import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -47,8 +51,14 @@ public class List1Activity extends BaseActivity {
 
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        List<String> textData = DataUtil.getTextData();
-        RecyclerAdapter adapter = new RecyclerAdapter(CellFactory.createVerticalTextCell(textData));
+        List<SimpleMultiItemEntity> textData = DataUtil.getTextData(RecyclerCellType.VERTICAL_TEXT_CELL);
+        RecyclerAdapter adapter = new RecyclerAdapter(textData) {
+            @NonNull
+            @Override
+            protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
+                return new VerticalTextCell();
+            }
+        };
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

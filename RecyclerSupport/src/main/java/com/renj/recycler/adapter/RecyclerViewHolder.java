@@ -1,10 +1,8 @@
 package com.renj.recycler.adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +10,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +17,6 @@ import android.widget.TextView;
  * ======================================================================
  * <p>
  * 作者：Renj
- * 邮箱：renjunhua@anlovek.com
  * <p>
  * 创建时间：2019-06-05   9:55
  * <p>
@@ -30,11 +26,17 @@ import android.widget.TextView;
  * <p>
  * ======================================================================
  */
-public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+public class RecyclerViewHolder<C extends BaseRecyclerCell> extends RecyclerView.ViewHolder {
+    C mItemCell;
     // 保存当前 item 的所有控件id，减少 findViewById 次数
     private SparseArray<View> itemViews = new SparseArray<>();
 
-    public RecyclerViewHolder(View itemView) {
+    public RecyclerViewHolder(@NonNull ViewGroup parent, C itemCell) {
+        this(LayoutInflater.from(parent.getContext()).inflate(itemCell.mItemLayoutResId, parent, false));
+        this.mItemCell = itemCell;
+    }
+
+    private RecyclerViewHolder(final View itemView) {
         super(itemView);
         // 增加单击事件
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,18 +57,33 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    public <D> void onBindViewHolder(int position, D itemData) {
+        mItemCell.onBindViewHolder(this, position, itemData);
+    }
+
+    public void onAttachedToWindow() {
+        mItemCell.onAttachedToWindow(this);
+    }
+
+    public void onDetachedFromWindow() {
+        mItemCell.onDetachedFromWindow(this);
+    }
+
     public TextView getTextView(@IdRes int vId) {
         return getView(vId);
     }
 
+    @SuppressWarnings("unused")
     public void setText(@IdRes int vId, @NonNull CharSequence content) {
         getTextView(vId).setText(content);
     }
 
+    @SuppressWarnings("unused")
     public void setText(@IdRes int vId, @StringRes int strId) {
         getTextView(vId).setText(strId);
     }
 
+    @SuppressWarnings("unused")
     public void setEnabled(@IdRes int vId, boolean enable) {
         getView(vId).setEnabled(enable);
     }
@@ -75,22 +92,24 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         return getView(vId);
     }
 
+    @SuppressWarnings("unused")
     public void setBitmap(@IdRes int vId, @NonNull Bitmap bitmap) {
         getImageView(vId).setImageBitmap(bitmap);
     }
 
+    @SuppressWarnings("unused")
     public void setBitmap(@IdRes int vId, @DrawableRes int resId) {
         getImageView(vId).setImageResource(resId);
-
     }
 
-    public <T extends View> T getView(@IdRes int vId) {
+    @SuppressWarnings("unchecked")
+    public <V extends View> V getView(@IdRes int vId) {
         View view = itemViews.get(vId);
         if (view == null) {
             view = itemView.findViewById(vId);
             itemViews.put(vId, view);
         }
-        return (T) view;
+        return (V) view;
     }
 
 

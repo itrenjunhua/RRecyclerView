@@ -1,12 +1,12 @@
-package com.android.test.adapter.cell;
+package com.android.test.cell;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -25,21 +25,20 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  * <p>
  * ======================================================================
  */
-public class HorizontalTextCell extends BaseRecyclerCell<String> {
-
-    public HorizontalTextCell(String itemData) {
-        super(RecyclerCellType.HORIZONTAL_TEXT_CELL, R.layout.item_recycler_view2, itemData);
+public class HorizontalTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+    public HorizontalTextCell() {
+        super(R.layout.item_recycler_view2);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
-        holder.setText(R.id.text_view, itemData);
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+        holder.setText(R.id.text_view, itemData.getData());
     }
 
     @Override
     public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
-        ToastUtil.showSingleToast(context, "长按 位置:" + position + "；数据:" + itemData);
+                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+        ToastUtil.showSingleToast(context, "长按 位置:" + position + "；数据:" + itemData.getData());
         return false;
     }
 }

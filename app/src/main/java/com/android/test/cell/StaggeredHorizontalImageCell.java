@@ -1,4 +1,4 @@
-package com.android.test.adapter.cell;
+package com.android.test.cell;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.android.test.utils.imageutil.GlideUtils;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerViewHolder;
@@ -30,22 +31,21 @@ import java.util.Random;
  * <p>
  * ======================================================================
  */
-public class StaggeredVerticalImageCell extends BaseRecyclerCell<String> {
+public class StaggeredHorizontalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
     // 保存每一个 item 的高度，防止瀑布流图片闪烁问题
-    private HashMap<String, Integer> saveHeight = new HashMap<>();
-
+    private HashMap<SimpleMultiItemEntity<String>, Integer> saveHeight = new HashMap<>();
     private Random random = new Random();
     private GlideUtils glideUtils;
 
-    public StaggeredVerticalImageCell(String itemData, GlideUtils glideUtils) {
-        super(RecyclerCellType.S_VERTICAL_IMAGE_CELL, R.layout.item_staggred_1, itemData);
+    public StaggeredHorizontalImageCell(GlideUtils glideUtils) {
+        super(R.layout.item_staggred_2);
         this.glideUtils = glideUtils;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
-        ImageView imageView = holder.getView(R.id.imageview);
-        // 快速设置 item 的高度，而不是等待图片加载完成在设置高度
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+        ImageView imageView = holder.getImageView(R.id.imageview);
+        // 快速设置 item 的宽度，而不是等待图片加载完成在设置宽度
         Integer integer = saveHeight.get(itemData);
         if (integer == null || integer <= 0) {
             integer = (random.nextInt(4) + 6) * 100;
@@ -53,15 +53,15 @@ public class StaggeredVerticalImageCell extends BaseRecyclerCell<String> {
         }
 
         ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
-        layoutParams.height = integer;
+        layoutParams.width = integer;
         imageView.setLayoutParams(layoutParams);
 
-        glideUtils.loadImage(itemData, imageView);
+        glideUtils.loadImage(itemData.getData(), imageView);
     }
 
     @Override
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, String itemData) {
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         ToastUtil.showSingleToast(context, "删除位置：" + position);
         recyclerAdapter.removeAndNotifyItem(position);
     }

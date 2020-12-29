@@ -21,85 +21,34 @@ import android.view.View;
  * ======================================================================
  */
 public abstract class BaseRecyclerCell<T> {
-    public static final int ITEM_TYPE_DEFAULT = 0;
-
-    /**
-     * item 数据
-     */
-    protected T mItemData;
-    /**
-     * 当前item条目类型值，通过构造函数指定。<br/>
-     * <b>一个Adapter中有多种条目时用到，并且添加到同一个 {@link RecyclerAdapter} 的不同
-     * {@link BaseRecyclerCell} 的 {@link #mItemType} 值必须不同，
-     * 否则发生 {@link ClassCastException}。</b><br/>
-     * <b>作用：用于在 {@link RecyclerAdapter} 中区分不同的 item 类型。</b>
-     */
-    final int mItemType;
     /**
      * 当前item布局资源id
      */
     final int mItemLayoutResId;
 
     /**
-     * 构造函数，一个Adapter中有多种条目时使用其他构造函数 {@link #BaseRecyclerCell(int, int)}、{@link #BaseRecyclerCell(int, int, Object)}
+     * 构造函数
      *
      * @param itemLayoutResId 当前item布局资源id
      */
     public BaseRecyclerCell(@LayoutRes int itemLayoutResId) {
-        this(itemLayoutResId, null);
-    }
-
-    /**
-     * 构造函数
-     *
-     * @param itemType        当前item条目类型值，查看{@link #mItemType}
-     * @param itemLayoutResId 当前item布局资源id
-     */
-    public BaseRecyclerCell(int itemType, @LayoutRes int itemLayoutResId) {
-        this(itemType, itemLayoutResId, null);
-    }
-
-    /**
-     * 构造函数，一个Adapter中有多种条目时使用其他构造函数 {@link #BaseRecyclerCell(int, int)}、{@link #BaseRecyclerCell(int, int, Object)}
-     *
-     * @param itemLayoutResId 当前item布局资源id
-     * @param itemData        item 数据
-     */
-    public BaseRecyclerCell(@LayoutRes int itemLayoutResId, T itemData) {
-        this(ITEM_TYPE_DEFAULT, itemLayoutResId, itemData);
-    }
-
-    /**
-     * 构造函数
-     *
-     * @param itemType        当前item条目类型值，查看{@link #mItemType}
-     * @param itemLayoutResId 当前item布局资源id
-     * @param itemData        item 数据
-     */
-    public BaseRecyclerCell(int itemType, @LayoutRes int itemLayoutResId, T itemData) {
-        this.mItemType = itemType;
         this.mItemLayoutResId = itemLayoutResId;
-        this.mItemData = itemData;
-    }
-
-    public T getItemData() {
-        return mItemData;
     }
 
     /**
-     * 绑定 holder，{@link BaseRecyclerCell#mItemData} 为 item 数据
+     * 绑定 holder
      */
     public abstract void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, T itemData);
 
+    @SuppressWarnings("unused")
     public void onAttachedToWindow(@NonNull RecyclerViewHolder holder) {
 
     }
 
     /**
      * 如有必要，释放资源
-     *
-     * @param holder
      */
+    @SuppressWarnings("unused")
     public void onDetachedFromWindow(@NonNull RecyclerViewHolder holder) {
 
     }
