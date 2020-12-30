@@ -21,17 +21,22 @@ Android `RecyclerView` 控件使用方法及代码示例，以及 `RecyclerView`
 
 ## RecyclerView Adapter封装
 #### 封装说明：
-定义一个 `RecyclerAdapter<T extends IRecyclerCell> extends RecyclerView.Adapter<RecyclerViewHolder>` 插件类，
-自定义一个 `RecyclerViewHolder extends RecyclerView.ViewHolder` 类，
-然后为每一种类型的 item创建一个 cell(继承至 RecyclerCell) ，最后将 cell 集合添加到 `RecyclerAdapter` 类中。
+定义一个 `RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder>` 插件类，
+自定义一个 `RecyclerViewHolder<C extends BaseRecyclerCell> extends RecyclerView.ViewHolder` 类，
+然后为每一种类型的 item 创建一个 cell(继承至 `BaseRecyclerCell`) ，最后重写 `RecyclerAdapter` 类中的抽象方法 `getRecyclerCell(int itemTypeValue)` 返回 `BaseRecyclerCell<T>` 子类实例（也就是当前列表类型的cell，多种条目类型实现时请看下文）。
+
+当一个列表中有多种条目类型时，需要使用 `MultiItemAdapter` 适配器类，添加到该类中的数据，必须实现 `MultiItemEntity` 接口，返回当前数据类型对应的 `itemType` 值（条目类型值，用于区分不同的条目类型），在重写方法 `getRecyclerCell(int itemTypeValue)` 时，可以根据参数 `itemTypeValue` 返回对应的 `BaseRecyclerCell<T>` 子类实例
+
 #### 好处：
-> 1.所有的 `RecyclerView` 都可以使用同一个 `RecyclerAdapter` 类，不需要重复的创建 `Adapter` 类；  
-> 2.如果一个列表有多重类型的 item 样式，只需要创建一个 cell 类，增加到 `RecyclerAdapter` 类 中即可，不需要修改 Adapter 中的代码，实现解耦；  
-> 3.当应用中有相同的 item 类型时，可以实现代码的复用(因为每一个 item 就是一个独立的 cell，与具体的页面和 Adapter 无关了)
+> 1. 同一种条目布局的 `RecyclerView` 都可以使用同一个 `RecyclerAdapter` 类，并且Adapter实现非常简单，只需要实现一个方法返回对应的 `BaseRecyclerCell` 对象；  
+> 2. 如果一个列表有多重类型的 item 样式，只需要创建一个 cell 类，在 `MultiItemAdapter` 类中 `getRecyclerCell(int itemTypeValue)` 方法返回即可，不需要修改其他中的代码；  
+> 3. 当应用中有相同的 item 类型时，可以实现代码的复用(因为每一个 item(或者一种类型的数据) 就是一个独立的 cell，与具体的页面无关)
 
 [Android RecyclerView —— 适配器封装探索](https://blog.csdn.net/ITRenj/article/details/92405204)
 
 ## 自定义下拉刷新和加载更多效果
+该部分实现仅仅说明实现原理，功能比较单一。在编写App时建议使用完整下拉刷新和上拉加载框架。如  [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout) 等。
+
 扩展`RecyclerView`控件，实现自定义下拉刷新和加载更多效果，控件名：RefreshRecyclerView  
 > 在布局文件中定义
 

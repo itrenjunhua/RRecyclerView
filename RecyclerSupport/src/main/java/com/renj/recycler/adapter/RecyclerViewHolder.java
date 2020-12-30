@@ -20,7 +20,7 @@ import android.widget.TextView;
  * <p>
  * 创建时间：2019-06-05   9:55
  * <p>
- * 描述：
+ * 描述：{@link RecyclerView.ViewHolder} 封装类，最终转发到 {@link BaseRecyclerCell} 中
  * <p>
  * 修订历史：
  * <p>

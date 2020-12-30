@@ -1,7 +1,9 @@
 package com.renj.recycler.adapter;
 
 import android.content.Context;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import java.util.Objects;
  * <p>
  * 创建时间：2019-06-05   9:52
  * <p>
- * 描述：{@link RecyclerView} 适配器封装，内部包含 {@link BaseRecyclerCell} 列表
+ * 描述：{@link RecyclerView} 适配器封装，多种条目类型请使用 {@link MultiItemAdapter}
  * <p>
  * 修订历史：
  * <p>
@@ -52,8 +54,18 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             this.mDataList.addAll(dataList);
     }
 
+    @SuppressWarnings("unused")
     public List<T> getDataList() {
         return mDataList;
+    }
+
+    @Nullable
+    @SuppressWarnings("unused")
+    public T getItem(@IntRange(from = 0) int position) {
+        if (position >= 0 && position < mDataList.size())
+            return mDataList.get(position);
+        else
+            return null;
     }
 
     @Override
@@ -72,9 +84,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     /**
      * 返回 {@link BaseRecyclerCell} 子类对象
      *
-     * @param itemTypeValue 当前条目的类型，有多种条目适配器 {@link MultiItemAdapter} 实例时用到，
+     * @param itemTypeValue 当前条目的类型，多种条目适配器 {@link MultiItemAdapter} 实例时用到，
      *                      默认值为 {@link #ITEM_TYPE_DEFAULT}
-     * @return {@link BaseRecyclerCell} 子类对象
+     * @return 根据 itemTypeValue 值返回对应的 {@link BaseRecyclerCell} 子类对象
      */
     @NonNull
     protected abstract <C extends BaseRecyclerCell<T>> C getRecyclerCell(int itemTypeValue);
