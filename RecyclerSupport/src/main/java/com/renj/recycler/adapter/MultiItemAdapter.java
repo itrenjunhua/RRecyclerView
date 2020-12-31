@@ -27,6 +27,7 @@ public abstract class MultiItemAdapter<T extends MultiItemEntity> extends Recycl
 
     @Override
     public int getItemViewType(int position) {
-        return mDataList.get(position).getItemType();
+        T itemData = getItem(position);
+        return itemData == null ? ITEM_TYPE_NO_FOUNT : itemData.getItemType();
     }
 }

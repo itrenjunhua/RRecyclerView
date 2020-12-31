@@ -19,7 +19,7 @@ import java.util.Objects;
  * <p>
  * 创建时间：2019-06-05   9:52
  * <p>
- * 描述：{@link RecyclerView} 适配器封装，多种条目类型请使用 {@link MultiItemAdapter}
+ * 描述：单一类型条目 {@link RecyclerView} 适配器封装，多种条目类型请使用 {@link MultiItemAdapter}
  * <p>
  * 修订历史：
  * <p>
@@ -27,19 +27,33 @@ import java.util.Objects;
  */
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
     static final int ITEM_TYPE_DEFAULT = -0xFFFF;
+    static final int ITEM_TYPE_NO_FOUNT = -404;
     private int mItemTypeValue;
     protected List<T> mDataList;
 
+    /**
+     * 单一条目类型，使用默认类型值 {@link #ITEM_TYPE_DEFAULT}
+     */
     public RecyclerAdapter() {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
         this.mDataList = new ArrayList<>();
     }
 
+    /**
+     * 单一条目类型，指定条目类型值
+     *
+     * @param itemTypeValue 当前条目类型值
+     */
     public RecyclerAdapter(int itemTypeValue) {
         this.mItemTypeValue = itemTypeValue;
         this.mDataList = new ArrayList<>();
     }
 
+    /**
+     * 单一条目类型，使用默认类型值 {@link #ITEM_TYPE_DEFAULT}
+     *
+     * @param dataList 数据列表
+     */
     public RecyclerAdapter(List<T> dataList) {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
         this.mDataList = new ArrayList<>();
@@ -47,6 +61,12 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             this.mDataList.addAll(dataList);
     }
 
+    /**
+     * 单一条目类型，指定条目类型值和数据列表
+     *
+     * @param itemTypeValue 当前条目类型值
+     * @param dataList      数据列表
+     */
     public RecyclerAdapter(int itemTypeValue, List<T> dataList) {
         this.mItemTypeValue = itemTypeValue;
         this.mDataList = new ArrayList<>();
@@ -54,11 +74,22 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             this.mDataList.addAll(dataList);
     }
 
+    /**
+     * 获取数据列表
+     *
+     * @return 数据列表
+     */
     @SuppressWarnings("unused")
     public List<T> getDataList() {
         return mDataList;
     }
 
+    /**
+     * 某一个位置数据
+     *
+     * @param position 指定位置
+     * @return 指定位置的数据
+     */
     @Nullable
     @SuppressWarnings("unused")
     public T getItem(@IntRange(from = 0) int position) {
@@ -159,9 +190,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         return obj == null;
     }
 
-    /* ======================== set/add/modify/remove IRecyclerCell ======================== */
+    /* ======================== set/add/modify/remove Data ======================== */
 
-    /* -------------------------  set IRecyclerCell ------------------------- */
+    /* -------------------------  set Data ------------------------- */
 
     /**
      * 设置数据，将原来的数据完全替换并刷新列表
@@ -174,7 +205,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         notifyDataSetChanged();
     }
 
-    /* -------------------------  add IRecyclerCell ------------------------- */
+    /* -------------------------  add Data ------------------------- */
 
     /**
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
@@ -216,7 +247,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(int index, @NonNull List<T> dataList) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<T> dataList) {
         add(index, dataList, true);
     }
 
@@ -224,7 +255,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(int index, @NonNull List<T> dataList) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<T> dataList) {
         add(index, dataList, false);
     }
 
@@ -235,7 +266,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(int index, @NonNull List<T> dataList, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, @NonNull List<T> dataList, boolean refreshAllItem) {
         if (notEmptyList(dataList)) {
             if (refreshAllItem) {
                 this.mDataList.addAll(index, dataList);
@@ -286,7 +317,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(int index, @NonNull T data) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull T data) {
         add(index, data, true);
     }
 
@@ -294,7 +325,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(int index, @NonNull T data) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull T data) {
         add(index, data, false);
     }
 
@@ -305,7 +336,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(int index, T data, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, T data, boolean refreshAllItem) {
+        if (index < 0) index = 0;
+        if (index > mDataList.size()) index = mDataList.size();
         if (!isNullObject(data)) {
             if (refreshAllItem) {
                 this.mDataList.add(index, data);
@@ -317,15 +350,15 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    /* -------------------------  modify IRecyclerCell ------------------------- */
+    /* -------------------------  modify Data ------------------------- */
 
     @SuppressWarnings("unused")
-    public void modifyAndNotifyAll(int index, @NonNull T data) {
+    public void modifyAndNotifyAll(@IntRange(from = 0) int index, @NonNull T data) {
         modify(index, data, true);
     }
 
     @SuppressWarnings("unused")
-    public void modifyAndNotifyItem(int index, @NonNull T data) {
+    public void modifyAndNotifyItem(@IntRange(from = 0) int index, @NonNull T data) {
         modify(index, data, false);
     }
 
@@ -336,7 +369,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemChanged(int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void modify(int index, T data, boolean refreshAllItem) {
+    public void modify(@IntRange(from = 0) int index, T data, boolean refreshAllItem) {
         if (index < 0 || index >= this.mDataList.size())
             return;
         if (isNullObject(data))
@@ -349,7 +382,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
             notifyItemChanged(index);
     }
 
-    /* -------------------------  remove IRecyclerCell ------------------------- */
+    /* -------------------------  remove Data ------------------------- */
 
     /**
      * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
@@ -385,7 +418,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyAll(int index) {
+    public void removeAndNotifyAll(@IntRange(from = 0) int index) {
         remove(index, true);
     }
 
@@ -394,7 +427,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyItem(int index) {
+    public void removeAndNotifyItem(@IntRange(from = 0) int index) {
         remove(index, false);
     }
 
@@ -406,7 +439,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void remove(int index, boolean refreshAllItem) {
+    public void remove(@IntRange(from = 0) int index, boolean refreshAllItem) {
         if (index < 0 || index >= this.mDataList.size())
             return;
 
@@ -425,7 +458,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyAll(int start, int count) {
+    public void removeAndNotifyAll(@IntRange(from = 0) int start, int count) {
         remove(start, count, true);
     }
 
@@ -434,7 +467,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyItem(int start, int count) {
+    public void removeAndNotifyItem(@IntRange(from = 0) int start, int count) {
         remove(start, count, false);
     }
 
@@ -446,7 +479,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void remove(int start, int count, boolean refreshAllItem) {
+    public void remove(@IntRange(from = 0) int start, @IntRange(from = 0) int count, boolean refreshAllItem) {
+        if (count <= 0) return;
+        if (start < 0) start = 0;
         if ((start + count) > this.mDataList.size()) {
             return;
         }

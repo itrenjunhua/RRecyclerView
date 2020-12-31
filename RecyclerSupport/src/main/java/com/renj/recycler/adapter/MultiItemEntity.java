@@ -14,5 +14,10 @@ package com.renj.recycler.adapter;
  * ======================================================================
  */
 public interface MultiItemEntity {
+    /**
+     * 返回当前数据的条目类型值，用于区分列表中的不同数据
+     *
+     * @return 当前数据的条目类型值，用于区分列表中的不同数据
+     */
     int getItemType();
 }
