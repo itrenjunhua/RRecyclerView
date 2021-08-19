@@ -26,7 +26,7 @@ import android.widget.TextView;
  * <p>
  * ======================================================================
  */
-public class RecyclerViewHolder<C extends BaseRecyclerCell> extends RecyclerView.ViewHolder {
+public class RecyclerViewHolder<D, C extends BaseRecyclerCell<D>> extends RecyclerView.ViewHolder {
     C mItemCell;
     // 保存当前 item 的所有控件id，减少 findViewById 次数
     private SparseArray<View> itemViews = new SparseArray<>();
@@ -57,7 +57,7 @@ public class RecyclerViewHolder<C extends BaseRecyclerCell> extends RecyclerView
         });
     }
 
-    public <D> void onBindViewHolder(int position, D itemData) {
+    public void onBindViewHolder(int position, D itemData) {
         mItemCell.onBindViewHolder(this, position, itemData);
     }
 

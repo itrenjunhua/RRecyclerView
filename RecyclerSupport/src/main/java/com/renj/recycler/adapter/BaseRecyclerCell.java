@@ -19,7 +19,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public abstract class BaseRecyclerCell<T> {
+public abstract class BaseRecyclerCell<D> {
     /**
      * 当前item布局资源id
      */
@@ -37,7 +37,7 @@ public abstract class BaseRecyclerCell<T> {
     /**
      * 绑定 holder
      */
-    public abstract void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, T itemData);
+    public abstract void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, D itemData);
 
     @SuppressWarnings("unused")
     public void onAttachedToWindow(@NonNull RecyclerViewHolder holder) {
@@ -53,12 +53,12 @@ public abstract class BaseRecyclerCell<T> {
     }
 
     public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, T itemData) {
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData) {
 
     }
 
     public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, T itemData) {
+                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData) {
         return false;
     }
 }

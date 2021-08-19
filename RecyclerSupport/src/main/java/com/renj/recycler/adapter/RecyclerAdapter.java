@@ -19,17 +19,16 @@ import java.util.Objects;
  * <p>
  * 创建时间：2019-06-05   9:52
  * <p>
- * 描述：单一类型条目 {@link RecyclerView} 适配器封装，多种条目类型请使用 {@link MultiItemAdapter}
+ * 描述： {@link RecyclerView} 适配器封装
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerViewHolder> {
+public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerViewHolder<D, ? extends BaseRecyclerCell>> {
     static final int ITEM_TYPE_DEFAULT = -0xFFFF;
-    static final int ITEM_TYPE_NO_FOUNT = -404;
     private int mItemTypeValue;
-    protected List<T> mDataList;
+    protected List<D> mDataList;
 
     /**
      * 单一条目类型，使用默认类型值 {@link #ITEM_TYPE_DEFAULT}
@@ -54,7 +53,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *
      * @param dataList 数据列表
      */
-    public RecyclerAdapter(List<T> dataList) {
+    public RecyclerAdapter(List<D> dataList) {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
         this.mDataList = new ArrayList<>();
         if (dataList != null)
@@ -67,7 +66,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @param itemTypeValue 当前条目类型值
      * @param dataList      数据列表
      */
-    public RecyclerAdapter(int itemTypeValue, List<T> dataList) {
+    public RecyclerAdapter(int itemTypeValue, List<D> dataList) {
         this.mItemTypeValue = itemTypeValue;
         this.mDataList = new ArrayList<>();
         if (dataList != null)
@@ -80,7 +79,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @return 数据列表
      */
     @SuppressWarnings("unused")
-    public List<T> getDataList() {
+    public List<D> getDataList() {
         return mDataList;
     }
 
@@ -92,13 +91,19 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      */
     @Nullable
     @SuppressWarnings("unused")
-    public T getItem(@IntRange(from = 0) int position) {
+    public D getItem(@IntRange(from = 0) int position) {
         if (position >= 0 && position < mDataList.size())
             return mDataList.get(position);
         else
             return null;
     }
 
+    /**
+     * 返回条目类型，如果是多条目类型时需要子类重写
+     *
+     * @param position 当前条目所在位置
+     * @return 条目类型值
+     */
     @Override
     public int getItemViewType(int position) {
         return mItemTypeValue;
@@ -106,26 +111,25 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
 
     @NonNull
     @Override
-    public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewHolder<D, ? extends BaseRecyclerCell> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BaseRecyclerCell recyclerCell = getRecyclerCell(viewType);
         Objects.requireNonNull(recyclerCell);
-        return new RecyclerViewHolder<>(parent, recyclerCell);
+        return new RecyclerViewHolder(parent, recyclerCell);
     }
 
     /**
      * 返回 {@link BaseRecyclerCell} 子类对象
      *
-     * @param itemTypeValue 当前条目的类型，多种条目适配器 {@link MultiItemAdapter} 实例时用到，
-     *                      默认值为 {@link #ITEM_TYPE_DEFAULT}
+     * @param itemTypeValue 当前条目的类型，{@link #getItemViewType(int)} 方法返回值，单一条目时使用默认值： {@link #ITEM_TYPE_DEFAULT}
      * @return 根据 itemTypeValue 值返回对应的 {@link BaseRecyclerCell} 子类对象
      */
     @NonNull
-    protected abstract <C extends BaseRecyclerCell<T>> C getRecyclerCell(int itemTypeValue);
+    protected abstract BaseRecyclerCell getRecyclerCell(int itemTypeValue);
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<D, ? extends BaseRecyclerCell> holder, int position) {
         final int tmpPosition = position;
-        final RecyclerViewHolder finalHolder = holder;
+        final RecyclerViewHolder<D, ? extends BaseRecyclerCell> finalHolder = holder;
         holder.onBindViewHolder(position, mDataList.get(position));
         holder.setOnItemViewClickListener(new RecyclerViewHolder.OnItemViewClickListener() {
             @Override
@@ -198,7 +202,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 设置数据，将原来的数据完全替换并刷新列表
      */
     @SuppressWarnings("unused")
-    public void setData(@NonNull List<T> dataList) {
+    public void setData(@NonNull List<D> dataList) {
         this.mDataList.clear();
         if (notEmptyList(dataList))
             this.mDataList.addAll(dataList);
@@ -211,7 +215,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@NonNull List<T> dataList) {
+    public void addAndNotifyAll(@NonNull List<D> dataList) {
         add(dataList, true);
     }
 
@@ -219,7 +223,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@NonNull List<T> dataList) {
+    public void addAndNotifyItem(@NonNull List<D> dataList) {
         add(dataList, false);
     }
 
@@ -230,7 +234,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@NonNull List<T> dataList, boolean refreshAllItem) {
+    public void add(@NonNull List<D> dataList, boolean refreshAllItem) {
         if (notEmptyList(dataList)) {
             if (refreshAllItem) {
                 this.mDataList.addAll(dataList);
@@ -247,7 +251,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<T> dataList) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
         add(index, dataList, true);
     }
 
@@ -255,7 +259,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<T> dataList) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
         add(index, dataList, false);
     }
 
@@ -266,7 +270,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@IntRange(from = 0) int index, @NonNull List<T> dataList, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem) {
         if (notEmptyList(dataList)) {
             if (refreshAllItem) {
                 this.mDataList.addAll(index, dataList);
@@ -282,7 +286,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@NonNull T data) {
+    public void addAndNotifyAll(@NonNull D data) {
         add(data, true);
     }
 
@@ -290,7 +294,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@NonNull T data) {
+    public void addAndNotifyItem(@NonNull D data) {
         add(data, false);
     }
 
@@ -301,7 +305,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(T data, boolean refreshAllItem) {
+    public void add(D data, boolean refreshAllItem) {
         if (!isNullObject(data)) {
             if (refreshAllItem) {
                 this.mDataList.add(data);
@@ -317,7 +321,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull T data) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull D data) {
         add(index, data, true);
     }
 
@@ -325,7 +329,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull T data) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull D data) {
         add(index, data, false);
     }
 
@@ -336,7 +340,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@IntRange(from = 0) int index, T data, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, D data, boolean refreshAllItem) {
         if (index < 0) index = 0;
         if (index > mDataList.size()) index = mDataList.size();
         if (!isNullObject(data)) {
@@ -353,12 +357,12 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
     /* -------------------------  modify Data ------------------------- */
 
     @SuppressWarnings("unused")
-    public void modifyAndNotifyAll(@IntRange(from = 0) int index, @NonNull T data) {
+    public void modifyAndNotifyAll(@IntRange(from = 0) int index, @NonNull D data) {
         modify(index, data, true);
     }
 
     @SuppressWarnings("unused")
-    public void modifyAndNotifyItem(@IntRange(from = 0) int index, @NonNull T data) {
+    public void modifyAndNotifyItem(@IntRange(from = 0) int index, @NonNull D data) {
         modify(index, data, false);
     }
 
@@ -369,7 +373,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemChanged(int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void modify(@IntRange(from = 0) int index, T data, boolean refreshAllItem) {
+    public void modify(@IntRange(from = 0) int index, D data, boolean refreshAllItem) {
         if (index < 0 || index >= this.mDataList.size())
             return;
         if (isNullObject(data))
@@ -388,7 +392,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyAll(@NonNull T data) {
+    public void removeAndNotifyAll(@NonNull D data) {
         remove(data, true);
     }
 
@@ -397,7 +401,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void removeAndNotifyItem(@NonNull T data) {
+    public void removeAndNotifyItem(@NonNull D data) {
         remove(data, false);
     }
 
@@ -409,7 +413,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      *                       和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void remove(T data, boolean refreshAllItem) {
+    public void remove(D data, boolean refreshAllItem) {
         if (!isNullObject(data))
             remove(this.mDataList.indexOf(data), refreshAllItem);
     }
@@ -507,8 +511,8 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
 
 
     /* ====================== item click listener event ======================= */
-    private OnItemClickListener mOnItemClickListener;
-    private OnItemLongClickListener mOnItemLongClickListener;
+    private OnItemClickListener<D> mOnItemClickListener;
+    private OnItemLongClickListener<D> mOnItemLongClickListener;
 
     /**
      * 设置单击监听，优先级高于 {@link BaseRecyclerCell#onItemClick(Context, RecyclerAdapter, RecyclerViewHolder, View, int, Object)}
@@ -516,7 +520,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @param onItemClickListener {@link OnItemClickListener} 对象
      */
     @SuppressWarnings("unused")
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener<D> onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
 
@@ -526,23 +530,23 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerVi
      * @param onItemLongClickListener {@link OnItemLongClickListener} 对象
      */
     @SuppressWarnings("unused")
-    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+    public void setOnItemLongClickListener(OnItemLongClickListener<D> onItemLongClickListener) {
         this.mOnItemLongClickListener = onItemLongClickListener;
     }
 
     /**
      * item 单击监听接口
      */
-    public interface OnItemClickListener {
+    public interface OnItemClickListener<D> {
         void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                         @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, Object itemData);
+                         @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
     }
 
     /**
      * item 长按监听接口
      */
-    public interface OnItemLongClickListener {
+    public interface OnItemLongClickListener<D> {
         boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                                @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, Object itemData);
+                                @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
     }
 }

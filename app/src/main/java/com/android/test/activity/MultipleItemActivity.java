@@ -13,7 +13,7 @@ import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
 import com.android.test.data.UserData;
 import com.renj.recycler.adapter.BaseRecyclerCell;
-import com.renj.recycler.adapter.MultiItemAdapter;
+import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.draw.LinearItemDecoration;
 
@@ -56,7 +56,13 @@ public class MultipleItemActivity extends BaseActivity {
 
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        MultiItemAdapter adapter = new MultiItemAdapter(initDta()) {
+        RecyclerAdapter<SimpleMultiItemEntity> adapter = new RecyclerAdapter<SimpleMultiItemEntity>(initDta()) {
+
+            @Override
+            public int getItemViewType(int position) {
+                return mDataList.get(position).getItemType();
+            }
+
             @NonNull
             @Override
             protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
@@ -87,9 +93,9 @@ public class MultipleItemActivity extends BaseActivity {
         for (int i = 'A', j = 0; i <= 'Z'; i++, j++) {
             int anInt = random.nextInt(3) + 1;
             if (anInt % 3 == 0)
-                dataList.add(new SimpleMultiItemEntity(RecyclerCellType.VERTICAL_TEXT_CELL, "多种条目——文字类型 " + i));
+                dataList.add(new SimpleMultiItemEntity<>(RecyclerCellType.VERTICAL_TEXT_CELL, "多种条目——文字类型 " + i));
             else if (anInt % 3 == 1) {
-                dataList.add(new SimpleMultiItemEntity(RecyclerCellType.USER_DATA_CELL, new UserData("张三 - " + i, i)));
+                dataList.add(new SimpleMultiItemEntity<>(RecyclerCellType.USER_DATA_CELL, new UserData("张三 - " + i, i)));
             } else {
                 dataList.add(imageArray[j]);
             }
