@@ -135,9 +135,14 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
             @Override
             public void onItemViewClick(View itemView) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(itemView.getContext(),
+                    if (mOnItemClickListener.onItemClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
-                            tmpPosition, mDataList.get(tmpPosition));
+                            tmpPosition, mDataList.get(tmpPosition))) {
+
+                        finalHolder.mItemCell.onItemClick(itemView.getContext(),
+                                RecyclerAdapter.this, finalHolder, itemView,
+                                tmpPosition, mDataList.get(tmpPosition));
+                    }
                 } else {
                     finalHolder.mItemCell.onItemClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
@@ -149,9 +154,16 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
             @Override
             public boolean onItemLongViewClick(View itemView) {
                 if (mOnItemLongClickListener != null) {
-                    return mOnItemLongClickListener.onItemLongClick(itemView.getContext(),
+                    boolean itemLongClick = mOnItemLongClickListener.onItemLongClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
                             tmpPosition, mDataList.get(tmpPosition));
+
+                    if (itemLongClick) {
+                        return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
+                                RecyclerAdapter.this, finalHolder, itemView,
+                                tmpPosition, mDataList.get(tmpPosition));
+                    }
+                    return false;
                 } else {
                     return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
@@ -538,14 +550,42 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * item 单击监听接口
      */
     public interface OnItemClickListener<D> {
-        void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                         @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
+        /**
+         * item 点击监听
+         *
+         * @param context         上下文
+         * @param recyclerAdapter 适配器对象
+         * @param holder          封装的Holder对象
+         * @param itemView        item 根布局
+         * @param position        点击位置
+         * @param itemData        item 数据
+         * @return 根据返回结果确定是否需要继续响应 {@link BaseRecyclerCell#onItemClick(Context, RecyclerAdapter,
+         * RecyclerViewHolder, View, int, Object)} 方法，true：继续响应 ； false：不继续响应
+         */
+        boolean onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
+                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
     }
 
     /**
      * item 长按监听接口
      */
     public interface OnItemLongClickListener<D> {
+        /**
+         * item 长按监听
+         *
+         * @param context         上下文
+         * @param recyclerAdapter 适配器对象
+         * @param holder          封装的Holder对象
+         * @param itemView        item 根布局
+         * @param position        点击位置
+         * @param itemData        item 数据
+         * @return 根据返回结果确定是否需要继续响应 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter,
+         * RecyclerViewHolder, View, int, Object)} 方法，true：继续响应 ； false：不继续响应<br/><br/>
+         * <b>注意：<br/>
+         * 如果返回false，那么表示item的 {@link View.OnLongClickListener} 的回调方法也会直接返回false；<br/>
+         * 如果返回true，那么item的 {@link View.OnLongClickListener} 的回调方法返回结果就是 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter,
+         * RecyclerViewHolder, View, int, Object)} 方法 返回的结果</b>
+         */
         boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                                 @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
     }
