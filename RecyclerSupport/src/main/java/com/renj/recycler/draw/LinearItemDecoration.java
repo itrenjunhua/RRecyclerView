@@ -19,7 +19,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public class LinearItemDecoration extends RecyclerItemDecoration {
+public class LinearItemDecoration extends RecyclerItemDecoration<LinearItemDecoration> {
     public LinearItemDecoration(@RecyclerView.Orientation int orientation) {
         super(orientation);
     }

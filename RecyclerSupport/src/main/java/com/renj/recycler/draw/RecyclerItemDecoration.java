@@ -20,7 +20,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration {
+public abstract class RecyclerItemDecoration<T extends RecyclerItemDecoration> extends RecyclerView.ItemDecoration {
     protected static final int DEFAULT_DIVIDER_HEIGHT = 1; // 默认宽度
     protected static final int DEFAULT_DIVIDER_COLOR = 0xFFDDDDDD; // 默认分割线颜色
     protected int mOrientation;
@@ -65,7 +65,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param dividerHeight 水平方向和垂直方向上的宽度相同
      * @return
      */
-    public <T extends RecyclerItemDecoration> T dividerHeight(int dividerHeight) {
+    public T dividerHeight(int dividerHeight) {
         this.mHorizontalDividerHeight = dividerHeight;
         return (T) this;
     }
@@ -76,7 +76,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param dividerColor 水平方向、垂直方向上和交叉点的颜色相同  交叉点默认使用水平方向上的颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T dividerColor(int dividerColor) {
+    public T dividerColor(int dividerColor) {
         this.mHorizontalDividerColor = dividerColor;
         this.mCrossPointColor = dividerColor;
         return (T) this;
@@ -88,7 +88,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param dividerDrawable 水平方向、垂直方向上和交叉点的颜色相同  交叉点默认使用水平方向上的 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T dividerDrawable(Drawable dividerDrawable) {
+    public T dividerDrawable(Drawable dividerDrawable) {
         this.mHorizontalDividerDrawable = dividerDrawable;
         this.mCrossPointDrawable = dividerDrawable;
         return (T) this;
@@ -101,7 +101,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param crossPointColor        交叉点的分割线的颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T dividerColor(int horizontalDividerColor, int crossPointColor) {
+    public T dividerColor(int horizontalDividerColor, int crossPointColor) {
         this.mHorizontalDividerColor = horizontalDividerColor;
         this.mCrossPointColor = crossPointColor;
         return (T) this;
@@ -114,7 +114,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param crossPointDrawable        交叉点的分割线的 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T dividerDrawable(Drawable horizontalDividerDrawable, Drawable crossPointDrawable) {
+    public T dividerDrawable(Drawable horizontalDividerDrawable, Drawable crossPointDrawable) {
         this.mHorizontalDividerDrawable = horizontalDividerDrawable;
         this.mCrossPointDrawable = crossPointDrawable;
         return (T) this;
@@ -131,7 +131,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lowHeight 第一行之前和最后一列之后的分割线高度
      * @param colHeight 第一列之前和最后一行之后的分割线宽度
      */
-    public <T extends RecyclerItemDecoration> T dividerRowAndColHeight(int lowHeight, int colHeight) {
+    public T dividerRowAndColHeight(int lowHeight, int colHeight) {
         mTopAndBottomRowHeight = lowHeight;
         mLeftAndRightColHeight = colHeight;
         return (T) this;
@@ -144,7 +144,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstRowBefore(boolean isDrawFirstRow, int firstRowColor) {
+    public T drawFirstRowBefore(boolean isDrawFirstRow, int firstRowColor) {
         this.mIsDrawFirstRow = isDrawFirstRow;
         this.mFirstRowColor = firstRowColor;
         return (T) this;
@@ -157,7 +157,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstRowDrawable 分割线 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstRowBefore(boolean isDrawFirstRow, Drawable firstRowDrawable) {
+    public T drawFirstRowBefore(boolean isDrawFirstRow, Drawable firstRowDrawable) {
         this.mIsDrawFirstRow = isDrawFirstRow;
         this.mFirstRowDrawable = firstRowDrawable;
         return (T) this;
@@ -170,7 +170,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstColBefore(boolean isDrawFirstCol, int firstColColor) {
+    public T drawFirstColBefore(boolean isDrawFirstCol, int firstColColor) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         this.mFirstColColor = firstColColor;
         return (T) this;
@@ -183,7 +183,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param firstColDrawable 分割线 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawFirstColBefore(boolean isDrawFirstCol, Drawable firstColDrawable) {
+    public T drawFirstColBefore(boolean isDrawFirstCol, Drawable firstColDrawable) {
         this.mIsDrawFirstCol = isDrawFirstCol;
         this.mFirstColDrawable = firstColDrawable;
         return (T) this;
@@ -196,7 +196,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastRowColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow, int lastRowColor) {
+    public T drawLastRowAfter(boolean isDrawLastRow, int lastRowColor) {
         this.mIsDrawLastRow = isDrawLastRow;
         this.mLastRowColor = lastRowColor;
         return (T) this;
@@ -209,7 +209,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastRowDrawable 分割线 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastRowAfter(boolean isDrawLastRow, Drawable lastRowDrawable) {
+    public T drawLastRowAfter(boolean isDrawLastRow, Drawable lastRowDrawable) {
         this.mIsDrawLastRow = isDrawLastRow;
         this.mLastRowDrawable = lastRowDrawable;
         return (T) this;
@@ -222,7 +222,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastColColor  分割线颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastColAfter(boolean isDrawLastCol, int lastColColor) {
+    public T drawLastColAfter(boolean isDrawLastCol, int lastColColor) {
         this.mIsDrawLastCol = isDrawLastCol;
         this.mLastColColor = lastColColor;
         return (T) this;
@@ -235,7 +235,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param lastColDrawable 分割线 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T drawLastColAfter(boolean isDrawLastCol, Drawable lastColDrawable) {
+    public T drawLastColAfter(boolean isDrawLastCol, Drawable lastColDrawable) {
         this.mIsDrawLastCol = isDrawLastCol;
         this.mLastColDrawable = lastColDrawable;
         return (T) this;
@@ -248,7 +248,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param borderCrossPointColor 边界交叉点颜色
      * @return
      */
-    public <T extends RecyclerItemDecoration> T borderCrossPointColor(int borderCrossPointColor) {
+    public T borderCrossPointColor(int borderCrossPointColor) {
         this.mBorderCrossPointColor = borderCrossPointColor;
         return (T) this;
     }
@@ -260,7 +260,7 @@ public abstract class RecyclerItemDecoration extends RecyclerView.ItemDecoration
      * @param borderCrossPointDrawable 边界交叉点 Drawable
      * @return
      */
-    public <T extends RecyclerItemDecoration> T borderCrossPointDrawable(Drawable borderCrossPointDrawable) {
+    public T borderCrossPointDrawable(Drawable borderCrossPointDrawable) {
         this.mBorderCrossPointDrawable = borderCrossPointDrawable;
         return (T) this;
     }

@@ -106,6 +106,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     @Override
     public int getItemViewType(int position) {
+        D itemData = mDataList.get(position);
+        if (itemData instanceof MultiItemEntity)
+            return ((MultiItemEntity) itemData).getItemType();
         return mItemTypeValue;
     }
 

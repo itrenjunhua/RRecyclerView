@@ -46,8 +46,8 @@ public class MultipleItemActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        title = (TextView) findViewById(R.id.title);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        title = findViewById(R.id.title);
+        recyclerView = findViewById(R.id.recyclerview);
 
         title.setText("使用多种 item 类型（View 点击事件）");
 
@@ -57,12 +57,6 @@ public class MultipleItemActivity extends BaseActivity {
     private void setRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         RecyclerAdapter<SimpleMultiItemEntity> adapter = new RecyclerAdapter<SimpleMultiItemEntity>(initDta()) {
-
-            @Override
-            public int getItemViewType(int position) {
-                return mDataList.get(position).getItemType();
-            }
-
             @NonNull
             @Override
             protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {

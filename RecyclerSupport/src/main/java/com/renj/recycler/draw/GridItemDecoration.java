@@ -20,7 +20,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public class GridItemDecoration extends RecyclerItemDecoration {
+public class GridItemDecoration extends RecyclerItemDecoration<GridItemDecoration> {
     private int mVerticalDividerHeight = DEFAULT_DIVIDER_HEIGHT;   // 垂直方向上的宽度
     private int mVerticalDividerColor = DEFAULT_DIVIDER_COLOR;   // 垂直分割线颜色
     private Drawable mVerticalDividerDrawable;
