@@ -27,6 +27,9 @@ import java.util.Objects;
  */
 public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerViewHolder<D, ? extends BaseRecyclerCell>> {
     static final int ITEM_TYPE_DEFAULT = -0xFFFF;
+
+    // 是否需要按块加载数据的列表
+    private boolean mRecyclerBlockLoad = false;
     private int mItemTypeValue;
     protected List<D> mDataList;
 
@@ -99,7 +102,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 返回条目类型，如果是多条目类型时需要子类重写
+     * 返回条目类型，如果是多条目类型且数据不是 {@link MultiItemEntity} 子类时需要子类重写
      *
      * @param position 当前条目所在位置
      * @return 条目类型值
@@ -211,13 +214,48 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     /* ======================== set/add/modify/remove Data ======================== */
 
+    /**
+     * 设置按块加载数据
+     */
+    public void setRecyclerBlockData(RecyclerBlockData<D> recyclerBlockData) {
+        if (recyclerBlockData != null) {
+            mRecyclerBlockLoad = true;
+            recyclerBlockData.setRecyclerAdapter(this);
+        }
+    }
+
+    /**
+     * 清除按块加载的数据并刷新列表
+     */
+    public void clearRecyclerBlockData() {
+        clearRecyclerBlockData(true);
+    }
+
+    /**
+     * 清除按块加载的数据并指定是否需要刷新列表
+     *
+     * @param notifyAdapter 是否需要刷新列表  true：刷新  false：不刷新
+     */
+    public void clearRecyclerBlockData(boolean notifyAdapter) {
+        mRecyclerBlockLoad = false;
+        clear(notifyAdapter);
+    }
+
     /* -------------------------  set Data ------------------------- */
 
     /**
-     * 设置数据，将原来的数据完全替换并刷新列表
+     * 设置数据，将原来的数据完全替换并刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void setData(@NonNull List<D> dataList) {
+        setData(dataList, true);
+    }
+
+    void setData(@NonNull List<D> dataList, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         this.mDataList.clear();
         if (notEmptyList(dataList))
             this.mDataList.addAll(dataList);
@@ -227,7 +265,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     /* -------------------------  add Data ------------------------- */
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyAll(@NonNull List<D> dataList) {
@@ -235,7 +275,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyItem(@NonNull List<D> dataList) {
@@ -243,13 +285,21 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据
+     * 增加数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
     public void add(@NonNull List<D> dataList, boolean refreshAllItem) {
+        add(dataList, refreshAllItem, true);
+    }
+
+    void add(@NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (notEmptyList(dataList)) {
             if (refreshAllItem) {
                 this.mDataList.addAll(dataList);
@@ -263,7 +313,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
@@ -271,7 +323,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
@@ -279,13 +333,21 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据
+     * 增加数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
     public void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem) {
+        add(index, dataList, refreshAllItem, true);
+    }
+
+    void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (notEmptyList(dataList)) {
             if (refreshAllItem) {
                 this.mDataList.addAll(index, dataList);
@@ -298,7 +360,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyAll(@NonNull D data) {
@@ -306,7 +370,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyItem(@NonNull D data) {
@@ -314,13 +380,21 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据
+     * 增加数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
     public void add(D data, boolean refreshAllItem) {
+        add(data, refreshAllItem, true);
+    }
+
+    void add(D data, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (!isNullObject(data)) {
             if (refreshAllItem) {
                 this.mDataList.add(data);
@@ -333,7 +407,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull D data) {
@@ -341,7 +417,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 增加数据，并调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull D data) {
@@ -349,13 +427,21 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 增加数据
+     * 增加数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
     public void add(@IntRange(from = 0) int index, D data, boolean refreshAllItem) {
+        add(index, data, refreshAllItem, true);
+    }
+
+    void add(@IntRange(from = 0) int index, D data, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (index < 0) index = 0;
         if (index > mDataList.size()) index = mDataList.size();
         if (!isNullObject(data)) {
@@ -371,24 +457,42 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     /* -------------------------  modify Data ------------------------- */
 
+    /**
+     * 修改数据，并调用{@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
+     */
     @SuppressWarnings("unused")
     public void modifyAndNotifyAll(@IntRange(from = 0) int index, @NonNull D data) {
         modify(index, data, true);
     }
 
+    /**
+     * 修改数据并调用 {@link RecyclerAdapter#notifyItemChanged(int)} 方法刷新列表
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
+     */
     @SuppressWarnings("unused")
     public void modifyAndNotifyItem(@IntRange(from = 0) int index, @NonNull D data) {
         modify(index, data, false);
     }
 
     /**
-     * 修改数据
+     * 修改数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemChanged(int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
     public void modify(@IntRange(from = 0) int index, D data, boolean refreshAllItem) {
+        modify(index, data, refreshAllItem, true);
+    }
+
+    void modify(@IntRange(from = 0) int index, D data, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (index < 0 || index >= this.mDataList.size())
             return;
         if (isNullObject(data))
@@ -404,7 +508,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     /* -------------------------  remove Data ------------------------- */
 
     /**
-     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyAll(@NonNull D data) {
@@ -413,7 +519,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     /**
      * 移除数据，调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
-     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyItem(@NonNull D data) {
@@ -421,7 +529,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 移除数据
+     * 移除数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
@@ -429,12 +539,20 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     @SuppressWarnings("unused")
     public void remove(D data, boolean refreshAllItem) {
+        remove(data, refreshAllItem, true);
+    }
+
+    void remove(D data, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (!isNullObject(data))
             remove(this.mDataList.indexOf(data), refreshAllItem);
     }
 
     /**
-     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyAll(@IntRange(from = 0) int index) {
@@ -443,7 +561,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     /**
      * 移除数据，调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
-     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyItem(@IntRange(from = 0) int index) {
@@ -451,7 +571,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 移除数据
+     * 移除数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRemoved(int)}
@@ -459,6 +581,12 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     @SuppressWarnings("unused")
     public void remove(@IntRange(from = 0) int index, boolean refreshAllItem) {
+        remove(index, refreshAllItem, true);
+    }
+
+    void remove(@IntRange(from = 0) int index, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (index < 0 || index >= this.mDataList.size())
             return;
 
@@ -474,7 +602,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表
+     * 移除数据，调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyAll(@IntRange(from = 0) int start, int count) {
@@ -483,7 +613,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     /**
      * 移除数据，调用 {@link RecyclerAdapter#notifyItemRangeRemoved(int, int)}
-     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
+     * 和 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
     public void removeAndNotifyItem(@IntRange(from = 0) int start, int count) {
@@ -491,7 +623,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 移除数据
+     * 移除数据<br/>
+     * <b>注意：如果先调用了 {@link #setRecyclerBlockData(RecyclerBlockData)} 方法并传递的参数为非 {@code null}，那么该方法无效；
+     * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      *
      * @param refreshAllItem true：调用 {@link RecyclerAdapter#notifyDataSetChanged()} 方法刷新列表<br/>
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeRemoved(int, int)}
@@ -499,6 +633,12 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     @SuppressWarnings("unused")
     public void remove(@IntRange(from = 0) int start, @IntRange(from = 0) int count, boolean refreshAllItem) {
+        remove(start, count, refreshAllItem, true);
+    }
+
+    void remove(@IntRange(from = 0) int start, @IntRange(from = 0) int count, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+        if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
+
         if (count <= 0) return;
         if (start < 0) start = 0;
         if ((start + count) > this.mDataList.size()) {
@@ -520,8 +660,19 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     @SuppressWarnings("unused")
     public void clear() {
+        clear(true);
+    }
+
+    /**
+     * 清空数据并指定是否需要刷新列表
+     *
+     * @param notifyAdapter 是否需要刷新列表  true：刷新  false：不刷新
+     */
+    @SuppressWarnings("unused")
+    public void clear(boolean notifyAdapter) {
         this.mDataList.clear();
-        notifyDataSetChanged();
+        if (notifyAdapter)
+            notifyDataSetChanged();
     }
 
 

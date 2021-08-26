@@ -91,7 +91,8 @@ public class MultipleItemActivity extends BaseActivity {
             else if (anInt % 3 == 1) {
                 dataList.add(new SimpleMultiItemEntity<>(RecyclerCellType.USER_DATA_CELL, new UserData("张三 - " + i, i)));
             } else {
-                dataList.add(imageArray[j]);
+                if (j < imageArray.length)
+                    dataList.add(imageArray[j]);
             }
         }
         return dataList;
