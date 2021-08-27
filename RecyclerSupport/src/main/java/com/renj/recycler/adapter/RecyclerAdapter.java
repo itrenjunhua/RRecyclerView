@@ -546,7 +546,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         if (!isNullObject(data))
-            remove(this.mDataList.indexOf(data), refreshAllItem);
+            remove(this.mDataList.indexOf(data), refreshAllItem, filterRecyclerBlockData);
     }
 
     /**

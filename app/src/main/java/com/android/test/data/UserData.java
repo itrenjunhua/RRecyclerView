@@ -1,5 +1,7 @@
 package com.android.test.data;
 
+import java.util.Objects;
+
 /**
  * ======================================================================
  * <p>
@@ -20,5 +22,19 @@ public class UserData {
     public UserData(String userName, int age) {
         this.userName = userName;
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserData userData = (UserData) o;
+        return age == userData.age &&
+                userName.equals(userData.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userName, age);
     }
 }

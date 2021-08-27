@@ -9,7 +9,7 @@ import com.android.test.R;
 
 public class MainActivity extends BaseActivity {
     private TextView title;
-    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,button11;
+    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,button11,button12;
 
     @Override
     protected int getLayoutId() {
@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity {
         button9 = (Button) findViewById(R.id.bt9);
         button10 = (Button) findViewById(R.id.bt10);
         button11 = (Button) findViewById(R.id.bt11);
+        button12 = (Button) findViewById(R.id.bt12);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
         button9.setOnClickListener(this);
         button10.setOnClickListener(this);
         button11.setOnClickListener(this);
+        button12.setOnClickListener(this);
     }
 
     @Override
@@ -92,6 +94,10 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.bt11:
                 intent = new Intent(this, MyRefreshRecyclerViewActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt12:
+                intent = new Intent(this, BlockLoadActivity.class);
                 startActivity(intent);
                 break;
             default:

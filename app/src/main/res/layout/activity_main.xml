@@ -84,6 +84,13 @@
                 android:text="item 拖拽和侧滑删除"
                 android:textAllCaps="false"/>
 
+            <Button
+                android:id="@+id/bt12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="列表数据分块加载"
+                android:textAllCaps="false"/>
+
         </LinearLayout>
 
     </ScrollView>

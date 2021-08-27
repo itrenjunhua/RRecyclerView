@@ -66,4 +66,18 @@ public class DataUtil {
         }
         return result;
     }
+
+    public static List<SimpleMultiItemEntity> getImageList(int itemType, int dataCount) {
+        // 因为需要进行增删操作，所以不能使用 Arrays.asList() 方法将数组转为集合返回
+
+        // return Arrays.asList(ImageUrl.IMAGES);
+
+        List<SimpleMultiItemEntity> result = new ArrayList<>();
+        if (dataCount > ImageUrl.IMAGES.length) dataCount = ImageUrl.IMAGES.length;
+
+        for (int i = 0; i < dataCount; i++) {
+            result.add(new SimpleMultiItemEntity(itemType, ImageUrl.IMAGES[i]));
+        }
+        return result;
+    }
 }

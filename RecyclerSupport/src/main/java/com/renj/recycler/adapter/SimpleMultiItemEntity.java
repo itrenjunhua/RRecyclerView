@@ -1,5 +1,7 @@
 package com.renj.recycler.adapter;
 
+import java.util.Objects;
+
 /**
  * ======================================================================
  * <p>
@@ -17,7 +19,6 @@ public class SimpleMultiItemEntity<T> implements MultiItemEntity {
     // 当前数据的条目类型
     private final int itemType;
     private T data;
-
     /**
      * 创建多种条目类型数据
      *
@@ -41,5 +42,23 @@ public class SimpleMultiItemEntity<T> implements MultiItemEntity {
     @Override
     public int getItemType() {
         return itemType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SimpleMultiItemEntity<?> that = (SimpleMultiItemEntity<?>) o;
+
+        if (itemType != that.itemType) return false;
+        return Objects.equals(data, that.data);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = itemType;
+        result = 31 * result + (data != null ? data.hashCode() : 0);
+        return result;
     }
 }
