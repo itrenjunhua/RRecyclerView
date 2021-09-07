@@ -13,7 +13,7 @@ package com.android.test.data;
  * ======================================================================
  */
 public class ImageUrl {
-    static String[] IMAGES = new String[]{
+    public static String[] IMAGES = new String[]{
             "https://img0.baidu.com/it/u=3546583696,505241117&fm=26&fmt=auto&gp=0.jpg",
             "http://b.hiphotos.baidu.com/image/pic/item/91529822720e0cf34ed4defb0846f21fbe09aa8b.jpg",
             "http://f.hiphotos.baidu.com/image/pic/item/14ce36d3d539b600dfdd4e3feb50352ac65cb723.jpg",

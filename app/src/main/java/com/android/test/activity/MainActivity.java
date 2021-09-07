@@ -6,10 +6,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.test.R;
+import com.android.test.databinding.DBBlockLoadActivity;
 
 public class MainActivity extends BaseActivity {
     private TextView title;
-    private Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,button11,button12;
+    private Button button1, button2, button3, button4, button5, button6, button7,
+            button8, button9, button10, button11, button12, button13;
 
     @Override
     protected int getLayoutId() {
@@ -33,6 +35,7 @@ public class MainActivity extends BaseActivity {
         button10 = (Button) findViewById(R.id.bt10);
         button11 = (Button) findViewById(R.id.bt11);
         button12 = (Button) findViewById(R.id.bt12);
+        button13 = (Button) findViewById(R.id.bt13);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -46,6 +49,7 @@ public class MainActivity extends BaseActivity {
         button10.setOnClickListener(this);
         button11.setOnClickListener(this);
         button12.setOnClickListener(this);
+        button13.setOnClickListener(this);
     }
 
     @Override
@@ -98,6 +102,10 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.bt12:
                 intent = new Intent(this, BlockLoadActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt13:
+                intent = new Intent(this, DBBlockLoadActivity.class);
                 startActivity(intent);
                 break;
             default:

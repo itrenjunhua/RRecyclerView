@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:renj="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="itemValue"
+            type="String" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="4dp"
+        android:orientation="vertical"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="4dp"
+        app:contentPadding="2dp">
+
+        <ImageView
+            android:id="@+id/multiple_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            renj:url="@{itemValue}" />
+
+    </android.support.v7.widget.CardView>
+</layout>

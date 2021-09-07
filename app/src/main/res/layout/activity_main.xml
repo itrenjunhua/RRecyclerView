@@ -91,6 +91,13 @@
                 android:text="列表数据分块加载"
                 android:textAllCaps="false"/>
 
+            <Button
+                android:id="@+id/bt13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="列表数据分块加载(DataBinding)"
+                android:textAllCaps="false"/>
+
         </LinearLayout>
 
     </ScrollView>

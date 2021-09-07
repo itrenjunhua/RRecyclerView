@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.android.test"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.test">
 
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-	<application
-		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
-		android:supportsRtl="true"
-		android:theme="@style/AppTheme">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-		<!-- 配置Glide的GlideModule -->
-		<meta-data
-			android:name="com.android.test.utils.imageutil.ConsumerGlideModule"
-			android:value="GlideModule"/>
+        <!-- 配置Glide的GlideModule -->
+        <meta-data
+            android:name="com.android.test.utils.imageutil.ConsumerGlideModule"
+            android:value="GlideModule" />
 
-		<activity android:name="com.android.test.activity.MainActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
+        <activity android:name="com.android.test.activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-		<activity android:name="com.android.test.activity.List1Activity"/>
-		<activity android:name="com.android.test.activity.List2Activity"/>
-		<activity android:name="com.android.test.activity.Grid1Activity"/>
-		<activity android:name="com.android.test.activity.Grid2Activity"/>
-		<activity android:name="com.android.test.activity.Grid3Activity"/>
-		<activity android:name="com.android.test.activity.Staggered1Activity"/>
-		<activity android:name="com.android.test.activity.Staggered2Activity"/>
-		<activity android:name="com.android.test.activity.MultipleItemActivity"/>
-		<activity android:name="com.android.test.activity.RefreshActivity"/>
-		<activity android:name="com.android.test.activity.ItemTouchActivity"/>
-		<activity android:name="com.android.test.activity.MyRefreshRecyclerViewActivity"/>
-		<activity android:name="com.android.test.activity.BlockLoadActivity"/>
-	</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.android.test.activity.List1Activity" />
+        <activity android:name="com.android.test.activity.List2Activity" />
+        <activity android:name="com.android.test.activity.Grid1Activity" />
+        <activity android:name="com.android.test.activity.Grid2Activity" />
+        <activity android:name="com.android.test.activity.Grid3Activity" />
+        <activity android:name="com.android.test.activity.Staggered1Activity" />
+        <activity android:name="com.android.test.activity.Staggered2Activity" />
+        <activity android:name="com.android.test.activity.MultipleItemActivity" />
+        <activity android:name="com.android.test.activity.RefreshActivity" />
+        <activity android:name="com.android.test.activity.ItemTouchActivity" />
+        <activity android:name="com.android.test.activity.MyRefreshRecyclerViewActivity" />
+        <activity android:name="com.android.test.activity.BlockLoadActivity" />
+        <activity android:name="com.android.test.databinding.DBBlockLoadActivity" />
+    </application>
 
 </manifest>

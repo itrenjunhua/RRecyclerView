@@ -1,26 +1,25 @@
-package com.android.test.activity;
+package com.android.test.databinding;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.android.test.R;
 import com.android.test.cell.RecyclerCellType;
-import com.android.test.cell.UserDataCell;
-import com.android.test.cell.VerticalImageCell;
-import com.android.test.cell.VerticalTextCell;
-import com.android.test.data.DataUtil;
+import com.android.test.data.ImageUrl;
 import com.android.test.data.UserData;
-import com.renj.recycler.adapter.BaseRecyclerCell;
-import com.renj.recycler.adapter.RecyclerAdapter;
-import com.renj.recycler.adapter.RecyclerBlockData;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.renj.recycler.databinding.BaseRecyclerCell;
+import com.renj.recycler.databinding.RecyclerAdapter;
+import com.renj.recycler.databinding.RecyclerBlockData;
+import com.renj.recycler.databinding.SimpleMultiItemEntity;
 import com.renj.recycler.draw.LinearItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ======================================================================
@@ -35,23 +34,26 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class BlockLoadActivity extends BaseActivity {
+public class DBBlockLoadActivity extends AppCompatActivity {
     private TextView title;
     private RecyclerView recyclerView;
     // 列表数据
     private RecyclerBlockData<SimpleMultiItemEntity> recyclerBlockData;
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_recycler_view;
-    }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DataBindingUtil.setContentView(this, R.layout.db_activity_recycler_view);
+        initView();
+    }
+
+
     protected void initView() {
         title = findViewById(R.id.title);
         recyclerView = findViewById(R.id.recyclerview);
 
-        title.setText("列表数据分块加载");
+        title.setText("列表数据分块加载(DataBinding)");
 
         setRecyclerView();
     }
@@ -67,7 +69,7 @@ public class BlockLoadActivity extends BaseActivity {
                 else if (itemTypeValue == RecyclerCellType.USER_DATA_CELL)
                     return new UserDataCell();
                 else
-                    return new VerticalImageCell(glideUtils);
+                    return new VerticalImageCell();
             }
         };
 
@@ -90,7 +92,7 @@ public class BlockLoadActivity extends BaseActivity {
     private void initData() {
         Handler handler = new Handler();
 
-        List<SimpleMultiItemEntity> stringList = new ArrayList<>();
+        ObservableList<SimpleMultiItemEntity> stringList = new ObservableArrayList<>();
         for (int i = 0; i < 10; i++) {
             stringList.add(new SimpleMultiItemEntity<>(RecyclerCellType.VERTICAL_TEXT_CELL, "多种条目——文字类型 " + i));
         }
@@ -99,7 +101,7 @@ public class BlockLoadActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<SimpleMultiItemEntity> userList = new ArrayList<>();
+                ObservableList<SimpleMultiItemEntity> userList = new ObservableArrayList<>();
                 for (int i = 0; i < 8; i++) {
                     userList.add(new SimpleMultiItemEntity<>(RecyclerCellType.USER_DATA_CELL, new UserData("张三 - " + i, i)));
                 }
@@ -110,7 +112,7 @@ public class BlockLoadActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<SimpleMultiItemEntity> imageList = DataUtil.getImageList(RecyclerCellType.VERTICAL_IMAGE_CELL, 1);
+                ObservableList<SimpleMultiItemEntity> imageList = getImageList(RecyclerCellType.VERTICAL_IMAGE_CELL, 1);
                 recyclerBlockData.setBlockData(3, imageList);
             }
         }, 3000);
@@ -118,7 +120,7 @@ public class BlockLoadActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                List<SimpleMultiItemEntity> userList = new ArrayList<>();
+                ObservableList<SimpleMultiItemEntity> userList = new ObservableArrayList<>();
                 for (int i = 0; i < 2; i++) {
                     userList.add(new SimpleMultiItemEntity<>(RecyclerCellType.USER_DATA_CELL,
                             new UserData("李四 - " + i, i)));
@@ -174,5 +176,19 @@ public class BlockLoadActivity extends BaseActivity {
 //                recyclerBlockData.clear();
 //            }
 //        }, 8000);
+    }
+
+    public ObservableList<SimpleMultiItemEntity> getImageList(int itemType, int dataCount) {
+        // 因为需要进行增删操作，所以不能使用 Arrays.asList() 方法将数组转为集合返回
+
+        // return Arrays.asList(ImageUrl.IMAGES);
+
+        ObservableList<SimpleMultiItemEntity> result = new ObservableArrayList<>();
+        if (dataCount > ImageUrl.IMAGES.length) dataCount = ImageUrl.IMAGES.length;
+
+        for (int i = 0; i < dataCount; i++) {
+            result.add(new SimpleMultiItemEntity(itemType, ImageUrl.IMAGES[i]));
+        }
+        return result;
     }
 }
