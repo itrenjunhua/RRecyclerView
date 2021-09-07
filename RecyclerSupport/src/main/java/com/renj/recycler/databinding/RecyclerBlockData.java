@@ -4,7 +4,6 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.IntRange;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class RecyclerBlockData<T> {
     void setRecyclerAdapter(RecyclerAdapter<T> recyclerAdapter) {
         this.mRecyclerAdapter = recyclerAdapter;
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }
@@ -100,7 +99,7 @@ public class RecyclerBlockData<T> {
         blockDataList.add(blockData);
         mLinkedHashMap.put(blockPosition, blockDataList);
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }
@@ -123,7 +122,7 @@ public class RecyclerBlockData<T> {
 
         mLinkedHashMap.put(blockPosition, blockDataList);
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }

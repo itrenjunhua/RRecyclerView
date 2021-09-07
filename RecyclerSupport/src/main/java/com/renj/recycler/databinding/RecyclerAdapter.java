@@ -1,6 +1,8 @@
 package com.renj.recycler.databinding;
 
 import android.content.Context;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,14 +32,14 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     // 是否需要按块加载数据的列表
     private boolean mRecyclerBlockLoad = false;
     private int mItemTypeValue;
-    protected List<D> mDataList;
+    protected ObservableList<D> mDataList;
 
     /**
      * 单一条目类型，使用默认类型值 {@link #ITEM_TYPE_DEFAULT}
      */
     public RecyclerAdapter() {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
-        this.mDataList = new ArrayList<>();
+        this.mDataList = new ObservableArrayList<>();
     }
 
     /**
@@ -48,7 +49,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     public RecyclerAdapter(int itemTypeValue) {
         this.mItemTypeValue = itemTypeValue;
-        this.mDataList = new ArrayList<>();
+        this.mDataList = new ObservableArrayList<>();
     }
 
     /**
@@ -56,9 +57,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *
      * @param dataList 数据列表
      */
-    public RecyclerAdapter(List<D> dataList) {
+    public RecyclerAdapter(ObservableList<D> dataList) {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
-        this.mDataList = new ArrayList<>();
+        this.mDataList = new ObservableArrayList<>();
         if (dataList != null)
             this.mDataList.addAll(dataList);
     }
@@ -69,9 +70,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * @param itemTypeValue 当前条目类型值
      * @param dataList      数据列表
      */
-    public RecyclerAdapter(int itemTypeValue, List<D> dataList) {
+    public RecyclerAdapter(int itemTypeValue, ObservableList<D> dataList) {
         this.mItemTypeValue = itemTypeValue;
-        this.mDataList = new ArrayList<>();
+        this.mDataList = new ObservableArrayList<>();
         if (dataList != null)
             this.mDataList.addAll(dataList);
     }
@@ -82,7 +83,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * @return 数据列表
      */
     @SuppressWarnings("unused")
-    public List<D> getDataList() {
+    public ObservableList<D> getDataList() {
         return mDataList;
     }
 
@@ -249,11 +250,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void setData(@NonNull List<D> dataList) {
+    public void setData(@NonNull ObservableList<D> dataList) {
         setData(dataList, true);
     }
 
-    void setData(@NonNull List<D> dataList, boolean filterRecyclerBlockData) {
+    void setData(@NonNull ObservableList<D> dataList, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         this.mDataList.clear();
@@ -270,7 +271,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@NonNull List<D> dataList) {
+    public void addAndNotifyAll(@NonNull ObservableList<D> dataList) {
         add(dataList, true);
     }
 
@@ -280,7 +281,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@NonNull List<D> dataList) {
+    public void addAndNotifyItem(@NonNull ObservableList<D> dataList) {
         add(dataList, false);
     }
 
@@ -293,11 +294,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@NonNull List<D> dataList, boolean refreshAllItem) {
+    public void add(@NonNull ObservableList<D> dataList, boolean refreshAllItem) {
         add(dataList, refreshAllItem, true);
     }
 
-    void add(@NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+    void add(@NonNull ObservableList<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         if (notEmptyList(dataList)) {
@@ -318,7 +319,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList) {
         add(index, dataList, true);
     }
 
@@ -328,7 +329,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList) {
         add(index, dataList, false);
     }
 
@@ -341,11 +342,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList, boolean refreshAllItem) {
         add(index, dataList, refreshAllItem, true);
     }
 
-    void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+    void add(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         if (notEmptyList(dataList)) {

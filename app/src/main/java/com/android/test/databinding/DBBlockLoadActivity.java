@@ -65,11 +65,11 @@ public class DBBlockLoadActivity extends AppCompatActivity {
             @Override
             protected BaseRecyclerCell getRecyclerCell(int itemTypeValue) {
                 if (itemTypeValue == RecyclerCellType.VERTICAL_TEXT_CELL)
-                    return new VerticalTextCell();
+                    return new DBVerticalTextCell();
                 else if (itemTypeValue == RecyclerCellType.USER_DATA_CELL)
-                    return new UserDataCell();
+                    return new DBUserDataCell();
                 else
-                    return new VerticalImageCell();
+                    return new DBVerticalImageCell();
             }
         };
 

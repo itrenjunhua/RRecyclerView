@@ -26,9 +26,9 @@ import com.renj.recycler.databinding.SimpleMultiItemEntity;
  * <p>
  * ======================================================================
  */
-public class VerticalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+public class DBVerticalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
 
-    public VerticalImageCell() {
+    public DBVerticalImageCell() {
         super(R.layout.db_item_multiple_img);
     }
 

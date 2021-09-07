@@ -28,16 +28,16 @@ import com.renj.recycler.databinding.SimpleMultiItemEntity;
  * <p>
  * ======================================================================
  */
-public class VerticalTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
+public class DBVerticalTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
 
     private RecyclerView recyclerView;
     private ItemTouchHelper itemTouchHelper;
 
-    public VerticalTextCell() {
+    public DBVerticalTextCell() {
         super(R.layout.db_item_recycler_view1);
     }
 
-    public VerticalTextCell(RecyclerView recyclerView, ItemTouchHelper itemTouchHelper) {
+    public DBVerticalTextCell(RecyclerView recyclerView, ItemTouchHelper itemTouchHelper) {
         super(R.layout.db_item_recycler_view1);
         this.recyclerView = recyclerView;
         this.itemTouchHelper = itemTouchHelper;

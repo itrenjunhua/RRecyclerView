@@ -12,7 +12,8 @@ import android.support.v7.widget.RecyclerView;
  * <p>
  * 作者：Renj
  * <p>
- * 描述:
+ * 描述:DataBinding使用时数据更新自动刷新列表工具类。
+ * 注意：如果Adapter种数据使用的是 {@link RecyclerBlockData} ，那么不需要再次调佣该类的方法。
  * <p>
  * 创建时间: 2021-09-07 14:09
  */

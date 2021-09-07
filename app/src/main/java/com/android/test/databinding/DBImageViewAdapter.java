@@ -18,7 +18,7 @@ import com.android.test.utils.imageutil.GlideUtils;
  * <p>
  * 创建时间: 2021-09-07 15:56
  */
-public class ImageViewAdapter {
+public class DBImageViewAdapter {
     @BindingAdapter(value = {"url"})
     public static void setImageUrl(ImageView imageView, String url) {
         GlideUtils.with(imageView.getContext()).loadCornerImage(url, imageView, 4);

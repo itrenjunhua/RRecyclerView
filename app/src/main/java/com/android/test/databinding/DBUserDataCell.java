@@ -27,9 +27,9 @@ import com.renj.recycler.databinding.SimpleMultiItemEntity;
  * <p>
  * ======================================================================
  */
-public class UserDataCell extends BaseRecyclerCell<SimpleMultiItemEntity<UserData>> {
+public class DBUserDataCell extends BaseRecyclerCell<SimpleMultiItemEntity<UserData>> {
 
-    public UserDataCell() {
+    public DBUserDataCell() {
         super(R.layout.db_item_recycler_user);
     }
 
