@@ -39,6 +39,7 @@
         <activity android:name="com.android.test.activity.BlockLoadActivity" />
         <activity android:name="com.android.test.databinding.DBListActivity" />
         <activity android:name="com.android.test.databinding.DBBlockLoadActivity" />
+        <activity android:name="com.android.test.activity.GroupItemActivity" />
     </application>
 
 </manifest>

@@ -105,6 +105,13 @@
                 android:text="列表数据分块加载(DataBinding)"
                 android:textAllCaps="false" />
 
+            <Button
+                android:id="@+id/bt15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="列表分组吸顶"
+                android:textAllCaps="false" />
+
         </LinearLayout>
 
     </ScrollView>

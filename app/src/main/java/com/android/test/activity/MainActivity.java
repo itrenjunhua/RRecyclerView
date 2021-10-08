@@ -12,7 +12,7 @@ import com.android.test.databinding.DBListActivity;
 public class MainActivity extends BaseActivity {
     private TextView title;
     private Button button1, button2, button3, button4, button5, button6, button7,
-            button8, button9, button10, button11, button12, button13,button14;
+            button8, button9, button10, button11, button12, button13,button14,button15;
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +38,7 @@ public class MainActivity extends BaseActivity {
         button12 = (Button) findViewById(R.id.bt12);
         button13 = (Button) findViewById(R.id.bt13);
         button14 = (Button) findViewById(R.id.bt14);
+        button15 = (Button) findViewById(R.id.bt15);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -53,6 +54,7 @@ public class MainActivity extends BaseActivity {
         button12.setOnClickListener(this);
         button13.setOnClickListener(this);
         button14.setOnClickListener(this);
+        button15.setOnClickListener(this);
     }
 
     @Override
@@ -113,6 +115,10 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.bt14:
                 intent = new Intent(this, DBBlockLoadActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt15:
+                intent = new Intent(this, GroupItemActivity.class);
                 startActivity(intent);
                 break;
             default:
