@@ -15,11 +15,12 @@ package com.android.test.cell;
  * ======================================================================
  */
 public interface RecyclerCellType {
+    int VERTICAL_HEADER = -1;
     int VERTICAL_TEXT_CELL = 0;
     int HORIZONTAL_TEXT_CELL = 1;
     int VERTICAL_IMAGE_CELL = 2;
     int S_VERTICAL_IMAGE_CELL = 3;
     int S_HORIZONTAL_IMAGE_CELL = 4;
     int GRID_TEXT_CELL = 5;
-    int USER_DATA_CELL = 5;
+    int USER_DATA_CELL = 6;
 }

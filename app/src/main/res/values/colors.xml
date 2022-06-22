@@ -22,6 +22,7 @@
     <color name="colorBorderPoint">#FF997833</color>
 
     <color name="title_bg">#AA51B535</color>
+    <color name="header_bg">#51B535</color>
     <color name="title_color">#FFFFFF</color>
     <color name="item_bg">#884081FF</color>
     <color name="line_bg">#FFFFFF</color>

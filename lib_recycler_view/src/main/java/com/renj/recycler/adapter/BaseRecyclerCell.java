@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
  * ======================================================================
  */
 public abstract class BaseRecyclerCell<D> {
+    protected Context mContext;
     /**
      * 当前item布局资源id
      */

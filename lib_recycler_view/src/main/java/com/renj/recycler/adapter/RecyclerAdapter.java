@@ -26,7 +26,7 @@ import java.util.Objects;
  * <p>
  * ======================================================================
  */
-public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerViewHolder<D, ? extends BaseRecyclerCell>> {
+public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerViewHolder<D, ? extends BaseRecyclerCell<?>>> {
     static final int ITEM_TYPE_DEFAULT = -0xFFFF;
 
     // 是否需要按块加载数据的列表
@@ -118,9 +118,10 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
     @NonNull
     @Override
-    public RecyclerViewHolder<D, ? extends BaseRecyclerCell> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BaseRecyclerCell recyclerCell = getRecyclerCell(viewType);
+    public RecyclerViewHolder<D, ? extends BaseRecyclerCell<?>> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseRecyclerCell<?> recyclerCell = getRecyclerCell(viewType);
         Objects.requireNonNull(recyclerCell);
+        recyclerCell.mContext = parent.getContext();
         return new RecyclerViewHolder(parent, recyclerCell);
     }
 
@@ -131,51 +132,45 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * @return 根据 itemTypeValue 值返回对应的 {@link BaseRecyclerCell} 子类对象
      */
     @NonNull
-    protected abstract BaseRecyclerCell getRecyclerCell(int itemTypeValue);
+    protected abstract BaseRecyclerCell<?> getRecyclerCell(int itemTypeValue);
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder<D, ? extends BaseRecyclerCell> holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<D, ? extends BaseRecyclerCell<?>> holder, int position) {
         final int tmpPosition = position;
-        final RecyclerViewHolder<D, ? extends BaseRecyclerCell> finalHolder = holder;
+        final RecyclerViewHolder<D, ? extends BaseRecyclerCell<?>> finalHolder = holder;
         holder.onBindViewHolder(position, mDataList.get(position));
-        holder.setOnItemViewClickListener(new RecyclerViewHolder.OnItemViewClickListener() {
-            @Override
-            public void onItemViewClick(View itemView) {
-                if (mOnItemClickListener != null) {
-                    if (mOnItemClickListener.onItemClick(itemView.getContext(),
-                            RecyclerAdapter.this, finalHolder, itemView,
-                            tmpPosition, mDataList.get(tmpPosition))) {
+        holder.setOnItemViewClickListener(itemView -> {
+            if (mOnItemClickListener != null) {
+                if (mOnItemClickListener.onItemClick(itemView.getContext(),
+                        RecyclerAdapter.this, finalHolder, itemView,
+                        tmpPosition, mDataList.get(tmpPosition))) {
 
-                        finalHolder.mItemCell.onItemClick(itemView.getContext(),
-                                RecyclerAdapter.this, finalHolder, itemView,
-                                tmpPosition, mDataList.get(tmpPosition));
-                    }
-                } else {
                     finalHolder.mItemCell.onItemClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
                             tmpPosition, mDataList.get(tmpPosition));
                 }
+            } else {
+                finalHolder.mItemCell.onItemClick(itemView.getContext(),
+                        RecyclerAdapter.this, finalHolder, itemView,
+                        tmpPosition, mDataList.get(tmpPosition));
             }
         });
-        holder.setOnItemViewLongClickListener(new RecyclerViewHolder.OnItemViewLongClickListener() {
-            @Override
-            public boolean onItemLongViewClick(View itemView) {
-                if (mOnItemLongClickListener != null) {
-                    boolean itemLongClick = mOnItemLongClickListener.onItemLongClick(itemView.getContext(),
-                            RecyclerAdapter.this, finalHolder, itemView,
-                            tmpPosition, mDataList.get(tmpPosition));
+        holder.setOnItemViewLongClickListener(itemView -> {
+            if (mOnItemLongClickListener != null) {
+                boolean itemLongClick = mOnItemLongClickListener.onItemLongClick(itemView.getContext(),
+                        RecyclerAdapter.this, finalHolder, itemView,
+                        tmpPosition, mDataList.get(tmpPosition));
 
-                    if (itemLongClick) {
-                        return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
-                                RecyclerAdapter.this, finalHolder, itemView,
-                                tmpPosition, mDataList.get(tmpPosition));
-                    }
-                    return false;
-                } else {
+                if (itemLongClick) {
                     return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
                             RecyclerAdapter.this, finalHolder, itemView,
                             tmpPosition, mDataList.get(tmpPosition));
                 }
+                return false;
+            } else {
+                return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
+                        RecyclerAdapter.this, finalHolder, itemView,
+                        tmpPosition, mDataList.get(tmpPosition));
             }
         });
 
