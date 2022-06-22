@@ -34,14 +34,14 @@ public class UserDataCell extends BaseRecyclerCell<SimpleMultiItemEntity<UserDat
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<UserData> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, SimpleMultiItemEntity<UserData> itemData) {
         holder.setText(R.id.text_username, "姓名：" + itemData.getData().userName);
         holder.setText(R.id.text_age, "年龄：" + itemData.getData().age + "岁");
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<UserData> itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, SimpleMultiItemEntity<UserData> itemData) {
         ToastUtil.showSingleToast(context, "姓名:" + itemData.getData().userName);
     }
 }

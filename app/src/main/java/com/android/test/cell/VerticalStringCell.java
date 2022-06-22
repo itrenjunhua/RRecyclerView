@@ -23,21 +23,16 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  */
 public class VerticalStringCell extends BaseRecyclerCell<String> {
 
-    private RecyclerView recyclerView;
-    private ItemTouchHelper itemTouchHelper;
-
     public VerticalStringCell() {
         super(R.layout.item_recycler_view1);
     }
 
     public VerticalStringCell(RecyclerView recyclerView, ItemTouchHelper itemTouchHelper) {
         super(R.layout.item_recycler_view1);
-        this.recyclerView = recyclerView;
-        this.itemTouchHelper = itemTouchHelper;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, String itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, String itemData) {
         holder.setText(R.id.text_view, itemData);
     }
 }

@@ -33,14 +33,14 @@ public class GroupHeaderCell extends BaseRecyclerCell<MultiItemEntity> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, MultiItemEntity itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, MultiItemEntity itemData) {
         holder.setText(R.id.tv_group, ((HeaderItem) (itemData)).title);
         holder.setText(R.id.tv_message, ((HeaderItem) (itemData)).message);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, MultiItemEntity itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, MultiItemEntity itemData) {
         ToastUtil.showSingleToast(context, ((HeaderItem) (itemData)).title);
     }
 }

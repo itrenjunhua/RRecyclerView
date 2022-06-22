@@ -43,19 +43,19 @@ public class VerticalTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<Str
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?, ?> holder, int position, SimpleMultiItemEntity<String> itemData) {
         holder.setText(R.id.text_view, itemData.getData());
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?, ?> holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         ToastUtil.showSingleToast(context, "点击 位置:" + position + "；数据:" + itemData.getData());
     }
 
     @Override
-    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                                   @NonNull RecyclerViewHolder<?, ?> holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         // 长按开始拖拽
         if (itemTouchHelper != null && recyclerView != null)
             itemTouchHelper.startDrag(recyclerView.getChildViewHolder(itemView));

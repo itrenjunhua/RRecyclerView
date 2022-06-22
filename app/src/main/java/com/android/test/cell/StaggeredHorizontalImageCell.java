@@ -34,15 +34,15 @@ import java.util.Random;
  */
 public class StaggeredHorizontalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
     // 保存每一个 item 的高度，防止瀑布流图片闪烁问题
-    private HashMap<SimpleMultiItemEntity<String>, Integer> saveHeight = new HashMap<>();
-    private Random random = new Random();
+    private final HashMap<SimpleMultiItemEntity<String>, Integer> saveHeight = new HashMap<>();
+    private final Random random = new Random();
 
     public StaggeredHorizontalImageCell() {
         super(R.layout.item_staggred_2);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, SimpleMultiItemEntity<String> itemData) {
         ImageView imageView = holder.getImageView(R.id.imageview);
         // 快速设置 item 的宽度，而不是等待图片加载完成在设置宽度
         Integer integer = saveHeight.get(itemData);
@@ -59,8 +59,8 @@ public class StaggeredHorizontalImageCell extends BaseRecyclerCell<SimpleMultiIt
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         ToastUtil.showSingleToast(context, "删除位置：" + position);
         recyclerAdapter.removeAndNotifyItem(position);
     }

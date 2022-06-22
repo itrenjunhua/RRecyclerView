@@ -39,10 +39,10 @@ public abstract class BaseRecyclerCell<D> {
     /**
      * 绑定 holder
      */
-    public abstract void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, D itemData);
+    public abstract void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, D itemData);
 
     @SuppressWarnings("unused")
-    public void onAttachedToWindow(@NonNull RecyclerViewHolder holder) {
+    public void onAttachedToWindow(@NonNull RecyclerViewHolder<?,?> holder) {
 
     }
 
@@ -50,17 +50,17 @@ public abstract class BaseRecyclerCell<D> {
      * 如有必要，释放资源
      */
     @SuppressWarnings("unused")
-    public void onDetachedFromWindow(@NonNull RecyclerViewHolder holder) {
+    public void onDetachedFromWindow(@NonNull RecyclerViewHolder<?,?> holder) {
 
     }
 
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, D itemData) {
 
     }
 
-    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                                   @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData) {
+    public boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                                   @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, D itemData) {
         return false;
     }
 }

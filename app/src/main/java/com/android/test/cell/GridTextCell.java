@@ -32,12 +32,12 @@ public class GridTextCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?, ?> holder, int position, SimpleMultiItemEntity<String> itemData) {
         holder.setText(R.id.text_grid, itemData.getData());
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter, @NonNull RecyclerViewHolder holder,
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter, @NonNull RecyclerViewHolder<?, ?> holder,
                             @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         ToastUtil.showSingleToast(context, "点击TextView控件 - " + itemData.getData());
     }

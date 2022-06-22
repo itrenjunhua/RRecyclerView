@@ -39,14 +39,14 @@ public class VerticalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<St
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, SimpleMultiItemEntity<String> itemData) {
         ImageView imageView = holder.getImageView(R.id.multiple_imageview);
         ImageLoaderUtils.loadImage(imageView, itemData.getData(), 4);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, SimpleMultiItemEntity<String> itemData) {
         ToastUtil.showSingleToast(context, "图片链接 - " + itemData.getData());
     }
 }

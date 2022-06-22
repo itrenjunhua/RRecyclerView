@@ -33,13 +33,13 @@ public class GroupContentCell extends BaseRecyclerCell<MultiItemEntity> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, MultiItemEntity itemData) {
+    public void onBindViewHolder(@NonNull RecyclerViewHolder<?,?> holder, int position, MultiItemEntity itemData) {
         holder.setText(R.id.text_view, ((ContentItem) (itemData)).content);
     }
 
     @Override
-    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
-                            @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, MultiItemEntity itemData) {
+    public void onItemClick(@NonNull Context context, @NonNull RecyclerAdapter<?> recyclerAdapter,
+                            @NonNull RecyclerViewHolder<?,?> holder, @NonNull View itemView, int position, MultiItemEntity itemData) {
         ToastUtil.showSingleToast(context, ((ContentItem) (itemData)).content);
     }
 }
