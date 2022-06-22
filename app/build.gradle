@@ -11,7 +11,7 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -28,11 +28,12 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    implementation rootProject.ext.dependencies["androidSupportV7"]
-    implementation rootProject.ext.dependencies["recyclerviewV7"]
-    implementation rootProject.ext.dependencies["cardviewV7"]
+    testImplementation 'junit:junit:4.13.2'
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+    implementation rootProject.ext.dependencies["swiperefreshlayout"]
+    implementation rootProject.ext.dependencies["cardview"]
     implementation rootProject.ext.dependencies["glide"]
-    implementation 'jp.wasabeef:glide-transformations:2.0.1'
-    implementation project(':RecyclerSupport')
+    annotationProcessor rootProject.ext.dependencies["glideCompiler"]
+    implementation project(':lib_recycler_view')
 }

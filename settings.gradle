@@ -1,1 +1,1 @@
-include ':app', ':RecyclerSupport'
+include ':app', ':lib_recycler_view'

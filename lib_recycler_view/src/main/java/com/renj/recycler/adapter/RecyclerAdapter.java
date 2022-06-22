@@ -1,15 +1,15 @@
-package com.renj.recycler.databinding;
+package com.renj.recycler.adapter;
 
 import android.content.Context;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,14 +32,14 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     // 是否需要按块加载数据的列表
     private boolean mRecyclerBlockLoad = false;
     private int mItemTypeValue;
-    protected ObservableList<D> mDataList;
+    protected List<D> mDataList;
 
     /**
      * 单一条目类型，使用默认类型值 {@link #ITEM_TYPE_DEFAULT}
      */
     public RecyclerAdapter() {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
-        this.mDataList = new ObservableArrayList<>();
+        this.mDataList = new ArrayList<>();
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      */
     public RecyclerAdapter(int itemTypeValue) {
         this.mItemTypeValue = itemTypeValue;
-        this.mDataList = new ObservableArrayList<>();
+        this.mDataList = new ArrayList<>();
     }
 
     /**
@@ -57,9 +57,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *
      * @param dataList 数据列表
      */
-    public RecyclerAdapter(ObservableList<D> dataList) {
+    public RecyclerAdapter(List<D> dataList) {
         this.mItemTypeValue = ITEM_TYPE_DEFAULT;
-        this.mDataList = new ObservableArrayList<>();
+        this.mDataList = new ArrayList<>();
         if (dataList != null)
             this.mDataList.addAll(dataList);
     }
@@ -70,9 +70,9 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * @param itemTypeValue 当前条目类型值
      * @param dataList      数据列表
      */
-    public RecyclerAdapter(int itemTypeValue, ObservableList<D> dataList) {
+    public RecyclerAdapter(int itemTypeValue, List<D> dataList) {
         this.mItemTypeValue = itemTypeValue;
-        this.mDataList = new ObservableArrayList<>();
+        this.mDataList = new ArrayList<>();
         if (dataList != null)
             this.mDataList.addAll(dataList);
     }
@@ -83,7 +83,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * @return 数据列表
      */
     @SuppressWarnings("unused")
-    public ObservableList<D> getDataList() {
+    public List<D> getDataList() {
         return mDataList;
     }
 
@@ -147,13 +147,13 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
                             tmpPosition, mDataList.get(tmpPosition))) {
 
                         finalHolder.mItemCell.onItemClick(itemView.getContext(),
-                                RecyclerAdapter.this, finalHolder, finalHolder.viewDataBinding,
-                                itemView, tmpPosition, mDataList.get(tmpPosition));
+                                RecyclerAdapter.this, finalHolder, itemView,
+                                tmpPosition, mDataList.get(tmpPosition));
                     }
                 } else {
                     finalHolder.mItemCell.onItemClick(itemView.getContext(),
-                            RecyclerAdapter.this, finalHolder, finalHolder.viewDataBinding,
-                            itemView, tmpPosition, mDataList.get(tmpPosition));
+                            RecyclerAdapter.this, finalHolder, itemView,
+                            tmpPosition, mDataList.get(tmpPosition));
                 }
             }
         });
@@ -167,14 +167,14 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
                     if (itemLongClick) {
                         return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
-                                RecyclerAdapter.this, finalHolder, finalHolder.viewDataBinding,
-                                itemView, tmpPosition, mDataList.get(tmpPosition));
+                                RecyclerAdapter.this, finalHolder, itemView,
+                                tmpPosition, mDataList.get(tmpPosition));
                     }
                     return false;
                 } else {
                     return finalHolder.mItemCell.onItemLongClick(itemView.getContext(),
-                            RecyclerAdapter.this, finalHolder, finalHolder.viewDataBinding,
-                            itemView, tmpPosition, mDataList.get(tmpPosition));
+                            RecyclerAdapter.this, finalHolder, itemView,
+                            tmpPosition, mDataList.get(tmpPosition));
                 }
             }
         });
@@ -250,11 +250,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void setData(@NonNull ObservableList<D> dataList) {
+    public void setData(@NonNull List<D> dataList) {
         setData(dataList, true);
     }
 
-    void setData(@NonNull ObservableList<D> dataList, boolean filterRecyclerBlockData) {
+    void setData(@NonNull List<D> dataList, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         this.mDataList.clear();
@@ -271,7 +271,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@NonNull ObservableList<D> dataList) {
+    public void addAndNotifyAll(@NonNull List<D> dataList) {
         add(dataList, true);
     }
 
@@ -281,7 +281,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@NonNull ObservableList<D> dataList) {
+    public void addAndNotifyItem(@NonNull List<D> dataList) {
         add(dataList, false);
     }
 
@@ -294,11 +294,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@NonNull ObservableList<D> dataList, boolean refreshAllItem) {
+    public void add(@NonNull List<D> dataList, boolean refreshAllItem) {
         add(dataList, refreshAllItem, true);
     }
 
-    void add(@NonNull ObservableList<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+    void add(@NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         if (notEmptyList(dataList)) {
@@ -319,7 +319,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList) {
+    public void addAndNotifyAll(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
         add(index, dataList, true);
     }
 
@@ -329,7 +329,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      * 如果想要生效，就需要调用 {@link #clearRecyclerBlockData()} 或者 {@link #clearRecyclerBlockData(boolean)} 方法清除分块加载的数据。</b>
      */
     @SuppressWarnings("unused")
-    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList) {
+    public void addAndNotifyItem(@IntRange(from = 0) int index, @NonNull List<D> dataList) {
         add(index, dataList, false);
     }
 
@@ -342,11 +342,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
      *                       false：调用 {@link RecyclerAdapter#notifyItemRangeInserted(int, int)} 方法刷新列表
      */
     @SuppressWarnings("unused")
-    public void add(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList, boolean refreshAllItem) {
+    public void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem) {
         add(index, dataList, refreshAllItem, true);
     }
 
-    void add(@IntRange(from = 0) int index, @NonNull ObservableList<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
+    void add(@IntRange(from = 0) int index, @NonNull List<D> dataList, boolean refreshAllItem, boolean filterRecyclerBlockData) {
         if (mRecyclerBlockLoad && filterRecyclerBlockData) return;
 
         if (notEmptyList(dataList)) {
@@ -682,8 +682,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     private OnItemLongClickListener<D> mOnItemLongClickListener;
 
     /**
-     * 设置单击监听，优先级高于 {@link BaseRecyclerCell#onItemClick(Context, RecyclerAdapter, RecyclerViewHolder,
-     * android.databinding.ViewDataBinding, View, int, Object)}
+     * 设置单击监听，优先级高于 {@link BaseRecyclerCell#onItemClick(Context, RecyclerAdapter, RecyclerViewHolder, View, int, Object)}
      *
      * @param onItemClickListener {@link OnItemClickListener} 对象
      */
@@ -693,8 +692,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
     }
 
     /**
-     * 设置长按监听，优先级高于 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter, RecyclerViewHolder,
-     * android.databinding.ViewDataBinding, View, int, Object)}
+     * 设置长按监听，优先级高于 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter, RecyclerViewHolder, View, int, Object)}
      *
      * @param onItemLongClickListener {@link OnItemLongClickListener} 对象
      */
@@ -717,7 +715,7 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
          * @param position        点击位置
          * @param itemData        item 数据
          * @return 根据返回结果确定是否需要继续响应 {@link BaseRecyclerCell#onItemClick(Context, RecyclerAdapter,
-         * RecyclerViewHolder, android.databinding.ViewDataBinding, View, int, Object)} 方法，true：继续响应 ； false：不继续响应
+         * RecyclerViewHolder, View, int, Object)} 方法，true：继续响应 ； false：不继续响应
          */
         boolean onItemClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                             @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);
@@ -737,11 +735,11 @@ public abstract class RecyclerAdapter<D> extends RecyclerView.Adapter<RecyclerVi
          * @param position        点击位置
          * @param itemData        item 数据
          * @return 根据返回结果确定是否需要继续响应 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter,
-         * RecyclerViewHolder, android.databinding.ViewDataBinding, View, int, Object)} 方法，true：继续响应 ； false：不继续响应<br/><br/>
+         * RecyclerViewHolder, View, int, Object)} 方法，true：继续响应 ； false：不继续响应<br/><br/>
          * <b>注意：<br/>
          * 如果返回false，那么表示item的 {@link View.OnLongClickListener} 的回调方法也会直接返回false；<br/>
          * 如果返回true，那么item的 {@link View.OnLongClickListener} 的回调方法返回结果就是 {@link BaseRecyclerCell#onItemLongClick(Context, RecyclerAdapter,
-         * RecyclerViewHolder, android.databinding.ViewDataBinding, View, int, Object)} 方法 返回的结果</b>
+         * RecyclerViewHolder, View, int, Object)} 方法 返回的结果</b>
          */
         boolean onItemLongClick(@NonNull Context context, @NonNull RecyclerAdapter recyclerAdapter,
                                 @NonNull RecyclerViewHolder holder, @NonNull View itemView, int position, D itemData);

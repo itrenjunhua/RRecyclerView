@@ -1,8 +1,9 @@
-package com.renj.recycler.adapter;
+package com.renj.recycler.databinding;
 
-import android.support.annotation.IntRange;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableList;
+import androidx.annotation.IntRange;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class RecyclerBlockData<T> {
     private RecyclerAdapter<T> mRecyclerAdapter;
-    private LinkedHashMap<Integer, List<T>> mLinkedHashMap = new LinkedHashMap<>();
+    private LinkedHashMap<Integer, ObservableList<T>> mLinkedHashMap = new LinkedHashMap<>();
 
     public RecyclerBlockData() {
     }
@@ -29,7 +30,7 @@ public class RecyclerBlockData<T> {
     void setRecyclerAdapter(RecyclerAdapter<T> recyclerAdapter) {
         this.mRecyclerAdapter = recyclerAdapter;
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }
@@ -52,7 +53,7 @@ public class RecyclerBlockData<T> {
      * @param blockPosition 指定的数据块值
      */
     public RecyclerBlockData addBlock(int blockPosition) {
-        mLinkedHashMap.put(blockPosition, new ArrayList<T>());
+        mLinkedHashMap.put(blockPosition, new ObservableArrayList<T>());
         return this;
     }
 
@@ -82,7 +83,7 @@ public class RecyclerBlockData<T> {
     /**
      * 设置指定的数据块数据，<b>注意：该方法会清除原来数据块中已经存在的值，设置新的值。</b><br/><br/>
      * <b>如果数据块值没有通过 {@link #addBlock(int)} 方法进行增加(或指定的数据块值不存在)，则会以 {@link #setBlockData(int, Object)}、
-     * {@link #setBlockData(int, List)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, List)}
+     * {@link #setBlockData(int, ObservableList)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, ObservableList)}
      * 等类似方法的先后调用顺序为列表数据块展示顺序。</b>
      *
      * @param blockPosition 指定的数据块值
@@ -91,14 +92,14 @@ public class RecyclerBlockData<T> {
     public RecyclerBlockData setBlockData(int blockPosition, T blockData) {
         if (blockData == null) return this;
 
-        List<T> blockDataList = mLinkedHashMap.get(blockPosition);
-        if (blockDataList == null) blockDataList = new ArrayList<>();
+        ObservableList<T> blockDataList = mLinkedHashMap.get(blockPosition);
+        if (blockDataList == null) blockDataList = new ObservableArrayList<>();
         else blockDataList.clear();
 
         blockDataList.add(blockData);
         mLinkedHashMap.put(blockPosition, blockDataList);
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }
@@ -110,18 +111,18 @@ public class RecyclerBlockData<T> {
     /**
      * 设置指定的数据块数据，<b>注意：该方法会清除原来数据块中已经存在的值，设置新的值。</b><br/><br/>
      * <b>如果数据块值没有通过 {@link #addBlock(int)} 方法进行增加(或指定的数据块值不存在)，则会以 {@link #setBlockData(int, Object)}、
-     * {@link #setBlockData(int, List)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, List)}
+     * {@link #setBlockData(int, ObservableList)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, ObservableList)}
      * 等类似方法的先后调用顺序为列表数据块展示顺序。</b>
      *
      * @param blockPosition 指定的数据块值
      * @param blockDataList 需要给数据块设置的数据
      */
-    public RecyclerBlockData setBlockData(int blockPosition, List<T> blockDataList) {
-        if (blockDataList == null) blockDataList = new ArrayList<>();
+    public RecyclerBlockData setBlockData(int blockPosition, ObservableList<T> blockDataList) {
+        if (blockDataList == null) blockDataList = new ObservableArrayList<>();
 
         mLinkedHashMap.put(blockPosition, blockDataList);
 
-        List<T> dataList = new ArrayList<>();
+        ObservableList<T> dataList = new ObservableArrayList<>();
         for (List<T> value : mLinkedHashMap.values()) {
             dataList.addAll(value);
         }
@@ -134,7 +135,7 @@ public class RecyclerBlockData<T> {
     /**
      * 给指定的数据块增加数据<br/><br/>
      * <b>如果数据块值没有通过 {@link #addBlock(int)} 方法进行增加(或指定的数据块值不存在)，则会以 {@link #setBlockData(int, Object)}、
-     * {@link #setBlockData(int, List)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, List)}
+     * {@link #setBlockData(int, ObservableList)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, ObservableList)}
      *
      * @param blockPosition 指定的数据块值
      * @param blockData     需要增加的数据
@@ -142,8 +143,8 @@ public class RecyclerBlockData<T> {
     public RecyclerBlockData addBlockData(int blockPosition, T blockData) {
         if (blockData == null) return this;
 
-        List<T> blockDataList = mLinkedHashMap.get(blockPosition);
-        if (blockDataList == null) blockDataList = new ArrayList<>();
+        ObservableList<T> blockDataList = mLinkedHashMap.get(blockPosition);
+        if (blockDataList == null) blockDataList = new ObservableArrayList<>();
 
         blockDataList.add(blockData);
         mLinkedHashMap.put(blockPosition, blockDataList);
@@ -165,15 +166,15 @@ public class RecyclerBlockData<T> {
     /**
      * 给指定的数据块增加数据<br/><br/>
      * <b>如果数据块值没有通过 {@link #addBlock(int)} 方法进行增加(或指定的数据块值不存在)，则会以 {@link #setBlockData(int, Object)}、
-     * {@link #setBlockData(int, List)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, List)}
+     * {@link #setBlockData(int, ObservableList)}、{@link #addBlockData(int, Object)}、{@link #setBlockData(int, ObservableList)}
      *
      * @param blockPosition 指定的数据块值
      * @param blockDataList 需要增加的数据
      */
-    public RecyclerBlockData addBlockData(int blockPosition, List<T> blockDataList) {
+    public RecyclerBlockData addBlockData(int blockPosition, ObservableList<T> blockDataList) {
         if (isEmpty(blockDataList)) return this;
 
-        List<T> blockData = mLinkedHashMap.get(blockPosition);
+        ObservableList<T> blockData = mLinkedHashMap.get(blockPosition);
         if (blockData == null) {
             mLinkedHashMap.put(blockPosition, blockDataList);
         } else {
@@ -206,7 +207,7 @@ public class RecyclerBlockData<T> {
     public RecyclerBlockData removeBlockData(int blockPosition, T blockData) {
         if (blockData == null) return this;
 
-        List<T> blockDataList = mLinkedHashMap.get(blockPosition);
+        ObservableList<T> blockDataList = mLinkedHashMap.get(blockPosition);
         if (blockDataList == null) return this;
 
         blockDataList.remove(blockData);
@@ -226,7 +227,7 @@ public class RecyclerBlockData<T> {
      * @param count         数据块需要移除数据的个数
      */
     public RecyclerBlockData removeBlockData(int blockPosition, @IntRange(from = 0) int start, int count) {
-        List<T> blockData = mLinkedHashMap.get(blockPosition);
+        ObservableList<T> blockData = mLinkedHashMap.get(blockPosition);
         if (blockData == null) return this;
 
         if (count <= 0) return this;

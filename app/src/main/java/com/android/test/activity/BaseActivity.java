@@ -2,10 +2,9 @@ package com.android.test.activity;
 
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.android.test.utils.imageutil.GlideUtils;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * ======================================================================
@@ -22,15 +21,11 @@ import com.android.test.utils.imageutil.GlideUtils;
  */
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    // 在Base类中初始化，所有的子类可以直接使用
-    public GlideUtils glideUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        // 初始化图片加载工具类
-        glideUtils = GlideUtils.with(this);
         initView();
     }
 

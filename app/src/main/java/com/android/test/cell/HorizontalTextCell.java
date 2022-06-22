@@ -1,15 +1,16 @@
 package com.android.test.cell;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
-import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.BaseRecyclerCell;
+import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 
 /**
  * ======================================================================

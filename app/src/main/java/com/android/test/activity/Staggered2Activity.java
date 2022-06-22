@@ -1,19 +1,20 @@
 package com.android.test.activity;
 
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.android.test.R;
 import com.android.test.cell.RecyclerCellType;
 import com.android.test.cell.StaggeredHorizontalImageCell;
 import com.android.test.data.DataUtil;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class Staggered2Activity extends BaseActivity {
             @NonNull
             @Override
             protected BaseRecyclerCell<SimpleMultiItemEntity<String>> getRecyclerCell(int itemTypeValue) {
-                return new StaggeredHorizontalImageCell(glideUtils);
+                return new StaggeredHorizontalImageCell();
             }
         };
         recyclerView.setAdapter(adapter);

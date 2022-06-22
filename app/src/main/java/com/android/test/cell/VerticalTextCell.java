@@ -1,17 +1,18 @@
 package com.android.test.cell;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 
 /**
  * ======================================================================

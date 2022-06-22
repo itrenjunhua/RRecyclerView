@@ -1,9 +1,10 @@
 package com.renj.recycler.adapter;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 /**
  * ======================================================================
@@ -12,7 +13,7 @@ import android.view.View;
  * <p>
  * 创建时间：2019-06-05   9:56
  * <p>
- * 描述：{@link android.support.v7.widget.RecyclerView} 不同类型 item 实现类超类，具体实现类继承该类<br/>
+ * 描述：{@link androidx.recyclerview.widget.RecyclerView} 不同类型 item 实现类超类，具体实现类继承该类<br/>
  * 泛型 T 表示需要用到的数据类型
  * <p>
  * 修订历史：

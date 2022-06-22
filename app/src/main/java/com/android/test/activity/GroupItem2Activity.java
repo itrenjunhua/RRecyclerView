@@ -31,7 +31,7 @@ import java.util.List;
  * <p>
  * ======================================================================
  */
-public class GroupItemActivity extends BaseActivity {
+public class GroupItem2Activity extends BaseActivity {
     private TextView title;
     private RecyclerView recyclerView;
 
@@ -42,10 +42,10 @@ public class GroupItemActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        title = (TextView) findViewById(R.id.title);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        title = findViewById(R.id.title);
+        recyclerView = findViewById(R.id.recyclerview);
 
-        title.setText("列表分组吸顶(ItemDecoration)");
+        title.setText("列表分组吸顶(非ItemDecoration)");
 
         setRecyclerView();
     }

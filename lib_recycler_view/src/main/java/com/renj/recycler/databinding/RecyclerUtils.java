@@ -1,7 +1,7 @@
 package com.renj.recycler.databinding;
 
-import android.databinding.ObservableList;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.ObservableList;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 所在项目名: AndroidDataBinding

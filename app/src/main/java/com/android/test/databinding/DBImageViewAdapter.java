@@ -1,9 +1,10 @@
 package com.android.test.databinding;
 
-import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
-import com.android.test.utils.imageutil.GlideUtils;
+import androidx.databinding.BindingAdapter;
+
+import com.android.test.utils.imageutil.ImageLoaderUtils;
 
 /**
  * 所在项目名: RRecyclerView
@@ -21,6 +22,6 @@ import com.android.test.utils.imageutil.GlideUtils;
 public class DBImageViewAdapter {
     @BindingAdapter(value = {"url"})
     public static void setImageUrl(ImageView imageView, String url) {
-        GlideUtils.with(imageView.getContext()).loadCornerImage(url, imageView, 4);
+        ImageLoaderUtils.loadImage(imageView, url, 4);
     }
 }

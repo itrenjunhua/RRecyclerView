@@ -1,18 +1,19 @@
 package com.android.test.cell;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
-import com.android.test.utils.imageutil.GlideUtils;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
-import com.renj.recycler.adapter.RecyclerAdapter;
+import com.android.test.utils.imageutil.ImageLoaderUtils;
 import com.renj.recycler.adapter.BaseRecyclerCell;
+import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -36,11 +37,9 @@ public class StaggeredVerticalImageCell extends BaseRecyclerCell<SimpleMultiItem
     private HashMap<SimpleMultiItemEntity<String>, Integer> saveHeight = new HashMap<>();
 
     private Random random = new Random();
-    private GlideUtils glideUtils;
 
-    public StaggeredVerticalImageCell(GlideUtils glideUtils) {
+    public StaggeredVerticalImageCell() {
         super(R.layout.item_staggred_1);
-        this.glideUtils = glideUtils;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class StaggeredVerticalImageCell extends BaseRecyclerCell<SimpleMultiItem
         layoutParams.height = integer;
         imageView.setLayoutParams(layoutParams);
 
-        glideUtils.loadImage(itemData.getData(), imageView);
+        ImageLoaderUtils.loadImage(imageView,itemData.getData());
     }
 
     @Override

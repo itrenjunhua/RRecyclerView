@@ -1,16 +1,18 @@
 package com.android.test.cell;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
-import com.android.test.utils.imageutil.GlideUtils;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
+import com.android.test.utils.imageutil.ImageLoaderUtils;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
 import com.renj.recycler.adapter.RecyclerViewHolder;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 
 /**
  * ======================================================================
@@ -28,16 +30,18 @@ import com.renj.recycler.adapter.RecyclerViewHolder;
  */
 public class VerticalImageCell extends BaseRecyclerCell<SimpleMultiItemEntity<String>> {
 
-    private GlideUtils glideUtils;
-
-    public VerticalImageCell(GlideUtils glideUtils) {
+    public VerticalImageCell() {
         super(R.layout.item_multiple_img);
-        this.glideUtils = glideUtils;
+    }
+
+    public VerticalImageCell(int layoutId) {
+        super(layoutId);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position, SimpleMultiItemEntity<String> itemData) {
-        glideUtils.loadCornerImage(itemData.getData(), holder.getImageView(R.id.multiple_imageview), 4); // 加载圆角图片
+        ImageView imageView = holder.getImageView(R.id.multiple_imageview);
+        ImageLoaderUtils.loadImage(imageView, itemData.getData(), 4);
     }
 
     @Override

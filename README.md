@@ -9,6 +9,8 @@ Android `RecyclerView` 控件使用方法及代码示例，以及 `RecyclerView`
 > 5.与 SwipeRefreshLayout 控件结合实现刷新和自动加载更多  
 > 6.使用 ItemTouchHelper 实现拖拽和侧滑删除效果  
 > 7.将Adapter进行封装
+> 8.分组效果
+> 9.分组吸顶效果，并且分组支持自定义布局和点击事件
 
 ![RecyclerView效果图目录](https://github.com/itrenjunhua/RRecyclerView/raw/master/images/image_menu.jpg)
 

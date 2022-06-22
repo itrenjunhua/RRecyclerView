@@ -109,7 +109,14 @@
                 android:id="@+id/bt15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="列表分组吸顶"
+                android:text="列表分组吸顶(ItemDecoration)"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/bt16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="列表分组吸顶(非ItemDecoration)"
                 android:textAllCaps="false" />
 
         </LinearLayout>

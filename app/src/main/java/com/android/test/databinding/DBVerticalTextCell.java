@@ -1,13 +1,14 @@
 package com.android.test.databinding;
 
 import android.content.Context;
-import android.databinding.ViewDataBinding;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import com.android.databinding.library.baseAdapters.BR;
+import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.test.BR;
 import com.android.test.R;
 import com.android.test.utils.ToastUtil;
 import com.renj.recycler.databinding.BaseRecyclerCell;

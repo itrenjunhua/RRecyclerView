@@ -12,7 +12,7 @@ import com.android.test.databinding.DBListActivity;
 public class MainActivity extends BaseActivity {
     private TextView title;
     private Button button1, button2, button3, button4, button5, button6, button7,
-            button8, button9, button10, button11, button12, button13,button14,button15;
+            button8, button9, button10, button11, button12, button13, button14, button15, button16;
 
     @Override
     protected int getLayoutId() {
@@ -21,24 +21,25 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        title = (TextView) findViewById(R.id.title);
+        title = findViewById(R.id.title);
         title.setText("RecyclerView 基本使用");
 
-        button1 = (Button) findViewById(R.id.bt1);
-        button2 = (Button) findViewById(R.id.bt2);
-        button3 = (Button) findViewById(R.id.bt3);
-        button4 = (Button) findViewById(R.id.bt4);
-        button5 = (Button) findViewById(R.id.bt5);
-        button6 = (Button) findViewById(R.id.bt6);
-        button7 = (Button) findViewById(R.id.bt7);
-        button8 = (Button) findViewById(R.id.bt8);
-        button9 = (Button) findViewById(R.id.bt9);
-        button10 = (Button) findViewById(R.id.bt10);
-        button11 = (Button) findViewById(R.id.bt11);
-        button12 = (Button) findViewById(R.id.bt12);
-        button13 = (Button) findViewById(R.id.bt13);
-        button14 = (Button) findViewById(R.id.bt14);
-        button15 = (Button) findViewById(R.id.bt15);
+        button1 = findViewById(R.id.bt1);
+        button2 = findViewById(R.id.bt2);
+        button3 = findViewById(R.id.bt3);
+        button4 = findViewById(R.id.bt4);
+        button5 = findViewById(R.id.bt5);
+        button6 = findViewById(R.id.bt6);
+        button7 = findViewById(R.id.bt7);
+        button8 = findViewById(R.id.bt8);
+        button9 = findViewById(R.id.bt9);
+        button10 = findViewById(R.id.bt10);
+        button11 = findViewById(R.id.bt11);
+        button12 = findViewById(R.id.bt12);
+        button13 = findViewById(R.id.bt13);
+        button14 = findViewById(R.id.bt14);
+        button15 = findViewById(R.id.bt15);
+        button16 = findViewById(R.id.bt16);
 
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
         button13.setOnClickListener(this);
         button14.setOnClickListener(this);
         button15.setOnClickListener(this);
+        button16.setOnClickListener(this);
     }
 
     @Override
@@ -119,6 +121,10 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.bt15:
                 intent = new Intent(this, GroupItemActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.bt16:
+                intent = new Intent(this, GroupItem2Activity.class);
                 startActivity(intent);
                 break;
             default:

@@ -1,17 +1,18 @@
 package com.android.test.activity;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.test.R;
 import com.android.test.cell.GridTextCell;
 import com.android.test.cell.RecyclerCellType;
 import com.android.test.data.DataUtil;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.draw.GridItemDecoration;
 
 import java.util.List;

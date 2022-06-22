@@ -3,10 +3,11 @@ package com.android.test.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.test.R;
 import com.android.test.cell.RecyclerCellType;
@@ -14,9 +15,9 @@ import com.android.test.cell.VerticalTextCell;
 import com.android.test.data.DataUtil;
 import com.android.test.utils.ToastUtil;
 import com.android.test.view.RefreshRecyclerView;
-import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.adapter.BaseRecyclerCell;
 import com.renj.recycler.adapter.RecyclerAdapter;
+import com.renj.recycler.adapter.SimpleMultiItemEntity;
 import com.renj.recycler.draw.LinearItemDecoration;
 
 /**

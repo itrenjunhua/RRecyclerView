@@ -13,11 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 配置Glide的GlideModule -->
-        <meta-data
-            android:name="com.android.test.utils.imageutil.ConsumerGlideModule"
-            android:value="GlideModule" />
-
         <activity android:name="com.android.test.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,6 +35,7 @@
         <activity android:name="com.android.test.databinding.DBListActivity" />
         <activity android:name="com.android.test.databinding.DBBlockLoadActivity" />
         <activity android:name="com.android.test.activity.GroupItemActivity" />
+        <activity android:name="com.android.test.activity.GroupItem2Activity" />
     </application>
 
 </manifest>
