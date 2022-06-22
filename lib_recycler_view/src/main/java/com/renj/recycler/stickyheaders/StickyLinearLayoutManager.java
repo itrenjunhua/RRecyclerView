@@ -3,6 +3,7 @@ package com.renj.recycler.stickyheaders;
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +23,10 @@ import java.util.Map;
  */
 public class StickyLinearLayoutManager extends LinearLayoutManager {
 
-    private AdapterDataProvider mHeaderProvider;
+    private final AdapterDataProvider mHeaderProvider;
     private StickyHeaderHandler mHeaderHandler;
 
-    private List<Integer> mHeaderPositions = new ArrayList<>();
+    private final List<Integer> mHeaderPositions = new ArrayList<>();
 
     private ViewHolderFactory viewHolderFactory;
 
@@ -98,7 +99,8 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
         int scroll = super.scrollVerticallyBy(dy, recycler, state);
         if (Math.abs(scroll) > 0) {
             if (mHeaderHandler != null) {
-                mHeaderHandler.updateHeaderState(findFirstVisibleItemPosition(), getVisibleHeaders(), viewHolderFactory, findFirstCompletelyVisibleItemPosition() == 0);
+                mHeaderHandler.updateHeaderState(findFirstVisibleItemPosition(), getVisibleHeaders(), viewHolderFactory,
+                        findFirstCompletelyVisibleItemPosition() == 0);
             }
         }
         return scroll;
@@ -109,14 +111,15 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
         int scroll = super.scrollHorizontallyBy(dx, recycler, state);
         if (Math.abs(scroll) > 0) {
             if (mHeaderHandler != null) {
-                mHeaderHandler.updateHeaderState(findFirstVisibleItemPosition(), getVisibleHeaders(), viewHolderFactory, findFirstCompletelyVisibleItemPosition() == 0);
+                mHeaderHandler.updateHeaderState(findFirstVisibleItemPosition(), getVisibleHeaders(), viewHolderFactory,
+                        findFirstCompletelyVisibleItemPosition() == 0);
             }
         }
         return scroll;
     }
 
     @Override
-    public void removeAndRecycleAllViews(RecyclerView.Recycler recycler) {
+    public void removeAndRecycleAllViews(@NonNull RecyclerView.Recycler recycler) {
         super.removeAndRecycleAllViews(recycler);
         if (mHeaderHandler != null) {
             mHeaderHandler.clearHeader();
@@ -154,9 +157,11 @@ public class StickyLinearLayoutManager extends LinearLayoutManager {
 
         for (int i = 0; i < getChildCount(); i++) {
             View view = getChildAt(i);
-            int dataPosition = getPosition(view);
-            if (mHeaderPositions.contains(dataPosition)) {
-                visibleHeaders.put(dataPosition, view);
+            if (view != null) {
+                int dataPosition = getPosition(view);
+                if (mHeaderPositions.contains(dataPosition)) {
+                    visibleHeaders.put(dataPosition, view);
+                }
             }
         }
         return visibleHeaders;

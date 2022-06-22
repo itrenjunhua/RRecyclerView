@@ -18,6 +18,8 @@ public final class ViewHolderFactory {
     }
 
     public RecyclerView.ViewHolder getViewHolderForPosition(int position) {
+        if (recyclerView.getAdapter() == null) return currentViewHolder;
+
         if (currentViewType != recyclerView.getAdapter().getItemViewType(position)) {
             currentViewType = recyclerView.getAdapter().getItemViewType(position);
             currentViewHolder = recyclerView.getAdapter().createViewHolder((ViewGroup) recyclerView.getParent(), currentViewType);

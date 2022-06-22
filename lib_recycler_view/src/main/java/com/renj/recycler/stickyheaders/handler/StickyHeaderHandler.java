@@ -203,9 +203,12 @@ public final class StickyHeaderHandler {
     }
 
     private void attachHeader(RecyclerView.ViewHolder viewHolder, int headerPosition) {
+        RecyclerView.Adapter adapter = mRecyclerView.getAdapter();
+        if(adapter == null) return;
+
         if (currentViewHolder == viewHolder) {
             callDetach(lastBoundPosition);
-            mRecyclerView.getAdapter().onBindViewHolder(currentViewHolder, headerPosition);
+            adapter.onBindViewHolder(currentViewHolder, headerPosition);
             currentViewHolder.itemView.requestLayout();
             checkTranslation();
             callAttach(headerPosition);
@@ -214,7 +217,7 @@ public final class StickyHeaderHandler {
         }
         detachHeader(lastBoundPosition);
         this.currentViewHolder = viewHolder;
-        mRecyclerView.getAdapter().onBindViewHolder(currentViewHolder, headerPosition);
+        adapter.onBindViewHolder(currentViewHolder, headerPosition);
         this.currentHeader = currentViewHolder.itemView;
         callAttach(headerPosition);
         resolveElevationSettings(currentHeader.getContext());
